@@ -49,8 +49,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,200;0,300;1,200;1,300&display=swap"
     rel="stylesheet" />
-  <!-- Inline favicon — prevents 404 on file:/// and avoids network request -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>💍</text></svg>"/>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <script defer src="https://cdn.tailwindcss.com"></script>
 
   <script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
@@ -3089,43 +3088,50 @@
 
 
     /* ══════════════ TASK 1: 3D VAULT ══════════════ */
+
+    /* Outer clip wrapper: prevents 3D children bleeding into header/other sections.
+       NOT part of the 3D context — just a solid clipping boundary. */
+    .vault-clip {
+      width: 100%;
+      overflow: hidden;
+      isolation: isolate;
+      position: relative;
+      background: var(--bg);
+    }
+
+    /* Inner 3D scene */
     .vault-scene {
       position: relative;
       width: 100%;
-      height: 420px;
-      perspective: 900px;          /* reduced: 1200px pushed far cards out of view */
-      perspective-origin: 50% 40%;
-      overflow: visible;            /* MUST be visible — hidden clips 3D children */
+      height: 380px;
+      /* perspective ~2× translateZ keeps cards visible without distortion */
+      perspective: 680px;
+      perspective-origin: 50% 50%;
+      overflow: visible;
       cursor: grab;
       touch-action: pan-y;
-      transform-style: preserve-3d; /* propagate 3D to all children */
+      /* transform-style is on .vault-ring, not here — prevents stacking-context issues */
     }
     @media(max-width:700px) {
-      .vault-scene { height: 340px; perspective: 600px; }
+      .vault-scene { height: 300px; perspective: 460px; }
     }
     .vault-scene:active { cursor: grabbing; }
 
-    /* TASK 3: Floor — rotateX(85deg) plane beneath vault */
+    /* Floor shadow — 2D radial gradient, no 3D transform (avoids stacking context) */
     .vault-floor {
       position: absolute;
-      bottom: -10px;
+      bottom: 0;
       left: 50%;
-      width: 600px;
-      height: 160px;
-      margin-left: -300px;
-      transform: rotateX(85deg);
-      transform-origin: 50% 100%;
+      width: 70%;
+      height: 30px;
+      margin-left: -35%;
       background: radial-gradient(
-        ellipse 70% 55% at 50% 100%,
-        rgba(212,175,55,.20) 0%,
-        rgba(212,175,55,.06) 55%,
-        transparent 80%
+        ellipse 80% 100% at 50% 100%,
+        rgba(212,175,55,.18) 0%,
+        transparent 70%
       );
       pointer-events: none;
       z-index: 0;
-    }
-    @media(max-width:700px) {
-      .vault-floor { width: 340px; margin-left: -170px; height: 100px; }
     }
     /* Dynamic lighting gradient on vault cards */
     .vault-card-light {
@@ -3149,9 +3155,8 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      transform-style: preserve-3d;
+      transform-style: preserve-3d; /* 3D lives here only */
       will-change: transform;
-      /* No overflow:hidden — clipping kills 3D children */
     }
 
     .vault-card {
@@ -3402,6 +3407,53 @@
       .pcard::after, .pcard-bloom, .pcard-sweep { display: none; }
     }
 
+
+    /* ══ Vault card rendering overrides ══
+       .pcard and .pcard-img use overflow:hidden which creates new stacking
+       contexts that flatten 3D children. Inside the vault we must undo this.
+       These rules are scoped to .vault-ring and do NOT affect normal carousels. */
+    .vault-ring .pcard {
+      overflow: visible !important;
+      transform-style: preserve-3d !important;
+      backface-visibility: visible !important;
+      -webkit-backface-visibility: visible !important;
+      /* Clip visually with border-radius without using overflow:hidden */
+      clip-path: inset(0 round 16px);
+    }
+    .vault-ring .pcard-img {
+      overflow: visible !important;
+      transform-style: preserve-3d !important;
+      backface-visibility: visible !important;
+      -webkit-backface-visibility: visible !important;
+      clip-path: inset(0 round 4px 4px 0 0);
+    }
+    .vault-ring .pcard-img img {
+      backface-visibility: visible !important;
+      -webkit-backface-visibility: visible !important;
+      transform-style: preserve-3d !important;
+      /* Remove will-change:transform which can create new compositing layers */
+      will-change: auto;
+      display: block;
+      opacity: 1 !important;
+    }
+    /* Remove transforms that conflict with 3D parent context */
+    .vault-ring .pcard:hover {
+      transform: none !important;
+    }
+    .vault-ring .pcard::before,
+    .vault-ring .pcard::after,
+    .vault-ring .pcard-img-ov,
+    .vault-ring .pcard-bloom,
+    .vault-ring .pcard-sweep {
+      /* These overlays create stacking contexts — remove from vault */
+      display: none !important;
+    }
+    .vault-ring .pcard-info {
+      /* Info section doesn't need 3D */
+      position: relative;
+      z-index: 1;
+    }
+
   </style>
 
 <body>
@@ -3636,10 +3688,12 @@
         <div class="eyebrow">Most Loved</div>
         <h2 class="sec-title gold-text">Top Sellers</h2>
       </div>
-      <!-- 3D Vault scene (JS populates vault-ring from top_sellers data) -->
-      <div class="vault-scene" id="vault-scene" aria-label="Top sellers 3D carousel">
-        <div class="vault-floor" aria-hidden="true"></div>
-        <div class="vault-ring" id="vault-ring" role="list"></div>
+      <!-- 3D Vault: .vault-clip clips overflow, .vault-scene holds 3D context -->
+      <div class="vault-clip">
+        <div class="vault-scene" id="vault-scene" aria-label="Top sellers 3D carousel">
+          <div class="vault-ring" id="vault-ring" role="list"></div>
+          <div class="vault-floor" aria-hidden="true"></div>
+        </div>
       </div>
       <div class="vault-nav">
         <button class="vault-btn" id="vault-prev" aria-label="Previous" onclick="vaultStep(-1)">
@@ -4800,14 +4854,23 @@
     async function load() {
       try {
         let url = DATA_URL;
-        try {
-          const commitRes = await fetch('https://api.github.com/repos/n8nintegrationai/luvz-collection/commits/main', { cache: 'no-cache' });
-          if (!commitRes.ok) throw new Error(`Commit ${commitRes.status}`);
-          const commitData = await commitRes.json();
-          const sha = commitData.sha;
-          if (!sha) throw new Error('Missing commit SHA');
-          url = `https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection@${sha}/data/products.json`;
-        } catch (err) {
+
+        // On file:// protocol all cross-origin fetches are blocked — skip
+        // straight to jsDelivr CDN URL to avoid console security errors
+        const isFileProtocol = location.protocol === 'file:';
+
+        if (!isFileProtocol) {
+          try {
+            const commitRes = await fetch('https://api.github.com/repos/n8nintegrationai/luvz-collection/commits/main', { cache: 'no-cache' });
+            if (!commitRes.ok) throw new Error(`Commit ${commitRes.status}`);
+            const commitData = await commitRes.json();
+            const sha = commitData.sha;
+            if (!sha) throw new Error('Missing commit SHA');
+            url = `https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection@${sha}/data/products.json`;
+          } catch (err) {
+            url = `https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection@main/data/products.json?v=${Date.now()}`;
+          }
+        } else {
           url = `https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection@main/data/products.json?v=${Date.now()}`;
         }
 
@@ -4817,7 +4880,7 @@
           if (!res.ok) throw new Error(`Data ${res.status}`);
           d = await res.json();
         } catch (fetchErr) {
-          // file:// CORS block or network failure — use mock data so page renders
+          // Network failure — use mock data so page renders without errors
           console.warn('Data fetch failed, using mock data:', fetchErr.message);
           d = MOCK_DATA;
         }
@@ -5009,59 +5072,97 @@
 
       // How far apart cards sit on the ring (degrees)
       function stepDeg() { return 360 / Math.max(_items.length, 1); }
-      // translateZ per brief: ~400px desktop / ~170px mobile
+      // translateZ = ~40% of perspective keeps cards visible and proportional
+      // perspective:680 → tz:280 means front card appears at 680/(680-280)=1.7× size
+      // Cards at 60°/120° still visible; at 180° they face away (hidden by background)
       function tz() {
         const w = window.innerWidth;
-        return w <= 480 ? 170 : w <= 768 ? 260 : 400;
+        return w <= 480 ? 140 : w <= 768 ? 200 : 280;
       }
 
       function applyRing() {
         const ring = document.getElementById('vault-ring');
         if (!ring) return;
         ring.style.transform = `rotateY(${_angle}deg)`;
-        ring.querySelectorAll('.vault-card').forEach((card, i) => {
+        const cards = ring.querySelectorAll('.vault-card');
+
+        // Visibility window must accommodate all n cards.
+        // With 6 cards at 60deg spacing, wa < 90 || wa > 270 hides cards
+        // at 120deg and 240deg — only 3 of 6 visible. The fix: show ALL
+        // cards except the one directly at the back (near 180deg).
+        cards.forEach((card, i) => {
           const deg = i * stepDeg();
           card.style.transform = `rotateY(${deg}deg) translateZ(${tz()}px)`;
-          // Fix: correct front-detection by normalising into 0-360 range
-          const cardWorldAngle = ((deg - _angle) % 360 + 360) % 360;
-          const front = cardWorldAngle < 35 || cardWorldAngle > 325;
-          card.style.opacity  = front ? '1' : '0.5';
-          card.style.zIndex   = front ? '2' : '1';
+
+          // Normalise to 0-360: 0=facing viewer, 180=facing away
+          const wa = ((deg - _angle) % 360 + 360) % 360;
+
+          // Hide only the card near the exact back (160deg-200deg dead zone)
+          const isBack   = wa > 160 && wa < 200;
+          const isCenter = wa < 40  || wa > 320;
+
+          card.style.visibility    = isBack ? 'hidden' : 'visible';
+          card.style.opacity       = isBack ? '0' : isCenter ? '1' : '0.72';
+          card.style.zIndex        = isCenter ? '3' : isBack ? '0' : '2';
+          card.style.pointerEvents = isCenter ? 'auto' : 'none';
         });
       }
 
-      function loop() {
-        // Ease toward target
-        const diff = _target - _angle;
-        if (Math.abs(diff) > 0.08) {
-          _angle += diff * 0.08;
-          applyRing();
-          _raf = requestAnimationFrame(loop);
+      // Continuous animation loop — runs every frame, always.
+      // Auto-rotation: smooth constant velocity (deg/ms).
+      // Manual step: ease to snapped target, then resume auto-velocity.
+      const AUTO_DEG_PER_SEC = 18;  // full rotation in ~20s — luxury glide speed
+      const EASE_FACTOR      = 0.07; // lower = smoother ease-to-snap
+      const IDLE_RESUME_MS   = 2200; // ms after interaction before auto resumes
+      let _prevTimestamp = 0;
+      let _snapping = false;  // true while easing to a manual snap target
+
+      function loop(timestamp) {
+        _raf = requestAnimationFrame(loop);
+
+        const dt = Math.min(timestamp - _prevTimestamp, 64); // cap at 64ms (handles tab-blur)
+        _prevTimestamp = timestamp;
+        if (dt <= 0) return;
+
+        if (_dragging) return; // drag updates _angle directly via onMove
+
+        if (_snapping) {
+          // Ease toward snapped target after button press or drag-release
+          const diff = _target - _angle;
+          if (Math.abs(diff) < 0.06) {
+            _angle = _target;
+            _snapping = false;
+          } else {
+            _angle += diff * EASE_FACTOR;
+          }
         } else {
-          _angle = _target;
-          applyRing();
-          _autoRunning = false;
-          _raf = null;
-          // Resume auto after 3s idle
-          setTimeout(startAuto, 3000);
+          // Auto-rotate continuously if idle
+          const idle = Date.now() - _lastInteraction > IDLE_RESUME_MS;
+          if (idle && !_dragging) {
+            const delta = (AUTO_DEG_PER_SEC * dt) / 1000;
+            _angle -= delta;
+            _target = _angle; // keep target in sync so next snap is relative
+          }
         }
+
+        applyRing();
       }
 
-      function startAuto() {
-        if (_dragging || !_items.length) return;
-        if (Date.now() - _lastInteraction < 2800) return;
-        _target -= stepDeg();
-        if (!_raf) {
-          _autoRunning = true;
-          _raf = requestAnimationFrame(loop);
-        }
+      function startLoop() {
+        if (_raf) return;
+        _prevTimestamp = performance.now();
+        _raf = requestAnimationFrame(loop);
       }
+
+      // Keep startAuto as a no-op shim so existing setInterval call doesn't throw
+      function startAuto() {}
 
       window.vaultStep = function(dir) {
         _lastInteraction = Date.now();
-        _target += dir * stepDeg();
-        if (_raf) cancelAnimationFrame(_raf);
-        _raf = requestAnimationFrame(loop);
+        _snapping = true;
+        _target = _angle + dir * stepDeg();
+        // Snap to nearest clean multiple so we don't accumulate drift
+        _target = Math.round(_target / stepDeg()) * stepDeg() + dir * stepDeg();
       };
 
       // Drag support (mouse + touch)
@@ -5069,24 +5170,27 @@
         function onStart(x) {
           _dragging = true;
           _dragStartX = x;
-          _dragStartAngle = _target;
+          _dragStartAngle = _angle; // use current rendered angle, not target
           _lastInteraction = Date.now();
-          if (_raf) { cancelAnimationFrame(_raf); _raf = null; }
+          _snapping = false;
+          // Don't cancel rAF — loop() checks _dragging flag and skips auto-rotate
         }
         function onMove(x) {
           if (!_dragging) return;
           const dx = x - _dragStartX;
-          _target = _dragStartAngle - dx * 0.4;
+          // Update angle directly — loop() skips auto-rotate while _dragging
+          _angle = _dragStartAngle - dx * 0.35;
+          _target = _angle;
           applyRing();
         }
         function onEnd() {
           if (!_dragging) return;
           _dragging = false;
           _lastInteraction = Date.now();
-          // Snap to nearest card
+          // Snap to nearest card and ease there
           const s = stepDeg();
-          _target = Math.round(_target / s) * s;
-          _raf = requestAnimationFrame(loop);
+          _target = Math.round(_angle / s) * s;
+          _snapping = true;
         }
         scene.addEventListener('mousedown', e => { e.preventDefault(); onStart(e.clientX); });
         document.addEventListener('mousemove', e => onMove(e.clientX));
@@ -5105,7 +5209,7 @@
         const scene = document.getElementById('vault-scene');
         if (!track || !ring || !scene) return;
 
-        // Reduced-motion fallback: horizontal scroll
+        // Reduced-motion: flat horizontal scroll, no 3D
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
           scene.style.cssText = 'overflow-x:auto;display:flex;gap:14px;padding:16px;height:auto;cursor:auto';
           ring.style.cssText  = 'position:static;transform:none;display:flex;gap:14px;height:auto;width:max-content;transform-style:flat';
@@ -5118,89 +5222,150 @@
           return;
         }
 
-        const cards = Array.from(track.querySelectorAll('.carousel-item'));
-        _items = cards.slice(0, MAX_CARDS);
-        if (!_items.length) return;
+        // Collect product data directly from dataset (JSON) — NOT from DOM img.currentSrc
+        // img.currentSrc is empty when cards haven't loaded yet (most cases at call time)
+        const cardEls = Array.from(track.querySelectorAll('.carousel-item'));
+        const products = [];
+        cardEls.slice(0, MAX_CARDS).forEach(item => {
+          const inner = item.querySelector('.pcard');
+          if (!inner) return;
+          try {
+            const p = JSON.parse(
+              inner.dataset.p.replace(/&#39;/g, "'").replace(/&quot;/g, '"')
+            );
+            // Use optimizeCloudinaryUrl if available, fall back to raw p.image
+            const rawSrc = p.image || '';
+            p._vaultSrc = (typeof optimizeCloudinaryUrl === 'function' && rawSrc)
+              ? optimizeCloudinaryUrl(rawSrc, 600)
+              : rawSrc;
+            if (p._vaultSrc) products.push(p);
+          } catch(e) {}
+        });
 
-        // Preload all images first, then build the ring
-        // This ensures dimensions are known and browser has decoded the image
-        // before the 3D transform is applied — prevents blank-face bug
-        const preloadPromises = _items.map(item => new Promise(resolve => {
-          const img = item.querySelector('img');
-          if (!img || !img.src) { resolve(); return; }
-          if (img.complete && img.naturalWidth > 0) { resolve(); return; }
-          const pi = new Image();
-          pi.onload = resolve;
-          pi.onerror = resolve; // resolve anyway so vault still builds
-          pi.src = img.src;
+        if (!products.length) return;
+        _items = products;
+
+        // Preload images — ensure browser has decoded before 3D placement
+        const preloads = products.map(p => new Promise(resolve => {
+          if (!p._vaultSrc) { resolve(); return; }
+          const img = new Image();
+          img.onload  = resolve;
+          img.onerror = resolve;
+          img.src = p._vaultSrc;
         }));
 
-        Promise.all(preloadPromises).then(() => {
+        Promise.all(preloads).then(() => {
           ring.innerHTML = '';
-          _items.forEach((item, i) => {
-            const vc  = document.createElement('div');
+
+          products.forEach((p, i) => {
+            const isMob = window.innerWidth <= 700;
+            const cardW = isMob ? 140 : 170;
+            const cardH = isMob ? 270 : 330;
+            const imgH  = Math.round(cardH * 0.64);
+            const price = (p.price && p.price > 0)
+              ? '\u20B9' + Number(p.price).toLocaleString('en-IN') : '';
+
+            // ── Vault card: clean DOM, explicit dimensions, no overflow:hidden ──
+            const vc = document.createElement('div');
             vc.className = 'vault-card';
             vc.setAttribute('role', 'listitem');
 
-            const inner = item.querySelector('.pcard');
-            if (!inner) { ring.appendChild(vc); return; }
+            // Solid background is critical — without it, back-face cards (180° away)
+            // show the page content through them, causing the "transparent" look.
+            // border-radius is visual only; clipping is done by .vault-clip wrapper.
+            const vcStyles = [
+              'position:absolute',
+              'top:50%','left:50%',
+              `width:${cardW}px`,
+              `height:${cardH}px`,
+              `margin-left:${-cardW/2}px`,
+              `margin-top:${-cardH/2}px`,
+              'border-radius:14px',
+              'background:var(--card)',           // solid — no transparency
+              'border:1px solid var(--border)',
+              'box-shadow:var(--sh)',
+              'cursor:pointer',
+              'transform-style:preserve-3d',
+              'backface-visibility:visible',
+              '-webkit-backface-visibility:visible',
+              'display:flex',
+              'flex-direction:column',
+              'overflow:visible',                 // clipping done by .vault-clip, not here
+            ];
+            vc.style.cssText = vcStyles.join(';');
 
-            // Parse product data before cloning
-            let pData = null;
-            try {
-              pData = JSON.parse(
-                inner.dataset.p.replace(/&#39;/g, "'").replace(/&quot;/g, '"')
-              );
-            } catch(e) {}
+            // Image container
+            const imgWrap = document.createElement('div');
+            const iwStyles = [
+              'position:relative',
+              'width:100%',
+              `height:${imgH}px`,
+              'flex-shrink:0',
+              'border-radius:14px 14px 0 0',
+              'background:var(--card2)',
+              'overflow:hidden',                  // ok here — this div is not 3D-transformed
+            ];
+            imgWrap.style.cssText = iwStyles.join(';');
 
-            const clone = inner.cloneNode(true);
-
-            // Guarantee image src — cloneNode can lose decoded state in Safari
-            const origImg  = inner.querySelector('img');
-            const cloneImg = clone.querySelector('img');
-            if (origImg && cloneImg) {
-              // Set src directly (not srcset) so the preloaded image is used
-              cloneImg.removeAttribute('srcset');
-              cloneImg.removeAttribute('sizes');
-              cloneImg.src     = origImg.currentSrc || origImg.src;
-              cloneImg.loading = 'eager'; // already preloaded, no lazy delay
-              // Force the image to be visible — override any opacity/display
-              cloneImg.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;opacity:1;backface-visibility:visible;-webkit-backface-visibility:visible;';
+            if (p._vaultSrc) {
+              const img = document.createElement('img');
+              img.width  = cardW;
+              img.height = imgH;
+              img.alt    = p.name || '';
+              img.src    = p._vaultSrc;
+              // Inline style on img itself — overrides any inherited CSS
+              img.style.cssText = [
+                'width:100%',
+                `height:${imgH}px`,
+                'object-fit:cover',
+                'display:block',
+                'opacity:1',
+                'will-change:auto',
+                'pointer-events:none',
+                'transform:none',                 // no inherited transforms
+              ].join(';');
+              imgWrap.appendChild(img);
             }
 
-            // Delegated click — use stored pData, check drag threshold
-            clone.removeAttribute('onclick');
-            if (pData) {
-              const badge = 'Best Seller';
-              clone.addEventListener('click', (e) => {
-                if (Math.abs(_dragStartX - (e.clientX || 0)) > 6) return;
-                openModal(pData, badge);
-              });
+            // Subtle bottom gradient on image
+            const ov = document.createElement('div');
+            ov.style.cssText = [
+              'position:absolute','inset:0',
+              'border-radius:14px 14px 0 0',
+              'background:linear-gradient(to bottom,transparent 52%,rgba(0,0,0,.5))',
+              'pointer-events:none',
+            ].join(';');
+            imgWrap.appendChild(ov);
+            vc.appendChild(imgWrap);
+
+            // Info strip
+            const info = document.createElement('div');
+            info.style.cssText = 'padding:9px 11px 11px;flex:1;display:flex;flex-direction:column;gap:3px;background:var(--card);border-radius:0 0 14px 14px;';
+
+            const cat = document.createElement('div');
+            cat.style.cssText = "font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);opacity:.55;";
+            cat.textContent = p.category || '';
+            info.appendChild(cat);
+
+            const name = document.createElement('div');
+            name.style.cssText = "font-family:'Cinzel',serif;font-size:.68rem;font-weight:700;letter-spacing:.06em;line-height:1.28;color:var(--txt);";
+            name.textContent = p.name || '';
+            info.appendChild(name);
+
+            if (price) {
+              const pr = document.createElement('div');
+              pr.style.cssText = "font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;color:var(--gold);margin-top:auto;padding-top:4px;";
+              pr.textContent = price;
+              info.appendChild(pr);
             }
 
-            // Prism + lighting overlays (pointer-events:none — never block click)
-            const sweep = document.createElement('div');
-            sweep.className = 'pcard-sweep';
-            sweep.setAttribute('aria-hidden', 'true');
-            clone.appendChild(sweep);
+            vc.appendChild(info);
 
-            const bloom = document.createElement('div');
-            bloom.className = 'pcard-bloom';
-            bloom.setAttribute('aria-hidden', 'true');
-            clone.appendChild(bloom);
-
-            clone.addEventListener('touchstart', () => {
-              clone.classList.add('prism-active');
-              setTimeout(() => clone.classList.remove('prism-active'), 1800);
-            }, { passive: true });
-
-            vc.appendChild(clone);
-
-            // Dynamic lighting overlay
-            const light = document.createElement('div');
-            light.className = 'vault-card-light';
-            light.setAttribute('aria-hidden', 'true');
-            vc.appendChild(light);
+            // Click → open modal (with drag-threshold guard)
+            vc.addEventListener('click', (e) => {
+              if (Math.abs(_dragStartX - (e.clientX || 0)) > 8) return;
+              openModal(p, 'Best Seller');
+            });
 
             const deg = i * stepDeg();
             vc.style.transform = `rotateY(${deg}deg) translateZ(${tz()}px)`;
@@ -5209,8 +5374,7 @@
 
           applyRing();
           bindDrag(scene);
-          setTimeout(startAuto, 1500);
-          setInterval(startAuto, 5000);
+          startLoop(); // single continuous rAF — handles both auto and snap
         });
       };
     })();
@@ -5274,11 +5438,13 @@
     window.addEventListener('resize', () => {
       const ring = document.getElementById('vault-ring');
       if (!ring) return;
-      // Trigger re-layout via slight angle nudge
-      const tz = window.innerWidth <= 480 ? 220 : window.innerWidth <= 768 ? 280 : 340;
-      ring.querySelectorAll('.vault-card').forEach((card, i) => {
-        const current = card.style.transform;
-        card.style.transform = current.replace(/translateZ\([^)]+\)/, `translateZ(${tz}px)`);
+      // Recalculate translateZ inline — matches tz() inside initVault IIFE
+      const tzVal = window.innerWidth <= 480 ? 140 : window.innerWidth <= 768 ? 200 : 280;
+      ring.querySelectorAll('.vault-card').forEach(card => {
+        card.style.transform = card.style.transform.replace(
+          /translateZ\([^)]+\)/,
+          `translateZ(${tzVal}px)`
+        );
       });
     }, { passive: true });
 
