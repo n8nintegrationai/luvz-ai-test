@@ -1,0 +1,106 @@
+# # Add this line at the very top
+# local_backend: true
+
+# backend:
+#   name: proxy
+#   proxy_url: http://localhost:8081/api/v1
+#   branch: main
+
+backend:
+  name: git-gateway
+  repo: n8nintegrationai/luvz-collection
+  branch: main
+  # --- ADD THESE LINES STARTING HERE ---
+  commit_messages:
+    create: 'CMS: Create {{collection}} [skip ci]'
+    update: 'CMS: Update {{collection}} [skip ci]'
+    delete: 'CMS: Delete {{collection}} [skip ci]'
+    uploadMedia: 'CMS: Upload {{path}} [skip ci]'
+    deleteMedia: 'CMS: Delete {{path}} [skip ci]'
+  # --- END OF ADDED LINES ---
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "data"
+    label: "Store Content"
+    delete: false # Prevents accidental deletion of the main data file
+    files:
+      - name: "products"
+        label: "Product Catalog"
+        file: "data/products.json"
+        fields:
+          - { label: "Theme", name: "theme", widget: "select", options: ["light", "dark","earth"], default: "earth" }
+          
+          # Categories Section (matches 'categories' array in data/products.json)
+          - name: "categories"
+            label: "Main Categories"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Key", name: "key", widget: "string" }
+              - { label: "Image", name: "image", widget: "image" }
+              - { label: "Anchor ID", name: "anchor", widget: "string", required: false, hint: "Optional: section anchor like category-necklace" }
+              - { label: "Subtitle", name: "subtitle", widget: "string" }
+              - { label: "Story", name: "story", widget: "text" }
+
+          # Shared product fields (used by top_sellers, new_collection, and each category array)
+          - name: "top_sellers"
+            label: "Top Sellers"
+            widget: "list"
+            fields: &product_fields
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Category", name: "category", widget: "string" }
+              - { label: "Price (₹)", name: "price", widget: "number", required: false, hint: "Leave empty if you don't want to show price" }
+              - { label: "Main Image", name: "image", widget: "image" }
+              - label: "Gallery Images"
+                name: "images"
+                widget: "list"
+                required: false
+                field: { label: "Image", name: "image", widget: "image",required: false }
+                hint: "Optional: additional images for the product modal gallery"
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "WhatsApp Link (optional)", name: "whatsapp", widget: "string", required: false, hint: "If empty, the site auto-builds the link from the product name" }
+              - { label: "Badge", name: "badge", widget: "select", options: ["hot", "new", "limited", "soldout"], required: false }
+              - { label: "Scarcity Hint", name: "scarcity", widget: "string", required: false, hint: "e.g. 'Only 3 left'" }
+
+          # New Collection Section
+          - name: "new_collection"
+            label: "New Arrivals"
+            widget: "list"
+            fields: *product_fields
+
+          # Individual Category Lists (Necklaces, Bangles, etc.)
+          - name: "necklace"
+            label: "Necklaces List"
+            widget: "list"
+            fields: *product_fields
+
+          - name: "pendant"
+            label: "Pendants List"
+            widget: "list"
+            fields: *product_fields
+
+          - name: "earrings"
+            label: "Earrings List"
+            widget: "list"
+            fields: *product_fields
+
+          - name: "bangles"
+            label: "Bangles List"
+            widget: "list"
+            fields: *product_fields
+
+          - name: "jhumkas"
+            label: "Jhumkas List"
+            widget: "list"
+            fields: *product_fields
+
+          # Customer Reviews
+          - name: "reviews"
+            label: "Customer Reviews"
+            widget: "list"
+            fields:
+              - { label: "Review Image", name: "image", widget: "image" }

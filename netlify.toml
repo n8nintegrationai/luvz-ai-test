@@ -1,0 +1,3 @@
+[build]
+  # Skips build if ONLY the products.json file was modified
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':!data/products.json'"
