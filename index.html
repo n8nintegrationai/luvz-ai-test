@@ -5205,43 +5205,53 @@
       };
 
       // Drag support (mouse + touch)
-      // _moved tracks whether the pointer actually travelled > threshold
-      // during the current gesture — reset on every start.
-      let _moved = false;
-      const DRAG_THRESHOLD = 8; // px — below this = tap/click, not drag
+      const DRAG_THRESHOLD = 8; // px movement before treating as drag not tap
 
       function bindDrag(scene) {
-        function onStart(x) {
-          _dragging    = true;
-          _moved       = false;          // reset for this gesture
-          _dragStartX  = x;
+        let _pointerStartX = 0;
+        let _pointerMoved  = false;
+
+        function onPointerDown(e) {
+          // Do NOT call preventDefault() here — it would kill click events
+          _dragging      = true;
+          _pointerMoved  = false;
+          _pointerStartX = e.clientX;
+          _dragStartX    = e.clientX;
           _dragStartAngle = _angle;
           _lastInteraction = Date.now();
-          _snapping    = false;
+          _snapping = false;
+          scene.setPointerCapture && scene.setPointerCapture(e.pointerId);
         }
-        function onMove(x) {
+        function onPointerMove(e) {
           if (!_dragging) return;
-          const dx = x - _dragStartX;
-          if (Math.abs(dx) > DRAG_THRESHOLD) _moved = true;
-          _angle  = _dragStartAngle - dx * 0.35;
+          const dx = e.clientX - _pointerStartX;
+          if (Math.abs(dx) > DRAG_THRESHOLD) _pointerMoved = true;
+          _angle  = _dragStartAngle - (e.clientX - _dragStartX) * 0.35;
           _target = _angle;
           applyRing();
         }
-        function onEnd() {
+        function onPointerUp(e) {
           if (!_dragging) return;
           _dragging = false;
           _lastInteraction = Date.now();
           const s = stepDeg();
           _target   = Math.round(_angle / s) * s;
           _snapping = true;
-          // _moved stays set until next onStart so click handler can read it
+
+          // If pointer barely moved — treat as a tap, find the card under it
+          if (!_pointerMoved) {
+            const target = e.target && e.target.closest('.vault-card');
+            if (target && target.style.pointerEvents !== 'none') {
+              target.dispatchEvent(new CustomEvent('vault-tap', { bubbles: false }));
+            }
+          }
         }
-        scene.addEventListener('mousedown', e => { e.preventDefault(); onStart(e.clientX); });
-        document.addEventListener('mousemove', e => onMove(e.clientX));
-        document.addEventListener('mouseup', onEnd);
-        scene.addEventListener('touchstart', e => onStart(e.touches[0].clientX), { passive: true });
-        scene.addEventListener('touchmove',  e => onMove(e.touches[0].clientX),  { passive: true });
-        scene.addEventListener('touchend', onEnd, { passive: true });
+
+        // Pointer events: unified mouse + touch, no preventDefault needed
+        scene.addEventListener('pointerdown',  onPointerDown);
+        scene.addEventListener('pointermove',  onPointerMove);
+        scene.addEventListener('pointerup',    onPointerUp);
+        scene.addEventListener('pointercancel', () => { _dragging = false; });
       }
 
       // Called by buildCarousel after top_sellers data is ready
@@ -5421,12 +5431,15 @@
             dim.setAttribute('aria-hidden', 'true');
             vc.appendChild(dim);
 
-            // Click → open modal
-            // _moved is true if pointer travelled > DRAG_THRESHOLD this gesture.
-            // Works correctly on both mouse (clientX) and touch (clientX=0).
-            vc.addEventListener('click', () => {
-              if (_moved) return; // was a drag, not a tap
+            // vault-tap fires from onPointerUp when pointer didn't move (= real tap/click)
+            // This bypasses the synthetic click event which is suppressed by drag handling
+            vc.addEventListener('vault-tap', () => {
               openModal(p, 'Best Seller');
+            });
+            // Also keep native click as fallback for keyboard/accessibility
+            vc.addEventListener('click', (e) => {
+              // Only fire from keyboard (e.detail===0) — pointer taps handled by vault-tap
+              if (e.detail === 0) openModal(p, 'Best Seller');
             });
 
             const deg = i * stepDeg();
