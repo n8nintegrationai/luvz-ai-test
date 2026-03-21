@@ -2092,12 +2092,16 @@
         bottom: 0; left: 0; right: 0;
         max-width: none;
         width: 100%;
-        /* 92svh uses the small viewport height (excludes mobile browser chrome)
-           giving maximum usable space without triggering scroll on the page */
-        height: 92svh;
-        height: 92vh;
-        max-height: 92svh;
-        max-height: 92vh;
+        /*
+          Chrome Android: `vh` includes the browser toolbar height, making
+          `92vh` taller than the visible viewport → close button is hidden
+          behind the address bar.
+          Fix: JS sets --modal-h to window.innerHeight in px on every open.
+          This is the ACTUAL visible height on all browsers including Chrome.
+          Fallback: 85vh — conservative enough to stay within view on Chrome.
+        */
+        height: var(--modal-h, 85vh);
+        max-height: var(--modal-h, 85vh);
         border-radius: 20px 20px 0 0;
         overflow: hidden;
         animation: mSlide .34s cubic-bezier(.25, .46, .45, .94);
@@ -2135,13 +2139,10 @@
     @media (max-width: 600px) {
       #mimg-wrap {
         flex-shrink: 0;
-        /* CRITICAL: reset min-height to 0 so height: Xvh can actually apply.
-           Without this, min-height: 280px overrides the height declaration. */
         min-height: 0 !important;
-        /* 45% of the 92vh modal = 41.4vh for the image.
-           Leaves ~50vh for info (badge + name + price + desc + CTA). */
-        height: calc(92vh * 0.45);
-        height: calc(92svh * 0.45);
+        /* 44% of the JS-measured modal height.
+           Uses --modal-h (set on open) so it matches the mbox exactly. */
+        height: calc(var(--modal-h, 85vh) * 0.44);
       }
     }
 
@@ -2227,23 +2228,22 @@
       .minfo {
         flex: 1;
         min-height: 0;
-        /* Tight padding — every pixel counts on mobile */
         padding: 8px 16px 0;
+        /* minfo itself scrolls — minfo-scroll is just a grouping div */
         overflow-y: auto;
+        display: flex;
+        flex-direction: column;
       }
     }
 
-    /* Scrollable content area within info pane (mobile only) */
+    /* Scrollable content area within info pane */
     .minfo-scroll {
-      flex: 1;
-      min-height: 0;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 8px;
-    }
-    @media (min-width: 601px) {
-      /* Desktop: no inner scroll wrapper needed */
-      .minfo-scroll { overflow: visible; flex: none; }
+      /* Do NOT use flex:1 here — Chrome expands it to fill all space,
+         creating a huge empty gap between content and the sticky CTA.
+         Let it be content-height; .minfo handles overflow scrolling. */
+      flex-shrink: 0;
+      overflow: visible;
+      padding-bottom: 6px;
     }
 
     #m-badge {
@@ -4692,6 +4692,13 @@
     setTheme(localStorage.getItem('luvz-theme') || 'dark', false);
 
     /* ── Navbar ─────────────────────────── */
+    // Keep --modal-h accurate on orientation change
+    window.addEventListener('resize', () => {
+      if (document.getElementById('moverlay').classList.contains('open')) {
+        document.documentElement.style.setProperty('--modal-h', window.innerHeight + 'px');
+      }
+    }, { passive: true });
+
     window.addEventListener('scroll', () => {
       document.getElementById('nav').classList.toggle('stuck', window.scrollY > 50);
       const si = document.querySelector('.scroll-ind');
@@ -5448,6 +5455,11 @@
       if (_ra) { _ra.classList.remove('show'); }
       // Set base WA URL (referral code appended dynamically via applyReferralCode)
       document.getElementById('m-wa').href = p.whatsapp || waURL(p.name);
+      // Set --modal-h to actual visible height (Chrome vh bug fix)
+      // window.innerHeight = true visible area excluding browser chrome
+      document.documentElement.style.setProperty(
+        '--modal-h', window.innerHeight + 'px'
+      );
       document.getElementById('moverlay').classList.add('open');
       document.body.style.overflow = 'hidden';
       document.body.classList.add('modal-open');
