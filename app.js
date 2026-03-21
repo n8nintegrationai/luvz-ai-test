@@ -1395,3 +1395,42 @@
       strip.innerHTML = cards + cards;
     }
 
+
+
+/* ── Google Analytics: deferred until browser is idle ──────
+   Removes gtag from the critical path, reducing TBT.
+   Falls back to setTimeout(500ms) on browsers without rIC. */
+(function loadGTM() {
+  var GA_ID = 'G-7X8ZXT03Y9';
+  function initGA() {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function() { dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', GA_ID);
+  }
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(initGA, { timeout: 4000 });
+  } else {
+    setTimeout(initGA, 500);
+  }
+})();
+
+/* ── Netlify Identity: load only when admin shortcut is used ── */
+(function setupAdminLink() {
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.altKey && e.key === 'l') {
+      var al = document.getElementById('admin-link');
+      if (al) al.classList.toggle('admin-hidden');
+      // Load Netlify Identity widget on first access
+      if (!window.netlifyIdentity) {
+        var s = document.createElement('script');
+        s.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
+        document.head.appendChild(s);
+      }
+    }
+  });
+})();

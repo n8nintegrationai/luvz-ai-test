@@ -3727,4 +3727,15 @@
       .referral-expandable { display: block; }
     }
 
+
+    /* ── Tailwind CDN replacement: only classes actually used ── */
+    .mini-footer {
+      padding: 40px;
+      text-align: center;
+    }
+    .admin-hidden {
+      display: none;
+      font-size: .75rem;
+      color: #9CA3AF;
+    }
   
