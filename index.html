@@ -2301,7 +2301,7 @@
 
     /* ═══════════════════ CUSTOMER LOVE ═══════════════════ */
     #customer-love {
-      padding: 64px 0;
+      padding: 96px 0;   /* py-24 — matches vault section vertical rhythm */
       overflow: hidden
     }
 
@@ -2390,6 +2390,27 @@
       }
     }
 
+
+    /* ═══ Review section SEO typography ═══ */
+    .reviews-seo-sub {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: .6rem;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: .72;
+      margin-bottom: 8px;
+    }
+    .reviews-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--txt2);
+      opacity: .42;
+      margin-top: 14px;
+      line-height: 1.6;
+    }
     /* ═══════════════════ FOOTER ═══════════════════ */
     footer {
       background: var(--bg2);
@@ -4010,32 +4031,23 @@
   </section>
 
   <!-- CUSTOMER LOVE -->
-  <section id="customer-love" class="sec sec-alt reveal">
-    <div class="love-header">
-      <div class="eyebrow">Real People, Real Joy</div>
-      <h2 class="sec-title gold-text">Loved by You</h2>
-      <p
-        style="font-family:'Cormorant Garamond',serif;font-size:.95rem;font-style:italic;color:var(--txt2);opacity:.52;margin-top:9px">
-        Words from the women who wear LUVZ — shared with love.</p>
+  <!-- Reviews section: id="reviews" for SEO anchoring -->
+  <section id="customer-love" class="sec sec-alt reveal" aria-labelledby="reviews-heading">
+    <div id="reviews" class="love-header">
+      <!-- H3 first: keyword-rich sub-headline for search crawlers -->
+      <h3 class="reviews-seo-sub">Verified Customer Reviews &amp; Testimonials</h3>
+      <!-- H2: visible brand headline -->
+      <h2 id="reviews-heading" class="sec-title gold-text">Loved by You</h2>
+      <p class="reviews-desc">Words from the women who wear LUVZ — handcrafted 925 silver shared with love.</p>
     </div>
     <div class="love-strip-outer">
       <div class="love-strip" id="love-strip">
-        <!-- Skeleton placeholders while loading -->
-        <div class="love-card">
-          <div class="sk love-card-sk"></div>
-        </div>
-        <div class="love-card">
-          <div class="sk love-card-sk"></div>
-        </div>
-        <div class="love-card">
-          <div class="sk love-card-sk"></div>
-        </div>
-        <div class="love-card">
-          <div class="sk love-card-sk"></div>
-        </div>
-        <div class="love-card">
-          <div class="sk love-card-sk"></div>
-        </div>
+        <!-- Skeleton placeholders while reviews load -->
+        <figure class="love-card" aria-hidden="true" style="margin:0"><div class="sk love-card-sk"></div></figure>
+        <figure class="love-card" aria-hidden="true" style="margin:0"><div class="sk love-card-sk"></div></figure>
+        <figure class="love-card" aria-hidden="true" style="margin:0"><div class="sk love-card-sk"></div></figure>
+        <figure class="love-card" aria-hidden="true" style="margin:0"><div class="sk love-card-sk"></div></figure>
+        <figure class="love-card" aria-hidden="true" style="margin:0"><div class="sk love-card-sk"></div></figure>
       </div>
     </div>
   </section>
@@ -5527,21 +5539,30 @@
       const strip = document.getElementById('love-strip');
       if (!strip) return;
 
-      const cards = reviews.map(r => {
+      const cards = reviews.map((r, idx) => {
         const img = r.image || '';
         if (!img) return '';
-        // Store src in data-src for reliable retrieval, add onclick to open lightbox
-        return `<div class="love-card"
+        const name = r.name || '';
+        const text = r.text || '';
+        // <figure> + <blockquote> = semantic testimonial markup for search engines
+        return `<figure class="love-card"
           role="button"
           tabindex="0"
           data-src="${img}"
-          aria-label="View customer review"
-          style="cursor:pointer"
+          aria-label="${name ? 'Review by ' + name : 'View customer review'}"
+          style="cursor:pointer;margin:0"
           onclick="openLightbox(this.dataset.src)"
           onkeydown="if(event.key==='Enter'||event.key===' ')openLightbox(this.dataset.src)">
-      <img loading="lazy" src="${img}" alt="Customer feedback"
-           onerror="this.parentElement.style.display='none'"/>
-    </div>`;
+      <blockquote itemscope itemtype="https://schema.org/Review" style="margin:0">
+        <meta itemprop="reviewRating" content="5"/>
+        <img loading="lazy" src="${img}"
+             alt="${name ? 'Customer review by ' + name + ' — LUVZ Collection 925 silver jewellery' : 'LUVZ Collection customer review — 925 silver jewellery'}"
+             itemprop="image"
+             onerror="this.closest('figure').style.display='none'"/>
+        ${name ? `<figcaption itemprop="author" style="display:none"><strong>${name}</strong></figcaption>` : ''}
+        ${text ? `<p itemprop="reviewBody" style="display:none">${text}</p>` : ''}
+      </blockquote>
+    </figure>`;
       }).filter(Boolean).join('');
       strip.innerHTML = cards + cards;
     }
