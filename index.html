@@ -2140,9 +2140,8 @@
       #mimg-wrap {
         flex-shrink: 0;
         min-height: 0 !important;
-        /* 44% of the JS-measured modal height.
-           Uses --modal-h (set on open) so it matches the mbox exactly. */
-        height: calc(var(--modal-h, 85vh) * 0.44);
+        /* 50% of modal = image as the hero, ~42% left for info + CTA */
+        height: calc(var(--modal-h, 85vh) * 0.50);
       }
     }
 
@@ -2221,29 +2220,37 @@
       display: flex;
       flex-direction: column;
       overflow-y: auto;
-      /* Desktop: fills right column, naturally scrollable */
       -webkit-overflow-scrolling: touch;
     }
     @media (max-width: 600px) {
       .minfo {
+        /* flex:1 fills remaining height after image pane */
         flex: 1;
         min-height: 0;
-        padding: 8px 16px 0;
-        /* minfo itself scrolls — minfo-scroll is just a grouping div */
-        overflow-y: auto;
+        padding: 0;
+        /* NO overflow here — minfo-scroll handles scrolling */
+        overflow: hidden;
         display: flex;
         flex-direction: column;
       }
     }
 
-    /* Scrollable content area within info pane */
+    /* Scrollable text area — badge, name, price, description */
     .minfo-scroll {
-      /* Do NOT use flex:1 here — Chrome expands it to fill all space,
-         creating a huge empty gap between content and the sticky CTA.
-         Let it be content-height; .minfo handles overflow scrolling. */
       flex-shrink: 0;
       overflow: visible;
       padding-bottom: 6px;
+    }
+    @media (max-width: 600px) {
+      .minfo-scroll {
+        /* flex:1 + min-height:0 = fills space between top of minfo and m-footer */
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        /* Padding inside the scroll area */
+        padding: 10px 16px 8px;
+      }
     }
 
     #m-badge {
@@ -2276,16 +2283,19 @@
       color: var(--txt2); opacity: .7;
       line-height: 1.45;
     }
-    /* Mobile: clamp description so it never pushes CTA off screen */
     @media (max-width: 600px) {
-      #m-desc {
+      #m-badge  { font-size: 6.5px; margin-bottom: 1px; letter-spacing: .3em; }
+      #m-name   { font-size: .92rem; margin-bottom: 2px; line-height: 1.15; }
+      #m-price  { font-size: .88rem; margin-bottom: 4px; }
+      #m-desc   {
+        font-size: .78rem;
+        line-height: 1.38;
+        /* Clamp to 3 lines — minfo-scroll scrolls if user wants more */
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
       }
-      #m-badge { font-size: 6.5px; margin-bottom: 2px; }
-      #m-name  { font-size: .95rem; margin-bottom: 2px; }
     }
 
     /* ── Sticky CTA footer ── */
@@ -2300,23 +2310,26 @@
     }
     @media (max-width: 600px) {
       .m-footer {
-        /* Stick to the bottom of .minfo on mobile */
-        position: sticky;
-        bottom: 0;
-        padding: 8px 0 max(12px, env(safe-area-inset-bottom));
-        /* Slight blur behind the sticky bar so scrolled text doesn't show through */
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        background: rgba(var(--modal-bg-rgb, 30, 22, 13), .96);
-        margin-top: 10px;
+        /* flex-shrink:0 = always occupies its natural height at the
+           bottom of the flex column. No sticky needed — flex order
+           guarantees it stays at the base of .minfo on ALL browsers. */
+        flex-shrink: 0;
+        position: static;
+        padding: 8px 16px max(14px, env(safe-area-inset-bottom));
+        border-top: 1px solid var(--border);
+        margin-top: 0;
+        background: var(--modal-bg);
       }
-      /* Enlarge Enquire button touch target on mobile */
+      /* Enquire button: full width, generous touch target */
       #m-wa {
         padding: 14px 20px !important;
         font-size: .65rem !important;
         border-radius: 12px !important;
         min-height: 48px;
+        margin-top: 6px;
       }
+      /* Referral toggle compact */
+      .referral-wrap { margin-top: 0; }
     }
 
     /* ═══════════════════ POSTER MODAL ═══════════════════ */
