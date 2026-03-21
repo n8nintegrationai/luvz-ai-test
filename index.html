@@ -396,18 +396,20 @@
       top: 30px;
       left: 0;
       right: 0;
-      /* z-index above ann-bar (1001) so nav is always accessible */
       z-index: 1002;
       padding: 0 28px;
       transition: background .3s, box-shadow .3s;
-      /* Persistent subtle background — nav never disappears on scroll */
-      background: rgba(var(--bg-rgb, 24, 17, 10), 0.65);
+      /* Solid fallback — works on ALL Chrome versions, no CSS variable channels */
+      background: rgba(18, 13, 8, 0.82);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
     }
+    /* Per-theme nav background tints */
+    [data-theme="dark"]  #nav { background: rgba(8,  8,  7,  0.82); }
+    [data-theme="light"] #nav { background: rgba(250,247,242,0.88); }
+    [data-theme="earth"] #nav { background: rgba(18, 13, 8,  0.82); }
 
     #nav.stuck {
-      /* Solid background once scrolled */
       background: var(--nav-bg);
       backdrop-filter: blur(22px);
       -webkit-backdrop-filter: blur(22px);
@@ -517,11 +519,25 @@
 
     .nav-ham {
       display: none;
-      background: none;
-      border: none;
+      background: rgba(0,0,0,.35);   /* ensures visibility on any page background */
+      border: 1px solid var(--border);
       color: var(--gold);
       cursor: pointer;
-      padding: 6px
+      padding: 8px;
+      border-radius: 8px;
+      /* Explicit min size — 44px touch target */
+      min-width: 44px;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-ham svg {
+      display: block;
+      stroke: var(--gold);       /* explicit — not inherited, works on Chrome */
+      flex-shrink: 0;
+    }
+    [data-theme="light"] .nav-ham {
+      background: rgba(0,0,0,.12);
     }
 
     /* ── Mobile menu: full-screen overlay when open ── */
@@ -1907,7 +1923,8 @@
     /* ═══════════════════ FLOATING WA ═══════════════════ */
     #fwa {
       position: fixed;
-      bottom: 78px;
+      /* clears mob-nav (≈62px) + gap */
+      bottom: max(78px, calc(66px + env(safe-area-inset-bottom)));
       right: 18px;
       z-index: 998;
       width: 50px;
@@ -2452,7 +2469,7 @@
     footer {
       background: var(--bg2);
       border-top: 1px solid var(--border);
-      padding: 48px 24px max(32px, calc(62px + env(safe-area-inset-bottom)));
+      padding: 48px 24px max(80px, calc(72px + env(safe-area-inset-bottom)));  /* clears mob-nav */
     }
 
     @media(min-width:769px) {
@@ -5627,7 +5644,7 @@
     }
 
   </script>
-  <footer class="p-10 text-center">
+  <footer class="p-10 text-center" style="padding-bottom:max(40px,calc(70px + env(safe-area-inset-bottom)))">
     <p>© 2026 LUVZ Collection</p>
     <a id="admin-link" href="/admin/" class="hidden text-xs text-gray-400">Admin Login</a>
   </footer>
