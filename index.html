@@ -518,27 +518,58 @@
       padding: 6px
     }
 
+    /* ── Mobile menu: full-screen overlay when open ── */
     #mob-menu {
       display: none;
-      border-top: 1px solid var(--border);
-      padding: 14px 0 6px
     }
 
     #mob-menu.open {
-      display: block
+      /* Full viewport overlay — isolates menu from hero/logo completely */
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      inset: 0;
+      z-index: 2100;             /* above theme switcher (2000) and all overlays */
+      /* Near-opaque dark fill — no page content bleeds through */
+      background: rgba(8, 8, 7, 0.97);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      /* Top padding clears the header row (ann-bar 30px + nav 58px + buffer) */
+      padding: 104px 32px 40px;
+      overflow-y: auto;
+    }
+
+    /* Close tap area: invisible layer behind links to dismiss on backdrop tap */
+    #mob-menu.open::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      cursor: pointer;
     }
 
     .mob-link {
       display: block;
       font-family: 'Cinzel', serif;
-      font-size: .6rem;
-      letter-spacing: .28em;
+      font-size: .82rem;           /* larger — easier to tap */
+      font-weight: 700;
+      letter-spacing: .35em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--txt);           /* full white/cream — max legibility */
       text-decoration: none;
-      opacity: .72;
-      padding: 11px 4px;
-      border-bottom: 1px solid var(--border)
+      opacity: 1;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color .2s, padding-left .2s;
+    }
+    .mob-link:hover,
+    .mob-link:focus {
+      color: var(--gold);
+      padding-left: 8px;
+      outline: none;
+    }
+    .mob-link:last-child {
+      border-bottom: none;
     }
 
     @media(max-width:900px) {
@@ -2301,7 +2332,7 @@
 
     /* ═══════════════════ CUSTOMER LOVE ═══════════════════ */
     #customer-love {
-      padding: 96px 0;   /* py-24 — matches vault section vertical rhythm */
+      padding: 128px 0;  /* py-32 — visual symmetry across landing page */
       overflow: hidden
     }
 
@@ -3593,14 +3624,21 @@
         </svg>
       </button>
     </div>
-    <div id="mob-menu">
-      <a href="#categories" onclick="toggleMenu()" class="mob-link">Categories</a>
-      <a href="#top-sellers" onclick="toggleMenu()" class="mob-link">Top Sellers</a>
+    <div id="mob-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+      <!-- Gold divider header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--border-h)">
+        <span style="font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);opacity:.65">Menu</span>
+        <button onclick="toggleMenu()" aria-label="Close menu"
+          style="background:none;border:1px solid var(--border);color:var(--gold);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s"
+          onmouseenter="this.style.borderColor='var(--gold)'" onmouseleave="this.style.borderColor='var(--border)'">✕</button>
+      </div>
+      <a href="#categories"    onclick="toggleMenu()" class="mob-link">Categories</a>
+      <a href="#top-sellers"   onclick="toggleMenu()" class="mob-link">Top Sellers</a>
       <a href="#new-collection" onclick="toggleMenu()" class="mob-link">New Collection</a>
       <a href="#customer-love" onclick="toggleMenu()" class="mob-link">Customer Love</a>
-      <a href="#about" onclick="toggleMenu()" class="mob-link">About Us</a>
-    <a href="#story" onclick="toggleMenu()" class="mob-link">Our Story</a>
-      <a href="#contact" onclick="toggleMenu()" class="mob-link">Contact</a>
+      <a href="#about"         onclick="toggleMenu()" class="mob-link">About Us</a>
+      <a href="#story"         onclick="toggleMenu()" class="mob-link">Our Story</a>
+      <a href="#contact"       onclick="toggleMenu()" class="mob-link">Contact</a>
     </div>
   </nav>
 
@@ -4312,7 +4350,19 @@
         fwa.classList.toggle('fwa-visible', window.scrollY > heroH * 0.6);
       }
     }, { passive: true });
-    function toggleMenu() { document.getElementById('mob-menu').classList.toggle('open') }
+    function toggleMenu(forceClose) {
+      const m = document.getElementById('mob-menu');
+      const willOpen = forceClose ? false : !m.classList.contains('open');
+      m.classList.toggle('open', willOpen);
+      // Lock body scroll while overlay is open
+      document.body.style.overflow = willOpen ? 'hidden' : '';
+    }
+    // Close menu on Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && document.getElementById('mob-menu').classList.contains('open')) {
+        toggleMenu(true);
+      }
+    });
 
     /* ── Reveal ─────────────────────────── */
     const ro = new IntersectionObserver(es => {
