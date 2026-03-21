@@ -3801,8 +3801,8 @@
   </section>
 
 
-  <!-- HERITAGE SECTION — Task 2A -->
-  <section class="heritage-sec reveal" id="heritage">
+  <!-- HERITAGE SECTION — hidden for now -->
+  <section class="heritage-sec reveal" id="heritage" style="display:none">
     <div class="heritage-bg" id="heritage-bg"></div>
     <div class="heritage-overlay"></div>
     <div class="heritage-inner">
@@ -5107,39 +5107,43 @@
         ring.style.transform = `rotateY(${_angle}deg)`;
         const cards = ring.querySelectorAll('.vault-card');
 
-        // Fix transparency: only show the card closest to the front (isCenter).
-        // Side cards at 0.72 opacity bleed through because CSS z-index is ignored
-        // inside preserve-3d contexts — the GPU composites by depth, not z-index.
-        // Showing only one solid card at a time eliminates all bleed-through.
-        // Adjacent cards (within 70deg) fade in/out during rotation so the
-        // transition isn't a hard cut — still feels smooth.
+        // ALL cards are shown (opacity:1, fully opaque) except the one
+        // directly at the back (wa 150°–210°). This shows the full catalog.
+        //
+        // Depth dimming is via a .vault-dim overlay div INSIDE each card —
+        // its background-rgba darkness scales with world angle.
+        // We NEVER reduce card opacity itself — doing so on preserve-3d
+        // siblings causes bleed-through (GPU composites by depth, not z-index).
         cards.forEach((card, i) => {
           const deg = i * stepDeg();
           card.style.transform = `rotateY(${deg}deg) translateZ(${tz()}px)`;
 
-          // wa=0 → directly facing viewer, wa=180 → directly facing away
+          // wa=0 → front-facing, wa=180 → back-facing
           const wa = ((deg - _angle) % 360 + 360) % 360;
 
-          // Center zone: card is nearly front-facing
-          const isCenter   = wa < 40 || wa > 320;
-          // Adjacent zone: within 70° of front — cross-fades during rotation
-          const isAdjacent = (wa >= 40 && wa < 70) || (wa > 290 && wa <= 320);
-          // Everything else: hidden to prevent bleed-through
-          const isVisible  = isCenter || isAdjacent;
+          // Hide only the card directly behind (±60° of 180° = 150°–210°)
+          const isBack   = wa > 150 && wa < 210;
+          // Front-facing: fully visible, clickable
+          const isCenter = wa < 45 || wa > 315;
 
-          // Opacity: center=1 (fully solid), adjacent fades in/out, rest=0
-          let opacity = 0;
-          if (isCenter) {
-            opacity = 1;
-          } else if (isAdjacent) {
-            // Linear fade: 0 at 70°, 1 at 40° (and mirror on the other side)
-            const dist = wa < 180 ? wa - 40 : 360 - wa - 40;
-            opacity = Math.max(0, 1 - dist / 30) * 0.6;
+          // Card is always opacity:1 — solid, never bleeds
+          card.style.opacity       = '1';
+          card.style.visibility    = isBack ? 'hidden' : 'visible';
+          card.style.pointerEvents = isCenter ? 'auto' : 'none';
+
+          // Dim overlay: darker as card rotates away from viewer
+          // wa=0 → dim=0 (fully lit), wa=90 → dim=0.55, wa=150 → dim=0.8
+          const dim = card.querySelector('.vault-dim');
+          if (dim) {
+            let dimAmount = 0;
+            if (!isCenter) {
+              // Normalise side angle to 0–1 (0 at ±45°, 1 at ±150°)
+              const sideWa = wa <= 180 ? wa : 360 - wa; // fold to 0–180
+              dimAmount = Math.min(0.82, ((sideWa - 45) / 105) * 0.82);
+              dimAmount = Math.max(0, dimAmount);
+            }
+            dim.style.background = `rgba(0,0,0,${dimAmount.toFixed(3)})`;
           }
-
-          card.style.opacity       = opacity.toFixed(3);
-          card.style.visibility    = isVisible ? 'visible' : 'hidden';
-          card.style.pointerEvents = isCenter  ? 'auto'    : 'none';
         });
       }
 
@@ -5400,6 +5404,22 @@
             }
 
             vc.appendChild(info);
+
+            // Dim overlay — controls depth darkness, never reduces card opacity
+            // (reducing card opacity on preserve-3d siblings causes bleed-through)
+            const dim = document.createElement('div');
+            dim.className = 'vault-dim';
+            dim.style.cssText = [
+              'position:absolute',
+              'inset:0',
+              'border-radius:14px',
+              'background:rgba(0,0,0,0)',   // starts transparent, applyRing updates it
+              'pointer-events:none',         // never intercepts clicks
+              'z-index:10',
+              'transition:background 0.12s linear',
+            ].join(';');
+            dim.setAttribute('aria-hidden', 'true');
+            vc.appendChild(dim);
 
             // Click → open modal
             // _moved is true if pointer travelled > DRAG_THRESHOLD this gesture.
