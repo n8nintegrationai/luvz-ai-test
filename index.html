@@ -546,17 +546,16 @@
     }
 
     #mob-menu.open {
-      /* Full viewport overlay — isolates menu from hero/logo completely */
       display: flex;
       flex-direction: column;
       position: fixed;
       inset: 0;
-      z-index: 2100;             /* above theme switcher (2000) and all overlays */
-      /* Near-opaque dark fill — no page content bleeds through */
-      background: rgba(8, 8, 7, 0.99);  /* pure black — zero bleed-through */
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      /* Top padding clears the header row (ann-bar 30px + nav 58px + buffer) */
+      z-index: 2100;
+      /* Solid CSS colour — no rgba, no backdrop-filter.
+         backdrop-filter creates compositing issues on Chrome/Android
+         that make the background appear transparent even at 0.99 alpha. */
+      background: #080807;
+      /* No backdrop-filter here — background is already fully opaque */
       padding: 104px 32px 40px;
       overflow-y: auto;
     }
@@ -573,25 +572,33 @@
     .mob-link {
       display: block;
       font-family: 'Cinzel', serif;
-      font-size: .82rem;           /* larger — easier to tap */
+      font-size: .88rem;
       font-weight: 700;
-      letter-spacing: .35em;
+      letter-spacing: .32em;
       text-transform: uppercase;
-      color: var(--txt);           /* full white/cream — max legibility */
+      /* Force near-white: background is always near-black (#080807)
+         so var(--txt) could be dark on light theme. Use absolute value. */
+      color: #F0E8D8 !important;
       text-decoration: none;
       opacity: 1;
-      padding: 18px 0;
-      border-bottom: 1px solid var(--border);
-      transition: color .2s, padding-left .2s;
+      padding: 20px 0;
+      min-height: 56px;           /* generous touch target */
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(212,175,55,.15);
+      transition: color .18s, padding-left .18s, border-color .18s;
     }
     .mob-link:hover,
     .mob-link:focus {
-      color: var(--gold);
-      padding-left: 8px;
+      color: var(--gold) !important;
+      padding-left: 10px;
+      border-bottom-color: rgba(212,175,55,.35);
       outline: none;
     }
-    .mob-link:last-child {
-      border-bottom: none;
+    .mob-link:last-child { border-bottom: none; }
+    /* Ensure the menu header label is also clearly visible */
+    #mob-menu.open > div:first-child span {
+      color: #D4AF37 !important;
     }
 
     @media(max-width:900px) {
@@ -2073,13 +2080,11 @@
       #moverlay {
         align-items: flex-end;
         padding: 0;
-        /* Disable backdrop-filter on mobile — causes 60fps drops on mid-range devices */
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
         background: rgba(0, 0, 0, .82);
       }
       .mbox {
-        /* Single column, fixed to bottom, flex column so we control sizing */
         grid-template-columns: 1fr;
         display: flex;
         flex-direction: column;
@@ -2087,13 +2092,14 @@
         bottom: 0; left: 0; right: 0;
         max-width: none;
         width: 100%;
-        /* Fixed height: 90% of viewport — never taller, never shorter */
-        height: 90svh;
-        height: 90vh;          /* fallback for browsers without svh */
-        max-height: 90svh;
-        max-height: 90vh;
+        /* 92svh uses the small viewport height (excludes mobile browser chrome)
+           giving maximum usable space without triggering scroll on the page */
+        height: 92svh;
+        height: 92vh;
+        max-height: 92svh;
+        max-height: 92vh;
         border-radius: 20px 20px 0 0;
-        overflow: hidden;      /* clip children; scroll is inside .minfo */
+        overflow: hidden;
         animation: mSlide .34s cubic-bezier(.25, .46, .45, .94);
       }
     }
@@ -2128,10 +2134,10 @@
     }
     @media (max-width: 600px) {
       #mimg-wrap {
-        /* On mobile: fixed height — 42% of viewport.
-           This guarantees info + CTA always visible below the image. */
         flex-shrink: 0;
-        height: 42vh;
+        /* 38vh of 92vh total = 54vh for info pane.
+           Jewellery images are portrait so 38vh shows enough. */
+        height: 38vh;
         min-height: 0;
       }
     }
@@ -2220,8 +2226,8 @@
         /* Mobile: flex:1 makes it fill remaining height after image pane.
            overflow-y:auto gives it its own scroll so CTA stays pinned. */
         flex: 1;
-        min-height: 0;          /* required for flex children to scroll */
-        padding: 16px 18px 0;
+        min-height: 0;
+        padding: 10px 16px 0;
       }
     }
 
@@ -2240,33 +2246,44 @@
 
     #m-badge {
       font-family: 'Cinzel', serif;
-      font-size: 7.5px; letter-spacing: .4em;
+      font-size: 7px; letter-spacing: .35em;
       text-transform: uppercase;
       color: var(--gold); opacity: .5;
-      margin-bottom: 8px;
+      margin-bottom: 3px;
     }
     #m-name {
       font-family: 'Cinzel', serif;
-      font-size: 1.2rem; font-weight: 700;
+      font-size: 1.05rem; font-weight: 700;
       letter-spacing: .05em;
-      margin-bottom: 5px;
-      line-height: 1.25;
+      margin-bottom: 3px;
+      line-height: 1.18;
     }
     @media (min-width: 601px) {
       #m-name { font-size: 1.35rem }
     }
     #m-price {
       font-family: 'Cinzel', serif;
-      font-size: 1.05rem; font-weight: 700;
+      font-size: .95rem; font-weight: 700;
       color: var(--gold); letter-spacing: .06em;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       display: none;
     }
     #m-desc {
       font-family: 'Cormorant Garamond', serif;
-      font-size: .95rem; font-style: italic;
+      font-size: .84rem; font-style: italic;
       color: var(--txt2); opacity: .7;
-      line-height: 1.62;
+      line-height: 1.45;
+    }
+    /* Mobile: clamp description so it never pushes CTA off screen */
+    @media (max-width: 600px) {
+      #m-desc {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      #m-badge { font-size: 6.5px; margin-bottom: 2px; }
+      #m-name  { font-size: .95rem; margin-bottom: 2px; }
     }
 
     /* ── Sticky CTA footer ── */
@@ -2284,7 +2301,7 @@
         /* Stick to the bottom of .minfo on mobile */
         position: sticky;
         bottom: 0;
-        padding: 12px 0 max(14px, env(safe-area-inset-bottom));
+        padding: 8px 0 max(12px, env(safe-area-inset-bottom));
         /* Slight blur behind the sticky bar so scrolled text doesn't show through */
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
@@ -3551,8 +3568,14 @@
 
     /* ══ Referral Code Field ══ */
     .referral-wrap {
-      margin-top: 12px;
+      margin-top: 8px;
       position: relative;
+    }
+    @media (max-width: 600px) {
+      .referral-wrap { margin-top: 6px; }
+      .referral-input,
+      .referral-apply { min-height: 40px; padding-top: 8px; padding-bottom: 8px; }
+      .referral-label { font-size: .52rem; margin-bottom: 4px; }
     }
     .referral-label {
       display: block;
@@ -3704,6 +3727,46 @@
     }
     .social-gallery-cta {
       text-align: center;
+    }
+
+
+    /* Referral field: collapsed by default on mobile, expand on tap */
+    @media (max-width: 600px) {
+      .referral-wrap { margin-top: 8px; }
+      .referral-toggle {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-family: 'Cinzel', serif;
+        font-size: .55rem;
+        letter-spacing: .25em;
+        text-transform: uppercase;
+        color: var(--gold);
+        opacity: .65;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 6px 0;
+        width: 100%;
+        text-align: left;
+      }
+      .referral-toggle::after {
+        content: '▾';
+        margin-left: auto;
+        font-size: .7rem;
+        transition: transform .2s;
+      }
+      .referral-toggle.open::after { transform: rotate(180deg); }
+      .referral-expandable {
+        display: none;
+        padding-top: 6px;
+      }
+      .referral-expandable.open { display: block; }
+      .referral-label { display: none; } /* label text shown in toggle button */
+    }
+    @media (min-width: 601px) {
+      .referral-toggle { display: none; }
+      .referral-expandable { display: block; }
     }
 
   </style>
@@ -4549,16 +4612,21 @@
         </div>
         <!-- Sticky CTA footer — always visible, never pushed off screen -->
         <div class="m-footer">
-          <!-- Referral code field — appended to WA message before redirect -->
+          <!-- Referral code field — collapsible on mobile -->
           <div class="referral-wrap">
-            <label class="referral-label" for="referral-code">Have a referral or discount code?</label>
-            <div class="referral-row">
-              <input id="referral-code" class="referral-input" type="text"
-                placeholder="Enter code" maxlength="32" autocomplete="off"
-                oninput="applyReferralCode()" />
-              <button class="referral-apply" onclick="applyReferralCode()" type="button">Apply</button>
+            <button class="referral-toggle" type="button"
+              onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"
+              aria-expanded="false">✦ Have a referral code?</button>
+            <div class="referral-expandable">
+              <label class="referral-label" for="referral-code">Enter referral or discount code</label>
+              <div class="referral-row">
+                <input id="referral-code" class="referral-input" type="text"
+                  placeholder="Enter code" maxlength="32" autocomplete="off"
+                  oninput="applyReferralCode()" />
+                <button class="referral-apply" onclick="applyReferralCode()" type="button">Apply</button>
+              </div>
+              <span class="referral-applied" id="referral-applied">✓ Code applied</span>
             </div>
-            <span class="referral-applied" id="referral-applied">✓ Code applied</span>
           </div>
           <a id="m-wa" href="#" target="_blank" rel="noopener noreferrer" class="btn-gold" style="width:100%;margin-top:12px">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
@@ -5484,7 +5552,8 @@
           // Card is always opacity:1 — solid, never bleeds
           card.style.opacity       = '1';
           card.style.visibility    = isBack ? 'hidden' : 'visible';
-          card.style.pointerEvents = isCenter ? 'auto' : 'none';
+          // All visible cards accept pointer events — onPointerUp finds correct card
+          card.style.pointerEvents = isBack ? 'none' : 'auto';
 
           // Dim overlay: darker as card rotates away from viewer
           // wa=0 → dim=0 (fully lit), wa=90 → dim=0.55, wa=150 → dim=0.8
@@ -5566,8 +5635,12 @@
         let _pointerStartX = 0;
         let _pointerMoved  = false;
 
+        let _tappedCard = null; // card under pointer at down-time (captured before setPointerCapture)
+
         function onPointerDown(e) {
-          // Do NOT call preventDefault() here — it would kill click events
+          // Capture the card BEFORE setPointerCapture routes events to scene
+          // After capture, e.target in pointermove/pointerup will be the scene, not the card
+          _tappedCard    = e.target ? e.target.closest('.vault-card') : null;
           _dragging      = true;
           _pointerMoved  = false;
           _pointerStartX = e.clientX;
@@ -5593,11 +5666,43 @@
           _target   = Math.round(_angle / s) * s;
           _snapping = true;
 
-          // If pointer barely moved — treat as a tap, find the card under it
+          // If pointer barely moved — treat as a tap.
+          // Use _tappedCard (captured at pointerdown) because setPointerCapture
+          // makes e.target the scene in pointerup — e.target.closest() would return null.
           if (!_pointerMoved) {
-            const target = e.target && e.target.closest('.vault-card');
-            if (target && target.style.pointerEvents !== 'none') {
-              target.dispatchEvent(new CustomEvent('vault-tap', { bubbles: false }));
+            const tappedCard = _tappedCard;
+            _tappedCard = null; // reset for next interaction
+            if (tappedCard && tappedCard.style.visibility !== 'hidden') {
+              // Find which index this card is
+              const ring = document.getElementById('vault-ring');
+              const allCards = ring ? Array.from(ring.querySelectorAll('.vault-card')) : [];
+              const idx = allCards.indexOf(tappedCard);
+
+              if (idx !== -1) {
+                // Check if this card is front-facing (isCenter)
+                const deg = idx * stepDeg();
+                const wa = ((deg - _angle) % 360 + 360) % 360;
+                const isFront = wa < 45 || wa > 315;
+
+                if (isFront) {
+                  // Already front — open modal immediately
+                  tappedCard.dispatchEvent(new CustomEvent('vault-tap', { bubbles: false }));
+                } else {
+                  // Rotate to bring this card to the front, then open modal
+                  // Snap target = -deg (so card at deg becomes the front)
+                  const currentSnap = Math.round(_angle / s) * s;
+                  const rotations = Math.round((currentSnap - (-deg)) / 360);
+                  _target = -deg + rotations * 360;
+                  // Normalise to shortest path
+                  while (_target - _angle > 180)  _target -= 360;
+                  while (_angle - _target > 180)  _target += 360;
+                  _snapping = true;
+                  // Open modal after rotation completes (~600ms)
+                  setTimeout(() => {
+                    tappedCard.dispatchEvent(new CustomEvent('vault-tap', { bubbles: false }));
+                  }, 650);
+                }
+              }
             }
           }
         }
