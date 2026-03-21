@@ -396,16 +396,22 @@
       top: 30px;
       left: 0;
       right: 0;
-      z-index: 1000;
+      /* z-index above ann-bar (1001) so nav is always accessible */
+      z-index: 1002;
       padding: 0 28px;
-      transition: background .3s, box-shadow .3s
+      transition: background .3s, box-shadow .3s;
+      /* Persistent subtle background — nav never disappears on scroll */
+      background: rgba(var(--bg-rgb, 24, 17, 10), 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     #nav.stuck {
+      /* Solid background once scrolled */
       background: var(--nav-bg);
       backdrop-filter: blur(22px);
       -webkit-backdrop-filter: blur(22px);
-      box-shadow: 0 1px 0 var(--border)
+      box-shadow: 0 1px 0 var(--border);
     }
 
     .nav-inner {
@@ -531,7 +537,7 @@
       inset: 0;
       z-index: 2100;             /* above theme switcher (2000) and all overlays */
       /* Near-opaque dark fill — no page content bleeds through */
-      background: rgba(8, 8, 7, 0.97);
+      background: rgba(8, 8, 7, 0.99);  /* pure black — zero bleed-through */
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       /* Top padding clears the header row (ann-bar 30px + nav 58px + buffer) */
@@ -3624,22 +3630,6 @@
         </svg>
       </button>
     </div>
-    <div id="mob-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
-      <!-- Gold divider header -->
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--border-h)">
-        <span style="font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);opacity:.65">Menu</span>
-        <button onclick="toggleMenu()" aria-label="Close menu"
-          style="background:none;border:1px solid var(--border);color:var(--gold);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s"
-          onmouseenter="this.style.borderColor='var(--gold)'" onmouseleave="this.style.borderColor='var(--border)'">✕</button>
-      </div>
-      <a href="#categories"    onclick="toggleMenu()" class="mob-link">Categories</a>
-      <a href="#top-sellers"   onclick="toggleMenu()" class="mob-link">Top Sellers</a>
-      <a href="#new-collection" onclick="toggleMenu()" class="mob-link">New Collection</a>
-      <a href="#customer-love" onclick="toggleMenu()" class="mob-link">Customer Love</a>
-      <a href="#about"         onclick="toggleMenu()" class="mob-link">About Us</a>
-      <a href="#story"         onclick="toggleMenu()" class="mob-link">Our Story</a>
-      <a href="#contact"       onclick="toggleMenu()" class="mob-link">Contact</a>
-    </div>
   </nav>
 
   <!-- HERO -->
@@ -4316,6 +4306,25 @@
     <button onclick="event.stopPropagation();closePosterModal()"
       style="position:absolute;top:16px;right:16px;background:rgba(0,0,0,.6);border:1px solid var(--border-h);color:var(--gold);width:33px;height:33px;border-radius:50%;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center">✕</button>
   </div>
+
+  <!-- MOBILE MENU OVERLAY — direct body child so z-index is unrestricted -->
+  <div id="mob-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <!-- Header row -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--border-h)">
+      <span style="font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);opacity:.65">Menu</span>
+      <button onclick="toggleMenu()" aria-label="Close menu"
+        style="background:none;border:1px solid var(--border);color:var(--gold);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s"
+        onmouseenter="this.style.borderColor='var(--gold)'" onmouseleave="this.style.borderColor='var(--border)'">✕</button>
+    </div>
+    <a href="#categories"     onclick="toggleMenu()" class="mob-link">Categories</a>
+    <a href="#top-sellers"    onclick="toggleMenu()" class="mob-link">Top Sellers</a>
+    <a href="#new-collection" onclick="toggleMenu()" class="mob-link">New Collection</a>
+    <a href="#customer-love"  onclick="toggleMenu()" class="mob-link">Customer Love</a>
+    <a href="#about"          onclick="toggleMenu()" class="mob-link">About Us</a>
+    <a href="#story"          onclick="toggleMenu()" class="mob-link">Our Story</a>
+    <a href="#contact"        onclick="toggleMenu()" class="mob-link">Contact</a>
+  </div>
+
 
   <script>
     // ╔══════════════════════════════════════╗
