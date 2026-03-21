@@ -359,7 +359,7 @@
         const price = fmtP(p.price);
         return `<div class="wish-item">
       <div class="wish-item-img">
-        <img loading="lazy" src="${optimizeCloudinaryUrl(p.image || fb, 200)}" srcset="${generateSrcset(p.image, [140, 200])}" sizes="70px" alt="${p.name || ''}" loading="lazy" onerror="this.onerror=null;this.src='${optimizeCloudinaryUrl(fb, 200)}'"/>
+        <img loading="lazy" src="${optimizeCloudinaryUrl(p.image || fb, 200)}" srcset="${generateSrcset(p.image, [140, 200])}" sizes="70px" alt="${p.name || ''}" loading="lazy" onerror="this.onerror=null;this.src='${optimizeCloudinaryUrl(fb, 200)}'" decoding="async"/>
       </div>
       <div class="wish-item-info">
         ${p.category ? `<div class="wish-item-cat">${p.category}</div>` : ''}
@@ -420,7 +420,7 @@
 
       return `<div class="carousel-item"><div class="pcard reveal" onclick="openModal(JSON.parse(this.dataset.p),'${m.bt}')" data-p='${ps}'>
     <div class="pcard-img">
-      <img loading="lazy" src="${optimizeCloudinaryUrl(p.image || fb, 600)}" srcset="${generateSrcset(p.image, [400, 600, 800])}" sizes="(max-width: 480px) 90vw, (max-width: 768px) 50vw, (max-width: 1100px) 33vw, 25vw" alt="${(p.name || '').replace(/"/g, '&quot;')}" loading="lazy" onerror="this.onerror=null;this.src='${optimizeCloudinaryUrl(fb, 600)}'"/>
+      <img loading="lazy" src="${optimizeCloudinaryUrl(p.image || fb, 600)}" srcset="${generateSrcset(p.image, [400, 600, 800])}" sizes="(max-width: 480px) 90vw, (max-width: 768px) 50vw, (max-width: 1100px) 33vw, 25vw" alt="${(p.name || '').replace(/"/g, '&quot;')}" loading="lazy" onerror="this.onerror=null;this.src='${optimizeCloudinaryUrl(fb, 600)}'" decoding="async"/>
       <div class="pcard-img-ov"></div>
       <div class="pcard-bloom" aria-hidden="true"></div>
       <div class="pcard-sweep" aria-hidden="true"></div>
@@ -452,7 +452,7 @@
       const fb = `https://placehold.co/300x400/141210/D4AF37?text=${encodeURIComponent(name)}`;
       return `<a class="cat-tile reveal" href="${href}" aria-label="${name}" onclick="smoothScrollTo('${anchor}')">
     <div class="cat-tile-img">
-      ${cat.image ? `<img loading="lazy" src="${optimizeCloudinaryUrl(cat.image, 500)}" srcset="${generateSrcset(cat.image, [300, 400, 500])}" sizes="(max-width: 768px) 90vw, 180px" alt="${name}" loading="lazy" onerror="this.onerror=null;this.src='${optimizeCloudinaryUrl(fb, 500)}'"/>` :
+      ${cat.image ? `<img loading="lazy" src="${optimizeCloudinaryUrl(cat.image, 500)}" srcset="${generateSrcset(cat.image, [300, 400, 500])}" sizes="(max-width: 768px) 90vw, 180px" alt="${name}" loading="lazy" onerror="this.onerror=null;this.src='${optimizeCloudinaryUrl(fb, 500)}'" decoding="async"/>` :
           `<div class="cat-placeholder">${meta.icon}</div>`}
     </div>
     <div class="cat-tile-body">
@@ -545,7 +545,7 @@
 
         return `<div class="carousel-item"><div class="pcard reveal" onclick="openModal(JSON.parse(this.dataset.p),'${m.bt}')" data-p='${ps}'>
       <div class="pcard-img">
-        <img loading="lazy" src="${p.image || fb}" alt="${(p.name || '').replace(/"/g, '&quot;')}" loading="lazy" onerror="this.onerror=null;this.src='${fb}'"/>
+        <img loading="lazy" src="${p.image || fb}" alt="${(p.name || '').replace(/"/g, '&quot;')}" loading="lazy" onerror="this.onerror=null;this.src='${fb}'" decoding="async"/>
         <div class="pcard-img-ov"></div>
         <div class="pcard-quick-view">Quick View</div>
         <button class="pcard-wish${isWished(pid) ? ' wished' : ''}" onclick="event.stopPropagation();toggleWish(this,'${pid}')" aria-label="Add to wishlist">
@@ -1249,24 +1249,18 @@
           applyRing();
           bindDrag(scene);
 
-          // Performance: only run the rAF loop when vault is visible.
-          // Saves GPU/CPU when user hasn't scrolled to this section.
+          // Start rAF loop only when vault is visible (saves CPU/GPU when scrolled away)
           const _vaultIO = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+            for (const entry of entries) {
               if (entry.isIntersecting) {
                 startLoop();
-              } else {
-                // Pause loop when out of view
-                if (_raf) {
-                  cancelAnimationFrame(_raf);
-                  _raf = null;
-                }
+              } else if (_raf) {
+                cancelAnimationFrame(_raf);
+                _raf = null;
               }
-            });
-          }, { threshold: 0.1 });
-
-          const vaultClip = document.querySelector('.vault-clip') || scene;
-          _vaultIO.observe(vaultClip);
+            }
+          }, { threshold: 0.05 });
+          _vaultIO.observe(document.querySelector('.vault-clip') || scene);
         });
       };
     })();
@@ -1392,7 +1386,7 @@
         <img loading="lazy" src="${img}"
              alt="${name ? 'Customer review by ' + name + ' — LUVZ Collection 925 silver jewellery' : 'LUVZ Collection customer review — 925 silver jewellery'}"
              itemprop="image"
-             onerror="this.closest('figure').style.display='none'"/>
+             onerror="this.closest('figure').style.display='none'" decoding="async"/>
         ${name ? `<figcaption itemprop="author" style="display:none"><strong>${name}</strong></figcaption>` : ''}
         ${text ? `<p itemprop="reviewBody" style="display:none">${text}</p>` : ''}
       </blockquote>
