@@ -2127,31 +2127,33 @@
     #mimg-wrap {
       position: relative;
       overflow: hidden;
-      background: var(--bg);
+      /* Use modal background — letterbox areas invisible, not white */
+      background: var(--modal-bg);
       touch-action: pan-y pinch-zoom;
-      /* Desktop: fills left grid column fully */
-      min-height: 280px;
+      min-height: 280px; /* desktop only — overridden to 0 on mobile */
     }
     @media (max-width: 600px) {
       #mimg-wrap {
         flex-shrink: 0;
-        /* 38vh of 92vh total = 54vh for info pane.
-           Jewellery images are portrait so 38vh shows enough. */
-        height: 38vh;
-        min-height: 0;
+        /* CRITICAL: reset min-height to 0 so height: Xvh can actually apply.
+           Without this, min-height: 280px overrides the height declaration. */
+        min-height: 0 !important;
+        /* 45% of the 92vh modal = 41.4vh for the image.
+           Leaves ~50vh for info (badge + name + price + desc + CTA). */
+        height: calc(92vh * 0.45);
+        height: calc(92svh * 0.45);
       }
     }
 
     #mimg {
       width: 100%;
       height: 100%;
-      object-fit: cover;       /* cover fills the pane cleanly on mobile */
+      /* contain on ALL sizes: jewellery is portrait — never crop it.
+         The modal-bg fill makes any surrounding space invisible. */
+      object-fit: contain;
       transition: transform .3s;
       cursor: zoom-in;
       display: block;
-    }
-    @media (min-width: 601px) {
-      #mimg { object-fit: contain } /* desktop: show full image without crop */
     }
     #mimg.z { transform: scale(2.3); cursor: zoom-out }
 
@@ -2223,11 +2225,11 @@
     }
     @media (max-width: 600px) {
       .minfo {
-        /* Mobile: flex:1 makes it fill remaining height after image pane.
-           overflow-y:auto gives it its own scroll so CTA stays pinned. */
         flex: 1;
         min-height: 0;
-        padding: 10px 16px 0;
+        /* Tight padding — every pixel counts on mobile */
+        padding: 8px 16px 0;
+        overflow-y: auto;
       }
     }
 
