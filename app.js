@@ -74,52 +74,18 @@
       const track = document.getElementById('cat-grid');
       if (!outer || !track) return;
 
-      if (_catAutoScrollRAF) cancelAnimationFrame(_catAutoScrollRAF);
+      if (_catAutoScrollRAF) clearInterval(_catAutoScrollRAF);
       if (_catAutoScrollResume) clearTimeout(_catAutoScrollResume);
 
-      let isUserInteracting = false;
-      const scrollSpeed = window.matchMedia('(max-width: 768px)').matches ? 0.3 : 0.45;
       const resetPoint = () => Math.max(0, (outer.scrollWidth - outer.clientWidth) / 2);
-      const pauseAutoScroll = () => {
-        isUserInteracting = true;
-        if (_catAutoScrollResume) clearTimeout(_catAutoScrollResume);
-      };
-      const resumeAutoScroll = () => {
-        if (_catAutoScrollResume) clearTimeout(_catAutoScrollResume);
-        _catAutoScrollResume = setTimeout(() => { isUserInteracting = false; }, 2000);
-      };
-      const autoScroll = () => {
-        if (!isUserInteracting && outer.scrollWidth > outer.clientWidth) {
-          const loopAt = resetPoint();
-          outer.scrollLeft += scrollSpeed;
-          if (loopAt > 0 && outer.scrollLeft >= loopAt) {
-            outer.scrollLeft -= loopAt;
-          }
+      _catAutoScrollRAF = setInterval(() => {
+        const loopAt = resetPoint();
+        if (outer.scrollWidth <= outer.clientWidth) return;
+        outer.scrollLeft += 1;
+        if (loopAt > 0 && outer.scrollLeft >= loopAt) {
+          outer.scrollLeft -= loopAt;
         }
-        _catAutoScrollRAF = requestAnimationFrame(autoScroll);
-      };
-
-      outer.removeEventListener('touchstart', outer._pauseAutoScroll);
-      outer.removeEventListener('touchend', outer._resumeAutoScroll);
-      outer.removeEventListener('touchcancel', outer._resumeAutoScroll);
-      outer.removeEventListener('pointerdown', outer._pauseAutoScroll);
-      outer.removeEventListener('pointerup', outer._resumeAutoScroll);
-      outer.removeEventListener('pointercancel', outer._resumeAutoScroll);
-      outer.removeEventListener('scroll', outer._resumeAutoScroll);
-
-      outer._pauseAutoScroll = pauseAutoScroll;
-      outer._resumeAutoScroll = resumeAutoScroll;
-
-      outer.addEventListener('touchstart', pauseAutoScroll, { passive: true });
-      outer.addEventListener('touchend', resumeAutoScroll, { passive: true });
-      outer.addEventListener('touchcancel', resumeAutoScroll, { passive: true });
-      outer.addEventListener('pointerdown', pauseAutoScroll, { passive: true });
-      outer.addEventListener('pointerup', resumeAutoScroll, { passive: true });
-      outer.addEventListener('pointercancel', resumeAutoScroll, { passive: true });
-      outer.addEventListener('scroll', resumeAutoScroll, { passive: true });
-
-      if (outer.scrollLeft === 0 && resetPoint() > 0) outer.scrollLeft = 1;
-      autoScroll();
+      }, 20);
     }
 
     /* ── Section meta ───────────────────── */
@@ -881,6 +847,8 @@
       // Task 3B + 4A: restore original meta + clear hash
       clearHash();
     }
+    const closeBtn = document.querySelector('.close-btn');
+    if (closeBtn) closeBtn.onclick = closeModal;
     document.getElementById('moverlay').addEventListener('click', e => { if (e.target === document.getElementById('moverlay')) closeModal() });
 
 
