@@ -29,12 +29,10 @@
       const si = document.querySelector('.scroll-ind');
       if (si) si.style.opacity = window.scrollY > 100 ? '0' : '1';
 
-      // Gem bar: visible only on first screen, hides as user scrolls away
+      // Gem bar: visible only on first screen (= 100svh = window.innerHeight)
       const gb = document.querySelector('.gem-bar');
       if (gb) {
-        const hero = document.querySelector('.hero');
-        const heroH = hero ? hero.offsetHeight : window.innerHeight;
-        gb.classList.toggle('gem-hidden', window.scrollY > heroH * 0.85);
+        gb.classList.toggle('gem-hidden', window.scrollY > window.innerHeight * 0.8);
       }
 
       // Task 4B: show floating WA only after scrolling past hero
@@ -80,58 +78,57 @@
       const track = document.getElementById('cat-grid');
       if (!outer || !track) return;
 
-      // Detect touch device — works on all mobile browsers regardless of viewport width.
-      // Coarse pointer = touchscreen (phones, tablets). Fine pointer = mouse (desktop).
-      const isTouch = window.matchMedia('(pointer: coarse)').matches;
-      if (!isTouch) return; // Desktop with mouse: CSS catScroll animation handles it
+      // Touch device check: coarse pointer = any touchscreen
+      if (!window.matchMedia('(pointer: coarse)').matches) return;
 
-      // Stop CSS animation on this element — JS scroll takes over
-      track.style.animation = 'none';
+      // 1. Kill CSS transform animation — read offsetWidth to force reflow
+      //    so Chrome registers the change before the rAF loop starts
       track.style.webkitAnimation = 'none';
+      track.style.animation = 'none';
+      void track.offsetWidth; // reflow trigger
 
-      // Force scrollable container
-      outer.style.overflowX = 'auto';
-      outer.style.overflowY = 'hidden';
-      outer.style.webkitOverflowScrolling = 'touch';
-      // Remove fade masks on mobile (they use overflow:hidden which clips scroll)
+      // 2. Make outer scrollable — set overflow shorthand (not just overflow-x)
+      //    to override the desktop 'overflow: hidden' rule
+      outer.style.overflow = 'hidden'; // reset first
+      outer.style.overflowX = 'auto'; // then allow horizontal
+      void outer.offsetWidth; // reflow trigger
+
+      // 3. Remove webkit mask (forces overflow:hidden in WebKit)
       outer.style.webkitMaskImage = 'none';
       outer.style.maskImage = 'none';
 
-      const SPEED = 30; // px/sec
-      let raf = null;
+      // 4. Touch listeners — pause auto-scroll while user swipes
       let paused = false;
-      let lastTs = null;
-
-      function step(ts) {
-        if (lastTs !== null && !paused) {
-          const dt = Math.min(ts - lastTs, 50); // cap for tab-switch gaps
-          const half = track.scrollWidth / 2;
-          if (half > 0) {
-            outer.scrollLeft += SPEED * (dt / 1000);
-            if (outer.scrollLeft >= half) {
-              outer.scrollLeft -= half; // seamless loop
-            }
-          }
-        }
-        lastTs = ts;
-        raf = requestAnimationFrame(step);
-      }
-
       outer.addEventListener('touchstart', () => {
         paused = true;
       }, { passive: true });
-
       outer.addEventListener('touchend', () => {
-        // Wait for momentum scroll to settle before resuming auto-scroll
-        setTimeout(() => { paused = false; lastTs = null; }, 1000);
+        setTimeout(() => { paused = false; }, 800);
       }, { passive: true });
 
-      // Wait for a full paint so scrollWidth is accurate
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          raf = requestAnimationFrame(step);
-        });
-      });
+      // 5. Start rAF loop — timestamp-based speed (px/sec, frame-rate independent)
+      const SPEED = 30;
+      let lastTs = null;
+
+      function step(ts) {
+        if (!paused) {
+          if (lastTs !== null) {
+            const dt = Math.min(ts - lastTs, 50);
+            const half = track.scrollWidth / 2;
+            if (half > 0) {
+              outer.scrollLeft += SPEED * dt / 1000;
+              if (outer.scrollLeft >= half) outer.scrollLeft -= half;
+            }
+          }
+          lastTs = ts;
+        } else {
+          lastTs = null; // reset so there's no jump on resume
+        }
+        requestAnimationFrame(step);
+      }
+
+      // Wait two frames for layout to settle after innerHTML was set
+      requestAnimationFrame(() => requestAnimationFrame(() => step(performance.now())));
     }
 
     /* ── Section meta ───────────────────── */

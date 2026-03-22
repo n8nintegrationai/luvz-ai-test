@@ -1064,7 +1064,12 @@
       display: flex;
       gap: 18px;
       width: max-content;
-      animation: catScroll 32s linear infinite;
+    }
+    /* CSS animation only on non-touch devices — touch devices use JS scroll */
+    @media (hover: hover) and (pointer: fine) {
+      .cat-carousel-track {
+        animation: catScroll 32s linear infinite;
+      }
     }
 
     @media(max-width:768px) {
