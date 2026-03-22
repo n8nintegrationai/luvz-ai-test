@@ -2234,6 +2234,9 @@
         min-height: 0 !important;
         height: auto;
         padding: 0;
+        aspect-ratio: 3 / 4;
+        max-height: 55vh;
+        overflow: hidden;
       }
     }
 
@@ -2251,9 +2254,10 @@
       #mimg {
         width: 100%;
         height: auto;
-        max-height: 60vh;
-        object-fit: cover;
+        max-height: 55vh;
+        object-fit: contain;
         border-radius: 0;
+        background: var(--modal-bg);
       }
     }
     #mimg.z { transform: scale(2.3); cursor: zoom-out }
@@ -2405,12 +2409,7 @@
       margin-top: 14px;
     }
 
-    .modal img,
-    #mimg {
-      width: 100%;
-      height: auto;
-      max-height: none;
-    }
+
     @media (max-width: 600px) {
       .m-footer {
         flex-shrink: 0;
