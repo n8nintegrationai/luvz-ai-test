@@ -68,9 +68,49 @@
     };
 
     function initCategoryAutoScroll() {
-      // CSS handles scroll: catScroll animation on desktop,
-      // overflow-x:auto touch scroll on mobile.
-      // No JS interval needed — it caused shaking by fighting CSS animation.
+      const outer = document.querySelector('.cat-carousel-outer');
+      const track = document.getElementById('cat-grid');
+      if (!outer || !track) return;
+
+      // Desktop: CSS catScroll animation handles it — no JS needed.
+      // Mobile only: rAF-based scrollLeft auto-scroll.
+      // On mobile, CSS sets animation:none, so no conflict.
+      const isMobile = () => window.innerWidth <= 768;
+      if (!isMobile()) return;
+
+      let raf = null;
+      let paused = false;
+      let speed = 0.5; // px per frame — slow, smooth glide
+
+      function autoScroll() {
+        if (!paused) {
+          outer.scrollLeft += speed;
+          // Seamless loop: when we've scrolled past half the track width,
+          // snap back to 0. Track is doubled (tilesHTML + tilesHTML).
+          if (outer.scrollLeft >= track.scrollWidth / 2) {
+            outer.scrollLeft = 0;
+          }
+        }
+        raf = requestAnimationFrame(autoScroll);
+      }
+
+      // Pause on touch, resume after lift
+      outer.addEventListener('touchstart', () => { paused = true; }, { passive: true });
+      outer.addEventListener('touchend', () => {
+        setTimeout(() => { paused = false; }, 1200); // 1.2s pause after swipe
+      }, { passive: true });
+
+      raf = requestAnimationFrame(autoScroll);
+
+      // Stop if viewport resizes to desktop
+      window.addEventListener('resize', () => {
+        if (!isMobile() && raf) {
+          cancelAnimationFrame(raf);
+          raf = null;
+        } else if (isMobile() && !raf) {
+          raf = requestAnimationFrame(autoScroll);
+        }
+      }, { passive: true });
     }
 
     /* ── Section meta ───────────────────── */

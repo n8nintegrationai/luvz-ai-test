@@ -259,12 +259,9 @@
     /* ═══════════════════ GEM BAR ═══════════════════ */
     /* ══ TASK 4: Liquid Gold Ultra-Striking Header ══ */
     .gem-bar {
+      display: block;
       height: 3px;
       width: 100%;
-      display: flex !important;
-      visibility: visible !important;
-      position: relative;
-      z-index: 50;
       background: linear-gradient(
         90deg,
         #5C3D00 0%,
@@ -278,15 +275,10 @@
         #5C3D00 100%
       );
       background-size: 200% auto;
+      -webkit-animation: liquidGold 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       animation: liquidGold 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       box-shadow: 0 0 8px rgba(212,175,55,.35), 0 0 18px rgba(212,175,55,.12);
-      will-change: background-position;
-    }
-    @media (max-width: 768px) {
-      .gem-bar {
-        flex-shrink: 0;
-        overflow: visible;
-      }
+      flex-shrink: 0;
     }
     header,
     .top-container,
@@ -4204,9 +4196,11 @@
     </div>
   </nav>
 
+  <!-- GEM BAR — standalone, outside hero so overflow:hidden doesn't clip it -->
+  <div class="gem-bar" aria-hidden="true"></div>
+
   <!-- HERO -->
   <section class="hero" style="margin-top:30px">
-    <div class="gem-bar"><span class="g1"></span><span class="g2"></span><span class="g3"></span><span class="g4"></span><span class="g5"></span><span class="g6"></span></div>
     <div class="hero-inner">
       <div class="hero-brand-col">
         <img src="images/logo_gif.webp" alt="LUVZ Collection handcrafted silver jewelry logo" class="hero-logo-img" loading="eager" fetchpriority="high" decoding="async" width="110" height="110" />
