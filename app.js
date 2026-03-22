@@ -663,7 +663,8 @@
         if (cg && d.categories && d.categories.length) {
 
           const tilesHTML = d.categories.map(buildCatTile).join('');
-          cg.innerHTML = tilesHTML + tilesHTML;
+          const useNativeCatScroll = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
+          cg.innerHTML = useNativeCatScroll ? tilesHTML : tilesHTML + tilesHTML;
           cg.querySelectorAll('.reveal').forEach(el => ro.observe(el));
         }
         ['top_sellers', 'new_collection'].forEach(sec => {
@@ -786,6 +787,10 @@
         '--modal-h', window.innerHeight + 'px'
       );
       document.getElementById('moverlay').classList.add('open');
+      const minfo = document.querySelector('.minfo');
+      const minfoScroll = document.querySelector('.minfo-scroll');
+      if (minfo) minfo.scrollTop = 0;
+      if (minfoScroll) minfoScroll.scrollTop = 0;
       document.body.style.overflow = 'hidden';
       document.body.classList.add('modal-open');
       renderGalleryFrame();

@@ -592,10 +592,12 @@
       min-height: 100svh;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       background: var(--bg);
       position: relative;
       overflow: hidden;
-      padding-top: 88px
+      padding: 88px 16px 16px;
+      box-sizing: border-box
     }
 
     .hero::before {
@@ -783,6 +785,97 @@
       opacity: .6
     }
 
+    @media(max-width:600px) {
+      .hero {
+        min-height: 100svh;
+        padding: calc(72px + env(safe-area-inset-top)) 16px 12px;
+        margin-top: 0 !important;
+      }
+
+      .hero-inner {
+        justify-content: center;
+        padding: 0;
+      }
+
+      .hero-brand-col {
+        gap: 10px;
+        padding-bottom: 0;
+      }
+
+      .hero-logo-img {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 0;
+      }
+
+      .hero-kicker {
+        font-size: .5rem;
+        letter-spacing: .42em;
+        margin-bottom: 0;
+      }
+
+      .hero-h1 {
+        font-size: 24px;
+        line-height: 1.05;
+        letter-spacing: .14em;
+        max-width: 320px;
+      }
+
+      .hero-tagline {
+        font-size: 14px;
+        line-height: 1.45;
+        margin: 0;
+        max-width: 320px;
+      }
+
+      .hero-trust-pills {
+        gap: 6px;
+        margin: 2px 0 8px;
+      }
+
+      .hero-pill {
+        font-size: .48rem;
+        padding: 4px 8px;
+      }
+
+      .hero-stats {
+        padding: 8px 0;
+        margin-bottom: 10px;
+      }
+
+      .hstat-num {
+        font-size: 1rem;
+      }
+
+      .hero-btns {
+        gap: 8px;
+      }
+
+      .hero-social-proof {
+        gap: 6px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+      }
+
+      .hero-stars {
+        font-size: .78rem;
+      }
+
+      .hero-proof-text {
+        font-size: 14px;
+        line-height: 1.35;
+      }
+
+      .scroll-ind {
+        padding: 8px 0 4px;
+      }
+
+      .scroll-ind span {
+        font-size: 10px;
+        letter-spacing: .32em;
+      }
+    }
+
     .chevrons {
       display: flex;
       flex-direction: column;
@@ -957,6 +1050,35 @@
       gap: 18px;
       width: max-content;
       animation: catScroll 32s linear infinite;
+    }
+
+    @media(max-width:768px) {
+      .cat-carousel-outer {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        -webkit-mask-image: none;
+        mask-image: none;
+        padding: 12px 0 18px;
+        touch-action: pan-x;
+      }
+
+      .cat-carousel-outer::-webkit-scrollbar {
+        display: none;
+      }
+
+      .cat-carousel-track {
+        gap: 12px;
+        width: max-content;
+        animation: none;
+        padding: 0 16px;
+      }
+
+      .cat-tile {
+        flex: 0 0 auto;
+      }
     }
 
     /* Pause on hover only for real hover devices (prevents mobile tap-stuck hover) */
@@ -2024,32 +2146,25 @@
     /* ── Mobile: full-width sheet sliding up from bottom ── */
     @media (max-width: 600px) {
       #moverlay {
-        align-items: flex-end;
+        align-items: stretch;
+        justify-content: stretch;
         padding: 0;
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
-        background: rgba(0, 0, 0, .82);
+        background: var(--modal-bg);
       }
       .mbox {
-        grid-template-columns: 1fr;
         display: flex;
         flex-direction: column;
         position: fixed;
-        bottom: 0; left: 0; right: 0;
+        inset: 0;
         max-width: none;
         width: 100%;
-        /*
-          Chrome Android: `vh` includes the browser toolbar height, making
-          `92vh` taller than the visible viewport → close button is hidden
-          behind the address bar.
-          Fix: JS sets --modal-h to window.innerHeight in px on every open.
-          This is the ACTUAL visible height on all browsers including Chrome.
-          Fallback: 85vh — conservative enough to stay within view on Chrome.
-        */
-        height: var(--modal-h, 85vh);
-        max-height: var(--modal-h, 85vh);
-        border-radius: 20px 20px 0 0;
-        overflow: hidden;
+        height: var(--modal-h, 100svh);
+        max-height: var(--modal-h, 100svh);
+        border-radius: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         animation: mSlide .34s cubic-bezier(.25, .46, .45, .94);
       }
     }
@@ -2086,8 +2201,8 @@
       #mimg-wrap {
         flex-shrink: 0;
         min-height: 0 !important;
-        /* 50% of modal = image as the hero, ~42% left for info + CTA */
-        height: calc(var(--modal-h, 85vh) * 0.50);
+        height: auto;
+        padding: 0;
       }
     }
 
@@ -2100,6 +2215,15 @@
       transition: transform .3s;
       cursor: zoom-in;
       display: block;
+    }
+    @media (max-width: 600px) {
+      #mimg {
+        width: 100%;
+        height: auto;
+        max-height: 42vh;
+        object-fit: cover;
+        border-radius: 0 0 12px 12px;
+      }
     }
     #mimg.z { transform: scale(2.3); cursor: zoom-out }
 
@@ -2170,14 +2294,14 @@
     }
     @media (max-width: 600px) {
       .minfo {
-        /* flex:1 fills remaining height after image pane */
         flex: 1;
         min-height: 0;
-        padding: 0;
-        /* NO overflow here — minfo-scroll handles scrolling */
-        overflow: hidden;
+        padding: 16px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         display: flex;
         flex-direction: column;
+        gap: 12px;
       }
     }
 
@@ -2189,13 +2313,13 @@
     }
     @media (max-width: 600px) {
       .minfo-scroll {
-        /* flex:1 + min-height:0 = fills space between top of minfo and m-footer */
         flex: 1;
         min-height: 0;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        /* Padding inside the scroll area */
-        padding: 10px 16px 8px;
+        overflow: visible;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
       }
     }
 
@@ -2231,16 +2355,13 @@
     }
     @media (max-width: 600px) {
       #m-badge  { font-size: 6.5px; margin-bottom: 1px; letter-spacing: .3em; }
-      #m-name   { font-size: .92rem; margin-bottom: 2px; line-height: 1.15; }
+      #m-name   { font-size: 1rem; margin-bottom: 0; line-height: 1.2; }
       #m-price  { font-size: .88rem; margin-bottom: 4px; }
       #m-desc   {
-        font-size: .78rem;
-        line-height: 1.38;
-        /* Clamp to 3 lines — minfo-scroll scrolls if user wants more */
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+        font-size: .84rem;
+        line-height: 1.45;
+        display: block;
+        overflow: visible;
       }
     }
 
@@ -2254,28 +2375,44 @@
       border-top: 1px solid var(--border);
       margin-top: 14px;
     }
+    .enquiry-btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 8px;
+    }
     @media (max-width: 600px) {
       .m-footer {
-        /* flex-shrink:0 = always occupies its natural height at the
-           bottom of the flex column. No sticky needed — flex order
-           guarantees it stays at the base of .minfo on ALL browsers. */
         flex-shrink: 0;
-        position: static;
-        padding: 8px 16px max(14px, env(safe-area-inset-bottom));
+        position: sticky;
+        bottom: 0;
+        padding: 12px 0 calc(14px + env(safe-area-inset-bottom));
         border-top: 1px solid var(--border);
         margin-top: 0;
         background: var(--modal-bg);
       }
-      /* Enquire button: full width, generous touch target */
       #m-wa {
-        padding: 14px 20px !important;
-        font-size: .65rem !important;
-        border-radius: 12px !important;
+        width: 100%;
+        padding: 14px !important;
+        font-size: 16px !important;
+        border-radius: 8px !important;
         min-height: 48px;
-        margin-top: 6px;
+        margin-top: 0;
       }
       /* Referral toggle compact */
       .referral-wrap { margin-top: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .minfo-scroll > *,
+      .m-footer > * {
+        margin-bottom: 12px;
+      }
+
+      .m-footer > *:last-child,
+      .minfo-scroll > *:last-child {
+        margin-bottom: 0;
+      }
     }
 
     /* ═══════════════════ POSTER MODAL ═══════════════════ */
@@ -4831,7 +4968,7 @@
               <span class="referral-applied" id="referral-applied">✓ Code applied</span>
             </div>
           </div>
-          <a id="m-wa" href="#" target="_blank" rel="noopener noreferrer" class="btn-gold" style="width:100%;margin-top:12px">
+          <a id="m-wa" href="#" target="_blank" rel="noopener noreferrer" class="btn-gold enquiry-btn" style="width:100%;margin-top:12px">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
               <path
                 d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
