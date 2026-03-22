@@ -259,9 +259,12 @@
     /* ═══════════════════ GEM BAR ═══════════════════ */
     /* ══ TASK 4: Liquid Gold Ultra-Striking Header ══ */
     .gem-bar {
-      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
       height: 3px;
-      width: 100%;
+      z-index: 1003;
       background: linear-gradient(
         90deg,
         #5C3D00 0%,
@@ -277,8 +280,8 @@
       background-size: 200% auto;
       -webkit-animation: liquidGold 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       animation: liquidGold 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-      box-shadow: 0 0 8px rgba(212,175,55,.35), 0 0 18px rgba(212,175,55,.12);
-      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(212,175,55,.5), 0 0 24px rgba(212,175,55,.18);
+      pointer-events: none;
     }
     header,
     .top-container,

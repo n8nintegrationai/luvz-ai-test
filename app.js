@@ -72,45 +72,46 @@
       const track = document.getElementById('cat-grid');
       if (!outer || !track) return;
 
-      // Desktop: CSS catScroll animation handles it — no JS needed.
-      // Mobile only: rAF-based scrollLeft auto-scroll.
-      // On mobile, CSS sets animation:none, so no conflict.
-      const isMobile = () => window.innerWidth <= 768;
-      if (!isMobile()) return;
+      // Detect whether the outer is in scroll mode (mobile CSS)
+      // vs animation mode (desktop CSS). Check computed overflow-x.
+      function isScrollMode() {
+        return getComputedStyle(outer).overflowX === 'auto' ||
+               getComputedStyle(outer).overflowX === 'scroll';
+      }
 
+      // On desktop the CSS catScroll animation runs — no JS needed.
+      // Only activate JS auto-scroll when in scroll mode (mobile/tablet).
+      if (!isScrollMode()) return;
+
+      const SPEED = 25; // px per second — consistent across all frame rates
       let raf = null;
       let paused = false;
-      let speed = 0.5; // px per frame — slow, smooth glide
+      let lastTs = null;
 
-      function autoScroll() {
-        if (!paused) {
-          outer.scrollLeft += speed;
-          // Seamless loop: when we've scrolled past half the track width,
-          // snap back to 0. Track is doubled (tilesHTML + tilesHTML).
-          if (outer.scrollLeft >= track.scrollWidth / 2) {
-            outer.scrollLeft = 0;
+      function autoScroll(ts) {
+        if (lastTs !== null && !paused) {
+          const dt = Math.min(ts - lastTs, 50); // cap delta at 50ms (handles tab switch)
+          const half = track.scrollWidth / 2;
+          outer.scrollLeft += SPEED * dt / 1000;
+          // Seamless loop: track is doubled, snap back at halfway
+          if (half > 0 && outer.scrollLeft >= half) {
+            outer.scrollLeft -= half;
           }
         }
+        lastTs = ts;
         raf = requestAnimationFrame(autoScroll);
       }
 
-      // Pause on touch, resume after lift
-      outer.addEventListener('touchstart', () => { paused = true; }, { passive: true });
+      outer.addEventListener('touchstart', () => {
+        paused = true;
+      }, { passive: true });
+
       outer.addEventListener('touchend', () => {
-        setTimeout(() => { paused = false; }, 1200); // 1.2s pause after swipe
+        // Resume after finger lifts — small delay lets momentum settle
+        setTimeout(() => { paused = false; lastTs = null; }, 900);
       }, { passive: true });
 
       raf = requestAnimationFrame(autoScroll);
-
-      // Stop if viewport resizes to desktop
-      window.addEventListener('resize', () => {
-        if (!isMobile() && raf) {
-          cancelAnimationFrame(raf);
-          raf = null;
-        } else if (isMobile() && !raf) {
-          raf = requestAnimationFrame(autoScroll);
-        }
-      }, { passive: true });
     }
 
     /* ── Section meta ───────────────────── */
