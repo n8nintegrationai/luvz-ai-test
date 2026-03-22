@@ -19,7 +19,7 @@
     /* ── Navbar ─────────────────────────── */
     // Keep --modal-h accurate on orientation change
     window.addEventListener('resize', () => {
-      if (document.getElementById('moverlay').classList.contains('active')) {
+      if (document.getElementById('moverlay').classList.contains('open')) {
         document.documentElement.style.setProperty('--modal-h', window.innerHeight + 'px');
       }
     }, { passive: true });
@@ -67,35 +67,10 @@
       sets: { icon: '👑', label: 'Sets' },
     };
 
-    let _catAutoScrollRAF = 0;
-    let _catAutoScrollResume = 0;
     function initCategoryAutoScroll() {
-      const scrollEl = document.querySelector('.category-scroll, .cat-carousel-outer');
-      if (!scrollEl) return;
-
-      if (_catAutoScrollRAF) clearInterval(_catAutoScrollRAF);
-
-      const startAutoScroll = () => {
-        if (_catAutoScrollRAF) clearInterval(_catAutoScrollRAF);
-        _catAutoScrollRAF = setInterval(() => {
-          if (!scrollEl.matches(':hover')) {
-            scrollEl.scrollLeft += 1;
-          }
-        }, 30);
-      };
-
-      scrollEl.removeEventListener('touchstart', scrollEl._stopAutoScroll);
-      scrollEl.removeEventListener('touchend', scrollEl._startAutoScroll);
-
-      scrollEl._stopAutoScroll = () => {
-        if (_catAutoScrollRAF) clearInterval(_catAutoScrollRAF);
-      };
-      scrollEl._startAutoScroll = () => startAutoScroll();
-
-      scrollEl.addEventListener('touchstart', scrollEl._stopAutoScroll, { passive: true });
-      scrollEl.addEventListener('touchend', scrollEl._startAutoScroll, { passive: true });
-
-      startAutoScroll();
+      // CSS handles scroll: catScroll animation on desktop,
+      // overflow-x:auto touch scroll on mobile.
+      // No JS interval needed — it caused shaking by fighting CSS animation.
     }
 
     /* ── Section meta ───────────────────── */
@@ -817,8 +792,7 @@
       document.documentElement.style.setProperty(
         '--modal-h', window.innerHeight + 'px'
       );
-      document.getElementById('moverlay').classList.remove('open');
-      document.getElementById('moverlay').classList.add('active');
+      document.getElementById('moverlay').classList.add('open');
       const minfo = document.querySelector('.minfo');
       const minfoScroll = document.querySelector('.minfo-scroll');
       if (minfo) minfo.scrollTop = 0;
@@ -842,7 +816,7 @@
       );
 
       _gallery._keyHandler = e => {
-        if (document.getElementById('moverlay').classList.contains('active') && _gallery.imgs.length > 1) {
+        if (document.getElementById('moverlay').classList.contains('open') && _gallery.imgs.length > 1) {
           if (e.key === 'ArrowLeft') { e.preventDefault(); galleryPrev(); }
           else if (e.key === 'ArrowRight') { e.preventDefault(); galleryNext(); }
         }
