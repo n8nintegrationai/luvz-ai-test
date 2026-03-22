@@ -37,19 +37,14 @@
   }
 </script>
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-  <link rel="dns-prefetch" href="https://res.cloudinary.com" />
   <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Google Fonts: non-blocking via media=print swap -->
-  <link rel="preload" as="style"
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,200;0,300;1,200;1,300&display=swap" />
+  <!-- Google Fonts: non-blocking -->
   <link
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,200;0,300;1,200;1,300&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,200;0,300;1,200;1,300&display=swap"
     rel="stylesheet" media="print" onload="this.media='all'" />
-  <noscript><link
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,200;0,300;1,200;1,300&display=swap"
-    rel="stylesheet" /></noscript>
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,200;0,300;1,200;1,300&display=swap" rel="stylesheet" /></noscript>
   <link rel="preload" href="images/logo_gif.webp" as="image" type="image/webp" fetchpriority="high" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <!-- Tailwind CDN removed: only 5 utility classes were used, replaced with inline CSS -->
@@ -177,18 +172,6 @@
       background: var(--gold);
       border-radius: 2px
     }
-
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9999;
-      opacity: .016;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 256px
-    }
-
     /* ═══════════════════ GOLD TEXT ═══════════════════ */
     .gold-text {
       background: linear-gradient(110deg, var(--gold-d) 0%, var(--gold) 30%, var(--gold-l) 55%, var(--gold) 78%, var(--gold-d) 100%);
@@ -196,18 +179,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation: gShimmer 5s linear infinite
-    }
-
-    @keyframes gShimmer {
-      to {
-        background-position: 200% center
-      }
-    }
-
-    /* ═══════════════════ SKELETON ═══════════════════ */
-    .sk {
-      background: linear-gradient(90deg, var(--sk1) 25%, var(--sk2) 50%, var(--sk1) 75%);
+      
       background-size: 200% 100%;
       animation: skWave 1.7s infinite
     }
@@ -1019,28 +991,17 @@
       box-shadow: var(--sh);
       text-decoration: none;
       color: inherit;
-      animation: catFloat 4.5s ease-in-out infinite;
     }
 
-    .cat-tile:nth-child(2n) {
-      animation-delay: .7s
-    }
+    
 
-    .cat-tile:nth-child(3n) {
-      animation-delay: 1.4s
-    }
+    
 
-    .cat-tile:nth-child(4n) {
-      animation-delay: 2.1s
-    }
+    
 
-    .cat-tile:nth-child(5n) {
-      animation-delay: 2.8s
-    }
+    
 
-    .cat-tile:nth-child(6n) {
-      animation-delay: 3.5s
-    }
+    
 
     @keyframes catFloat {
 
@@ -1299,11 +1260,7 @@
       text-transform: uppercase;
       font-weight: 700;
       border-radius: 20px;
-      backdrop-filter: blur(6px)
-    }
-
-    .b-hot {
-      background: linear-gradient(135deg, var(--gold-d), var(--gold));
+      
       color: var(--btn-fg)
     }
 
@@ -1421,7 +1378,7 @@
       left: 50%;
       transform: translateX(-50%) translateY(8px);
       background: rgba(8, 8, 7, .82);
-      backdrop-filter: blur(8px);
+      
       border: 1px solid var(--border-h);
       color: var(--gold);
       font-family: 'Cinzel', serif;
@@ -1465,7 +1422,7 @@
       height: 30px;
       border-radius: 50%;
       background: rgba(8, 8, 7, .58);
-      backdrop-filter: blur(6px);
+      
       border: 1px solid rgba(212, 175, 55, .3);
       display: flex;
       align-items: center;
@@ -3114,7 +3071,7 @@
       border-radius: 2px;
       text-decoration: none;
       transition: all .3s;
-      backdrop-filter: blur(4px);
+      
       background: rgba(212,175,55,.06)
     }
     .heritage-cta:hover {
@@ -3271,7 +3228,7 @@
       width: 100%;
       height: 100%;
       transform-style: preserve-3d; /* 3D lives here only */
-      will-change: transform;
+      
     }
 
     .vault-card {
@@ -3285,7 +3242,7 @@
       /* visible !important so front face always renders */
       backface-visibility: visible !important;
       -webkit-backface-visibility: visible !important;
-      will-change: transform;
+      
       transition: box-shadow .3s;
       border-radius: 16px;
       /* No overflow:hidden — it clips the 3D children in some browsers */
@@ -3753,7 +3710,6 @@
       gap: 8px;
     }
     @media(max-width:480px) {
-      .hero-wa-btn { width: 100%; justify-content: center; }
     }
 
     /* ── Instagram CTA (Phase 5) ── */
@@ -3937,7 +3893,6 @@
       margin: 36px auto 0;
     }
     @media(max-width:700px) {
-      .testimonials-grid { grid-template-columns: 1fr; gap: 14px; }
     }
     .t-card {
       background: var(--card);
