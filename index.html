@@ -2247,15 +2247,12 @@
       #mimg-wrap {
         flex-shrink: 0;
         width: 100%;
-        /* aspect-ratio sets height = width × 4/3 = exact image ratio.
-           No max-height — that causes letterbox gaps on contain. */
-        aspect-ratio: 3 / 4;
-        /* Fallback for Samsung Internet < 14 which doesn't support aspect-ratio */
-        height: 0;
-        padding-bottom: 133.33%;
+        /* 65% of viewport height for image — gives it dominant presence */
+        height: 65vh;
+        max-height: 65vh;
         overflow: hidden;
-        padding: 0; /* overrides padding-bottom for browsers that support aspect-ratio */
         position: relative;
+        background: var(--modal-bg);
       }
     }
 
@@ -2271,14 +2268,14 @@
     }
     @media (max-width: 600px) {
       #mimg {
-        /* Fill wrap edge-to-edge — aspect-ratio on wrap guarantees 3:4 box */
         position: absolute;
         top: 0; left: 0;
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        /* cover fills the frame; object-position:top keeps jewellery visible */
+        object-fit: cover;
+        object-position: center top;
         border-radius: 0;
-        background: var(--modal-bg);
         display: block;
       }
     }
@@ -3476,31 +3473,7 @@
 
 
     /* ══ TASK 5: No Return Policy ══ */
-    .no-return-notice {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      margin-top: 12px;
-      padding: 10px 14px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: rgba(212,175,55,.03);
-    }
-    .no-return-notice svg { flex-shrink: 0; opacity: .45; margin-top: 1px; }
-    .no-return-notice p {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: .82rem;
-      font-style: italic;
-      color: var(--txt2);
-      opacity: .62;
-      line-height: 1.5;
-    }
-    .no-return-notice strong {
-      font-style: normal;
-      color: var(--gold);
-      opacity: .8;
-      font-weight: 600;
-    }
+
 
 
     /* ══ TASK 6: Review Lightbox ══ */
@@ -5043,10 +5016,7 @@
             </svg>
             Enquire on WhatsApp
           </a>
-          <div class="no-return-notice" id="modal-no-return">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
-            <p><strong>Custom-made for you.</strong> Each piece is crafted to order — returns aren't possible. We gladly replace items damaged during shipping. Enquire before ordering for sizing guidance.</p>
-          </div>
+
         </div>
       </div>
     </div>
