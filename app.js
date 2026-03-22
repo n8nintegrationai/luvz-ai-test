@@ -19,7 +19,7 @@
     /* ── Navbar ─────────────────────────── */
     // Keep --modal-h accurate on orientation change
     window.addEventListener('resize', () => {
-      if (document.getElementById('moverlay').classList.contains('open')) {
+      if (document.getElementById('moverlay').classList.contains('active')) {
         document.documentElement.style.setProperty('--modal-h', window.innerHeight + 'px');
       }
     }, { passive: true });
@@ -70,22 +70,32 @@
     let _catAutoScrollRAF = 0;
     let _catAutoScrollResume = 0;
     function initCategoryAutoScroll() {
-      const outer = document.querySelector('.cat-carousel-outer');
-      const track = document.getElementById('cat-grid');
-      if (!outer || !track) return;
+      const scrollEl = document.querySelector('.category-scroll, .cat-carousel-outer');
+      if (!scrollEl) return;
 
       if (_catAutoScrollRAF) clearInterval(_catAutoScrollRAF);
-      if (_catAutoScrollResume) clearTimeout(_catAutoScrollResume);
 
-      const resetPoint = () => Math.max(0, (outer.scrollWidth - outer.clientWidth) / 2);
-      _catAutoScrollRAF = setInterval(() => {
-        const loopAt = resetPoint();
-        if (outer.scrollWidth <= outer.clientWidth) return;
-        outer.scrollLeft += 1;
-        if (loopAt > 0 && outer.scrollLeft >= loopAt) {
-          outer.scrollLeft -= loopAt;
-        }
-      }, 20);
+      const startAutoScroll = () => {
+        if (_catAutoScrollRAF) clearInterval(_catAutoScrollRAF);
+        _catAutoScrollRAF = setInterval(() => {
+          if (!scrollEl.matches(':hover')) {
+            scrollEl.scrollLeft += 1;
+          }
+        }, 30);
+      };
+
+      scrollEl.removeEventListener('touchstart', scrollEl._stopAutoScroll);
+      scrollEl.removeEventListener('touchend', scrollEl._startAutoScroll);
+
+      scrollEl._stopAutoScroll = () => {
+        if (_catAutoScrollRAF) clearInterval(_catAutoScrollRAF);
+      };
+      scrollEl._startAutoScroll = () => startAutoScroll();
+
+      scrollEl.addEventListener('touchstart', scrollEl._stopAutoScroll, { passive: true });
+      scrollEl.addEventListener('touchend', scrollEl._startAutoScroll, { passive: true });
+
+      startAutoScroll();
     }
 
     /* ── Section meta ───────────────────── */
@@ -807,7 +817,8 @@
       document.documentElement.style.setProperty(
         '--modal-h', window.innerHeight + 'px'
       );
-      document.getElementById('moverlay').classList.add('open');
+      document.getElementById('moverlay').classList.remove('open');
+      document.getElementById('moverlay').classList.add('active');
       const minfo = document.querySelector('.minfo');
       const minfoScroll = document.querySelector('.minfo-scroll');
       if (minfo) minfo.scrollTop = 0;
@@ -831,7 +842,7 @@
       );
 
       _gallery._keyHandler = e => {
-        if (document.getElementById('moverlay').classList.contains('open') && _gallery.imgs.length > 1) {
+        if (document.getElementById('moverlay').classList.contains('active') && _gallery.imgs.length > 1) {
           if (e.key === 'ArrowLeft') { e.preventDefault(); galleryPrev(); }
           else if (e.key === 'ArrowRight') { e.preventDefault(); galleryNext(); }
         }
@@ -840,6 +851,7 @@
     }
     function closeModal() {
       document.getElementById('moverlay').classList.remove('open');
+      document.getElementById('moverlay').classList.remove('active');
       document.body.style.overflow = '';
       document.body.classList.remove('modal-open');
       if (_gallery._keyHandler) document.removeEventListener('keydown', _gallery._keyHandler);
