@@ -1810,7 +1810,18 @@
 
     @media(max-width:640px) {
       .contact-grid {
-        grid-template-columns: 1fr
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      /* Tighten card padding on small screens so content fits side by side */
+      .contact-card {
+        padding: 20px 14px;
+      }
+      .contact-title {
+        font-size: .9rem;
+      }
+      .contact-body {
+        font-size: .82rem;
       }
     }
 
