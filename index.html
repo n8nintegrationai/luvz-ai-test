@@ -151,6 +151,9 @@
       scroll-behavior: smooth
     }
 
+    html {
+      overflow-x: hidden;
+    }
     body {
       background: var(--bg);
       color: var(--txt);
@@ -2035,6 +2038,7 @@
       transition: opacity .45s ease, transform .45s ease;
       min-height: 48px;
       white-space: nowrap;
+      max-width: calc(100vw - 28px);
     }
     #fwa.fwa-visible {
       opacity: 1;

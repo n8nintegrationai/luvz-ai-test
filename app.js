@@ -12,9 +12,9 @@
     function setTheme(t, save = true) {
       document.documentElement.setAttribute('data-theme', t);
       document.querySelectorAll('.tb').forEach(b => b.classList.toggle('on', b.dataset.t === t));
-      if (save) localStorage.setItem('luvz-theme', t);
+      if (save) localStorage.setItem('luvz-theme-user-choice', t);
     }
-    setTheme(localStorage.getItem('luvz-theme') || 'dark', false);
+    setTheme(localStorage.getItem('luvz-theme-user-choice') || 'earth', false);
 
     /* ── Navbar ─────────────────────────── */
     // Keep --modal-h accurate on orientation change
@@ -718,7 +718,7 @@
           console.warn('Data fetch failed, using mock data:', fetchErr.message);
           d = MOCK_DATA;
         }
-        if (d.theme && !localStorage.getItem('luvz-theme')) setTheme(d.theme, false);
+        if (d.theme && !localStorage.getItem('luvz-theme-user-choice')) setTheme(d.theme, false);
         renderPoster(d.poster || null);
         renderHeritagePage(d.heritage || null);
         renderAboutSection(d.about || null);
