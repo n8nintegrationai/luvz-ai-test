@@ -3718,7 +3718,7 @@
       border-radius: 8px;
       color: var(--txt);
       font-family: 'Cinzel', serif;
-      font-size: .7rem;
+      font-size: 16px;
       letter-spacing: .12em;
       text-transform: uppercase;
       padding: 11px 14px;
@@ -3860,7 +3860,6 @@
       padding: 5px 12px;
       white-space: nowrap;
     }
-    /* Primary WA button in hero: full-width on mobile */
     .hero-wa-btn {
       font-size: .68rem;
       padding: 14px 24px;
@@ -3868,6 +3867,31 @@
       gap: 8px;
     }
     @media(max-width:480px) {
+      /* Keep both hero buttons on same row on small screens */
+      .hero-btns {
+        flex-wrap: nowrap;
+        gap: 8px;
+        width: 100%;
+      }
+      .hero-btns .btn-gold,
+      .hero-btns .btn-outline {
+        flex: 1;
+        min-width: 0;
+        font-size: .52rem;
+        padding: 13px 10px;
+        letter-spacing: .1em;
+        justify-content: center;
+      }
+      .hero-wa-btn {
+        font-size: .52rem;
+        padding: 13px 10px;
+        gap: 5px;
+      }
+      .hero-wa-btn svg {
+        width: 13px;
+        height: 13px;
+        flex-shrink: 0;
+      }
     }
 
     /* ── Instagram CTA (Phase 5) ── */
