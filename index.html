@@ -260,11 +260,11 @@
     /* ══ TASK 4: Liquid Gold Ultra-Striking Header ══ */
     .gem-bar {
       position: fixed;
-      top: 0;
+      top: 88px;
       left: 0;
       right: 0;
       height: 3px;
-      z-index: 1003;
+      z-index: 1002;
       background: linear-gradient(
         90deg,
         #5C3D00 0%,
@@ -282,6 +282,10 @@
       animation: liquidGold 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       box-shadow: 0 0 10px rgba(212,175,55,.5), 0 0 24px rgba(212,175,55,.18);
       pointer-events: none;
+    }
+    @media (max-width: 768px) {
+      /* Mobile nav is same height — keep top:88px */
+      .gem-bar { top: 88px; }
     }
     header,
     .top-container,

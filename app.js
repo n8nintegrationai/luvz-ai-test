@@ -72,30 +72,30 @@
       const track = document.getElementById('cat-grid');
       if (!outer || !track) return;
 
-      // Detect whether the outer is in scroll mode (mobile CSS)
-      // vs animation mode (desktop CSS). Check computed overflow-x.
-      function isScrollMode() {
-        return getComputedStyle(outer).overflowX === 'auto' ||
-               getComputedStyle(outer).overflowX === 'scroll';
-      }
+      // Use matchMedia — evaluates the SAME breakpoint as the CSS.
+      // Reliable on Chrome Android and Safari iOS, unlike innerWidth.
+      const mq = window.matchMedia('(max-width: 768px)');
+      if (!mq.matches) return; // Desktop: CSS catScroll animation handles it
 
-      // On desktop the CSS catScroll animation runs — no JS needed.
-      // Only activate JS auto-scroll when in scroll mode (mobile/tablet).
-      if (!isScrollMode()) return;
+      // Force mobile scroll styles explicitly — don't depend on CSS timing
+      outer.style.overflowX = 'auto';
+      outer.style.overflowY = 'hidden';
+      outer.style.webkitOverflowScrolling = 'touch';
 
-      const SPEED = 25; // px per second — consistent across all frame rates
+      const SPEED = 28; // px/sec — consistent at any frame rate
       let raf = null;
       let paused = false;
       let lastTs = null;
 
       function autoScroll(ts) {
         if (lastTs !== null && !paused) {
-          const dt = Math.min(ts - lastTs, 50); // cap delta at 50ms (handles tab switch)
+          const dt = Math.min(ts - lastTs, 50);
           const half = track.scrollWidth / 2;
-          outer.scrollLeft += SPEED * dt / 1000;
-          // Seamless loop: track is doubled, snap back at halfway
-          if (half > 0 && outer.scrollLeft >= half) {
-            outer.scrollLeft -= half;
+          if (half > 0) {
+            outer.scrollLeft += SPEED * (dt / 1000);
+            if (outer.scrollLeft >= half) {
+              outer.scrollLeft -= half;
+            }
           }
         }
         lastTs = ts;
@@ -107,11 +107,11 @@
       }, { passive: true });
 
       outer.addEventListener('touchend', () => {
-        // Resume after finger lifts — small delay lets momentum settle
         setTimeout(() => { paused = false; lastTs = null; }, 900);
       }, { passive: true });
 
-      raf = requestAnimationFrame(autoScroll);
+      // Small delay to ensure layout is flushed before reading scrollWidth
+      setTimeout(() => { raf = requestAnimationFrame(autoScroll); }, 150);
     }
 
     /* ── Section meta ───────────────────── */
