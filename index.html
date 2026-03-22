@@ -3775,7 +3775,8 @@
       color: var(--txt);
       transition: border-color .2s, box-shadow .2s;
     }
-    .ig-cta-link:hover { border-color: var(--border-h); box-shadow: var(--sh); }
+    .ig-cta-link:hover { border-color: var(--border-h); box-shadow: var(--sh); transform: translateY(-2px); }
+    .ig-cta-link:active { transform: scale(.98); transition: transform .1s; }
     .ig-cta-icon { color: var(--gold); flex-shrink: 0; }
     .ig-cta-handle {
       font-family: 'Cinzel', serif;
@@ -3917,9 +3918,80 @@
 
 
     /* ── content-visibility: defers rendering of off-screen sections ── */
-    #customer-love, footer, #social-gallery, .policy-sec, #how-it-works {
+    #customer-love, footer, #social-gallery, .policy-sec, #how-it-works, #testimonials {
       content-visibility: auto;
       contain-intrinsic-size: 0 400px;
+    }
+
+
+    /* ── Text Testimonials ── */
+    .testimonials-sec {
+      padding: 80px 24px;
+      background: var(--bg);
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      max-width: 980px;
+      margin: 36px auto 0;
+    }
+    @media(max-width:700px) {
+      .testimonials-grid { grid-template-columns: 1fr; gap: 14px; }
+    }
+    .t-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .t-card:hover { border-color: var(--border-h); box-shadow: var(--sh); }
+    .t-stars {
+      color: var(--gold);
+      font-size: 1rem;
+      letter-spacing: 2px;
+    }
+    .t-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--txt);
+      opacity: .88;
+      line-height: 1.65;
+      flex: 1;
+    }
+    .t-author {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+    .t-name {
+      font-family: 'Cinzel', serif;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .t-location {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .8rem;
+      font-style: italic;
+      color: var(--txt2);
+      opacity: .55;
+    }
+    .t-verified {
+      font-family: 'Cinzel', serif;
+      font-size: .52rem;
+      letter-spacing: .14em;
+      color: #4CAF50;
+      text-transform: uppercase;
     }
 
   </style>
@@ -4533,6 +4605,48 @@
             Open Instagram
           </a>
           <p class="contact-footer">DMs open · Usually replies within 1 hour</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEXT TESTIMONIALS -->
+  <section class="testimonials-sec reveal" id="testimonials" aria-label="Customer testimonials">
+    <div style="max-width:980px;margin:0 auto">
+      <div class="sec-head">
+        <div class="eyebrow">Real Customers</div>
+        <h2 class="sec-title gold-text">What They Say</h2>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:.95rem;font-style:italic;color:var(--txt2);opacity:.55;margin-top:10px">
+          Handcrafted pieces, heartfelt reviews.
+        </p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="t-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-quote">"Looks exactly like real gold! I wore it to a wedding and everyone was asking where I got it. The finish is stunning."</p>
+          <div class="t-author">
+            <span class="t-name">Priya S.</span>
+            <span class="t-location">Hyderabad</span>
+            <span class="t-verified">✓ Verified buyer</span>
+          </div>
+        </div>
+        <div class="t-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-quote">"Amazing quality for the price. The jhumkas are so lightweight yet look heavy and expensive. Couldn't be happier!"</p>
+          <div class="t-author">
+            <span class="t-name">Meena R.</span>
+            <span class="t-location">Bengaluru</span>
+            <span class="t-verified">✓ Verified buyer</span>
+          </div>
+        </div>
+        <div class="t-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-quote">"Ordered a custom necklace via WhatsApp — the team was so helpful and it arrived beautifully packed. Will order again!"</p>
+          <div class="t-author">
+            <span class="t-name">Anjali K.</span>
+            <span class="t-location">Chennai</span>
+            <span class="t-verified">✓ Verified buyer</span>
+          </div>
         </div>
       </div>
     </div>

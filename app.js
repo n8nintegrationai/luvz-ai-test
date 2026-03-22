@@ -69,8 +69,8 @@
 
     /* ── Section meta ───────────────────── */
     const SM = {
-      top_sellers: { badge: 'b-hot', label: '🔥 Best Seller', bt: 'Best Seller' },
-      new_collection: { badge: 'b-new', label: '✦ New Arrival', bt: 'New Arrival' },
+      top_sellers: { badge: 'b-hot', label: '✨ Bestseller', bt: 'Best Seller' },
+      new_collection: { badge: 'b-new', label: '💎 New Arrival', bt: 'New Arrival' },
     };
 
     /* ── Helpers ────────────────────────── */
@@ -408,7 +408,7 @@
       if (p.badge === 'soldout' || p.sold_out) {
         badgeHtml = `<div class="badge b-soldout">Sold Out</div>`;
       } else if (p.badge === 'limited' || p.limited) {
-        badgeHtml = `<div class="badge b-lim">⚠ Limited</div>`;
+        badgeHtml = `<div class="badge b-lim">🔥 Limited Stock</div>`;
       } else if (p.badge === 'new') {
         badgeHtml = `<div class="badge b-new">✦ New Arrival</div>`;
       } else {
@@ -537,7 +537,7 @@
 
         let badgeHtml = '';
         if (p.badge === 'soldout' || p.sold_out) badgeHtml = `<div class="badge b-soldout">Sold Out</div>`;
-        else if (p.badge === 'limited' || p.limited) badgeHtml = `<div class="badge b-lim">⚠ Limited</div>`;
+        else if (p.badge === 'limited' || p.limited) badgeHtml = `<div class="badge b-lim">🔥 Limited Stock</div>`;
         else if (p.badge === 'new') badgeHtml = `<div class="badge b-new">✦ New Arrival</div>`;
         else badgeHtml = `<div class="badge b-hot">${m.label}</div>`;
 
