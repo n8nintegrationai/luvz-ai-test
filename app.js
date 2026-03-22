@@ -67,6 +67,61 @@
       sets: { icon: '👑', label: 'Sets' },
     };
 
+    let _catAutoScrollRAF = 0;
+    let _catAutoScrollResume = 0;
+    function initCategoryAutoScroll() {
+      const outer = document.querySelector('.cat-carousel-outer');
+      const track = document.getElementById('cat-grid');
+      if (!outer || !track) return;
+
+      if (_catAutoScrollRAF) cancelAnimationFrame(_catAutoScrollRAF);
+      if (_catAutoScrollResume) clearTimeout(_catAutoScrollResume);
+
+      let isUserInteracting = false;
+      const scrollSpeed = window.matchMedia('(max-width: 768px)').matches ? 0.3 : 0.45;
+      const resetPoint = () => Math.max(0, (outer.scrollWidth - outer.clientWidth) / 2);
+      const pauseAutoScroll = () => {
+        isUserInteracting = true;
+        if (_catAutoScrollResume) clearTimeout(_catAutoScrollResume);
+      };
+      const resumeAutoScroll = () => {
+        if (_catAutoScrollResume) clearTimeout(_catAutoScrollResume);
+        _catAutoScrollResume = setTimeout(() => { isUserInteracting = false; }, 2000);
+      };
+      const autoScroll = () => {
+        if (!isUserInteracting && outer.scrollWidth > outer.clientWidth) {
+          const loopAt = resetPoint();
+          outer.scrollLeft += scrollSpeed;
+          if (loopAt > 0 && outer.scrollLeft >= loopAt) {
+            outer.scrollLeft -= loopAt;
+          }
+        }
+        _catAutoScrollRAF = requestAnimationFrame(autoScroll);
+      };
+
+      outer.removeEventListener('touchstart', outer._pauseAutoScroll);
+      outer.removeEventListener('touchend', outer._resumeAutoScroll);
+      outer.removeEventListener('touchcancel', outer._resumeAutoScroll);
+      outer.removeEventListener('pointerdown', outer._pauseAutoScroll);
+      outer.removeEventListener('pointerup', outer._resumeAutoScroll);
+      outer.removeEventListener('pointercancel', outer._resumeAutoScroll);
+      outer.removeEventListener('scroll', outer._resumeAutoScroll);
+
+      outer._pauseAutoScroll = pauseAutoScroll;
+      outer._resumeAutoScroll = resumeAutoScroll;
+
+      outer.addEventListener('touchstart', pauseAutoScroll, { passive: true });
+      outer.addEventListener('touchend', resumeAutoScroll, { passive: true });
+      outer.addEventListener('touchcancel', resumeAutoScroll, { passive: true });
+      outer.addEventListener('pointerdown', pauseAutoScroll, { passive: true });
+      outer.addEventListener('pointerup', resumeAutoScroll, { passive: true });
+      outer.addEventListener('pointercancel', resumeAutoScroll, { passive: true });
+      outer.addEventListener('scroll', resumeAutoScroll, { passive: true });
+
+      if (outer.scrollLeft === 0 && resetPoint() > 0) outer.scrollLeft = 1;
+      autoScroll();
+    }
+
     /* ── Section meta ───────────────────── */
     const SM = {
       top_sellers: { badge: 'b-hot', label: '✨ Bestseller', bt: 'Best Seller' },
@@ -663,9 +718,9 @@
         if (cg && d.categories && d.categories.length) {
 
           const tilesHTML = d.categories.map(buildCatTile).join('');
-          const useNativeCatScroll = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
-          cg.innerHTML = useNativeCatScroll ? tilesHTML : tilesHTML + tilesHTML;
+          cg.innerHTML = tilesHTML + tilesHTML;
           cg.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+          initCategoryAutoScroll();
         }
         ['top_sellers', 'new_collection'].forEach(sec => {
           if (d[sec] && d[sec].length) {
