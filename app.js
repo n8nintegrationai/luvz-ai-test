@@ -29,6 +29,14 @@
       const si = document.querySelector('.scroll-ind');
       if (si) si.style.opacity = window.scrollY > 100 ? '0' : '1';
 
+      // Gem bar: visible only on first screen, hides as user scrolls away
+      const gb = document.querySelector('.gem-bar');
+      if (gb) {
+        const hero = document.querySelector('.hero');
+        const heroH = hero ? hero.offsetHeight : window.innerHeight;
+        gb.classList.toggle('gem-hidden', window.scrollY > heroH * 0.85);
+      }
+
       // Task 4B: show floating WA only after scrolling past hero
       const fwa = document.getElementById('fwa');
       if (fwa) {
@@ -72,34 +80,41 @@
       const track = document.getElementById('cat-grid');
       if (!outer || !track) return;
 
-      // Use matchMedia — evaluates the SAME breakpoint as the CSS.
-      // Reliable on Chrome Android and Safari iOS, unlike innerWidth.
-      const mq = window.matchMedia('(max-width: 768px)');
-      if (!mq.matches) return; // Desktop: CSS catScroll animation handles it
+      // Detect touch device — works on all mobile browsers regardless of viewport width.
+      // Coarse pointer = touchscreen (phones, tablets). Fine pointer = mouse (desktop).
+      const isTouch = window.matchMedia('(pointer: coarse)').matches;
+      if (!isTouch) return; // Desktop with mouse: CSS catScroll animation handles it
 
-      // Force mobile scroll styles explicitly — don't depend on CSS timing
+      // Stop CSS animation on this element — JS scroll takes over
+      track.style.animation = 'none';
+      track.style.webkitAnimation = 'none';
+
+      // Force scrollable container
       outer.style.overflowX = 'auto';
       outer.style.overflowY = 'hidden';
       outer.style.webkitOverflowScrolling = 'touch';
+      // Remove fade masks on mobile (they use overflow:hidden which clips scroll)
+      outer.style.webkitMaskImage = 'none';
+      outer.style.maskImage = 'none';
 
-      const SPEED = 28; // px/sec — consistent at any frame rate
+      const SPEED = 30; // px/sec
       let raf = null;
       let paused = false;
       let lastTs = null;
 
-      function autoScroll(ts) {
+      function step(ts) {
         if (lastTs !== null && !paused) {
-          const dt = Math.min(ts - lastTs, 50);
+          const dt = Math.min(ts - lastTs, 50); // cap for tab-switch gaps
           const half = track.scrollWidth / 2;
           if (half > 0) {
             outer.scrollLeft += SPEED * (dt / 1000);
             if (outer.scrollLeft >= half) {
-              outer.scrollLeft -= half;
+              outer.scrollLeft -= half; // seamless loop
             }
           }
         }
         lastTs = ts;
-        raf = requestAnimationFrame(autoScroll);
+        raf = requestAnimationFrame(step);
       }
 
       outer.addEventListener('touchstart', () => {
@@ -107,11 +122,16 @@
       }, { passive: true });
 
       outer.addEventListener('touchend', () => {
-        setTimeout(() => { paused = false; lastTs = null; }, 900);
+        // Wait for momentum scroll to settle before resuming auto-scroll
+        setTimeout(() => { paused = false; lastTs = null; }, 1000);
       }, { passive: true });
 
-      // Small delay to ensure layout is flushed before reading scrollWidth
-      setTimeout(() => { raf = requestAnimationFrame(autoScroll); }, 150);
+      // Wait for a full paint so scrollWidth is accurate
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          raf = requestAnimationFrame(step);
+        });
+      });
     }
 
     /* ── Section meta ───────────────────── */

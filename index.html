@@ -282,10 +282,11 @@
       animation: liquidGold 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       box-shadow: 0 0 10px rgba(212,175,55,.5), 0 0 24px rgba(212,175,55,.18);
       pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.4s ease;
     }
-    @media (max-width: 768px) {
-      /* Mobile nav is same height — keep top:88px */
-      .gem-bar { top: 88px; }
+    .gem-bar.gem-hidden {
+      opacity: 0;
     }
     header,
     .top-container,
