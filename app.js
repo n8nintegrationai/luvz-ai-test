@@ -719,6 +719,10 @@
           d = MOCK_DATA;
         }
         if (d.theme && !localStorage.getItem('luvz-theme-user-choice')) setTheme(d.theme, false);
+        // Store valid referral codes (case-insensitive — normalise to uppercase)
+        if (Array.isArray(d.referral_codes)) {
+          _validReferralCodes = d.referral_codes.map(c => String(c).trim().toUpperCase());
+        }
         renderPoster(d.poster || null);
         renderHeritagePage(d.heritage || null);
         renderAboutSection(d.about || null);
@@ -841,8 +845,10 @@
       // Reset referral field
       const _ri = document.getElementById('referral-code');
       const _ra = document.getElementById('referral-applied');
-      if (_ri) { _ri.value = ''; }
+      const _rv = document.getElementById('referral-invalid');
+      if (_ri) { _ri.value = ''; _ri.classList.remove('invalid'); }
       if (_ra) { _ra.classList.remove('show'); }
+      if (_rv) { _rv.classList.remove('show'); }
       // Set base WA URL (referral code appended dynamically via applyReferralCode)
       document.getElementById('m-wa').href = p.whatsapp || waURL(p.name);
       // Set --modal-h to actual visible height (Chrome vh bug fix)
@@ -1410,10 +1416,12 @@
     /* ── Referral Code System ─────────────────── */
     // Stores the current product data so we can rebuild the WA URL on code change
     let _currentModalProduct = null;
+    let _validReferralCodes   = [];   // populated from JSON referral_codes field
 
     function applyReferralCode() {
       const input   = document.getElementById('referral-code');
       const applied = document.getElementById('referral-applied');
+      const invalid = document.getElementById('referral-invalid');
       const waBtn   = document.getElementById('m-wa');
       if (!input || !waBtn || !_currentModalProduct) return;
 
@@ -1421,16 +1429,32 @@
       const p    = _currentModalProduct;
       const name = p.name || 'this piece';
 
-      // Build WhatsApp message: base text + optional referral code
-      let msg = `Hi! I'm interested in ${name} 🤩`;
-      if (code) {
-        msg += `\nReferral Code: ${code}`;
-        applied.classList.add('show');
-      } else {
-        applied.classList.remove('show');
+      // Reset states
+      applied.classList.remove('show');
+      if (invalid) invalid.classList.remove('show');
+      input.classList.remove('invalid');
+
+      // Empty input — optional, allow WhatsApp flow unchanged
+      if (!code) {
+        const base = `https://wa.me/${WA_NUM}`;
+        waBtn.href = `${base}?text=${encodeURIComponent(`Hi! I'm interested in ${name} 🤩`)}`;
+        return;
       }
 
-      // Use product-specific WA URL or construct from WA_NUM
+      // Validate against list loaded from JSON
+      // If list is empty (not configured in JSON), accept any code
+      const isValid = _validReferralCodes.length === 0 || _validReferralCodes.includes(code);
+
+      if (!isValid) {
+        input.classList.add('invalid');
+        if (invalid) invalid.classList.add('show');
+        // Keep existing WA href — user can still enquire without a code
+        return;
+      }
+
+      // Valid code — append to WhatsApp message
+      applied.classList.add('show');
+      const msg = `Hi! I'm interested in ${name} 🤩\nReferral Code: ${code}`;
       const base = `https://wa.me/${WA_NUM}`;
       waBtn.href = `${base}?text=${encodeURIComponent(msg)}`;
     }

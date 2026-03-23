@@ -3759,6 +3759,20 @@
       display: none;
     }
     .referral-applied.show { display: block; }
+    .referral-invalid {
+      font-family: 'Cinzel', serif;
+      font-size: .56rem;
+      letter-spacing: .2em;
+      color: #E05060;
+      margin-top: 5px;
+      display: none;
+    }
+    .referral-invalid.show { display: block; }
+    /* Highlight input border red when code is invalid */
+    .referral-input.invalid {
+      border-color: #E05060;
+      box-shadow: 0 0 0 2px rgba(224, 80, 96, .12);
+    }
     @media(min-width:640px) {
     }
     @media(min-width:960px) {
@@ -5007,6 +5021,7 @@
                 <button class="referral-apply" onclick="applyReferralCode()" type="button">Apply</button>
               </div>
               <span class="referral-applied" id="referral-applied">✓ Code applied</span>
+              <span class="referral-invalid" id="referral-invalid">✗ Invalid code</span>
             </div>
           </div>
           <a id="m-wa" href="#" target="_blank" rel="noopener noreferrer" class="btn-gold enquiry-btn" style="width:100%;margin-top:12px">
