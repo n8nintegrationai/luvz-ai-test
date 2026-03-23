@@ -5016,8 +5016,8 @@
               <label class="referral-label" for="referral-code">Enter referral or discount code</label>
               <div class="referral-row">
                 <input id="referral-code" class="referral-input" type="text"
-                  placeholder="Enter code" maxlength="32" autocomplete="off"
-                  oninput="applyReferralCode()" />
+                  placeholder="Enter code" maxlength="32" minlength="5" autocomplete="off"
+                  oninput="clearReferralState()" />
                 <button class="referral-apply" onclick="applyReferralCode()" type="button">Apply</button>
               </div>
               <span class="referral-applied" id="referral-applied">✓ Code applied</span>

@@ -1418,6 +1418,17 @@
     let _currentModalProduct = null;
     let _validReferralCodes   = [];   // populated from JSON referral_codes field
 
+    // Clears error/success state while user is typing — no validation yet
+    function clearReferralState() {
+      const input   = document.getElementById('referral-code');
+      const applied = document.getElementById('referral-applied');
+      const invalid = document.getElementById('referral-invalid');
+      if (input)   input.classList.remove('invalid');
+      if (applied) applied.classList.remove('show');
+      if (invalid) invalid.classList.remove('show');
+    }
+
+    // Triggered only by the Apply button — validates and updates WA URL
     function applyReferralCode() {
       const input   = document.getElementById('referral-code');
       const applied = document.getElementById('referral-applied');
@@ -1429,34 +1440,38 @@
       const p    = _currentModalProduct;
       const name = p.name || 'this piece';
 
-      // Reset states
-      applied.classList.remove('show');
-      if (invalid) invalid.classList.remove('show');
+      // Reset states before evaluating
       input.classList.remove('invalid');
+      if (applied) applied.classList.remove('show');
+      if (invalid) invalid.classList.remove('show');
 
-      // Empty input — optional, allow WhatsApp flow unchanged
+      // Empty — referral is optional, restore base WA URL
       if (!code) {
         const base = `https://wa.me/${WA_NUM}`;
         waBtn.href = `${base}?text=${encodeURIComponent(`Hi! I'm interested in ${name} 🤩`)}`;
         return;
       }
 
-      // Validate against list loaded from JSON
-      // If list is empty (not configured in JSON), accept any code
+      // Minimum length check (5 chars)
+      if (code.length < 5) {
+        input.classList.add('invalid');
+        if (invalid) { invalid.textContent = '✗ Code must be at least 5 characters'; invalid.classList.add('show'); }
+        return;
+      }
+
+      // Validate against list from JSON (empty list = accept any code)
       const isValid = _validReferralCodes.length === 0 || _validReferralCodes.includes(code);
 
       if (!isValid) {
         input.classList.add('invalid');
-        if (invalid) invalid.classList.add('show');
-        // Keep existing WA href — user can still enquire without a code
+        if (invalid) { invalid.textContent = '✗ Invalid code'; invalid.classList.add('show'); }
         return;
       }
 
-      // Valid code — append to WhatsApp message
-      applied.classList.add('show');
+      // Valid — update WA URL and show success
+      if (applied) applied.classList.add('show');
       const msg = `Hi! I'm interested in ${name} 🤩\nReferral Code: ${code}`;
-      const base = `https://wa.me/${WA_NUM}`;
-      waBtn.href = `${base}?text=${encodeURIComponent(msg)}`;
+      waBtn.href = `https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`;
     }
 
     function renderReviews(reviews) {
