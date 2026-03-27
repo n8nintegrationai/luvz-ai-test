@@ -1102,6 +1102,24 @@
       mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
       padding: 18px 0 22px;
     }
+    /* Touch devices at any width: JS sets overflow-x inline,
+       but declare it here too so CSS and JS agree */
+    @media (hover: none) and (pointer: coarse) {
+      .cat-carousel-outer {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-mask-image: none;
+        mask-image: none;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 12px 0 18px;
+      }
+      .cat-carousel-outer::-webkit-scrollbar { display: none; }
+      .cat-carousel-track {
+        animation: none !important;
+        padding: 0 12px;
+      }
+    }
 
     .cat-carousel-track {
       display: flex;

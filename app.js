@@ -78,57 +78,72 @@
       const track = document.getElementById('cat-grid');
       if (!outer || !track) return;
 
-      // Touch device check: coarse pointer = any touchscreen
-      if (!window.matchMedia('(pointer: coarse)').matches) return;
+      // Device detection: use ontouchstart (universal) instead of pointer media query.
+      // pointer:coarse fails on iPhone Chrome and some Samsung browsers.
+      const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+      if (!isTouch) return;
 
-      // 1. Kill CSS transform animation — read offsetWidth to force reflow
-      //    so Chrome registers the change before the rAF loop starts
+      // Stop CSS animation on the track (kill transform so scrollLeft works)
       track.style.webkitAnimation = 'none';
       track.style.animation = 'none';
-      void track.offsetWidth; // reflow trigger
+      void track.offsetWidth; // force reflow so browser registers animation removal
 
-      // 2. Make outer scrollable — set overflow shorthand (not just overflow-x)
-      //    to override the desktop 'overflow: hidden' rule
-      outer.style.overflow = 'hidden'; // reset first
-      outer.style.overflowX = 'auto'; // then allow horizontal
-      void outer.offsetWidth; // reflow trigger
+      // Make outer scrollable.
+      // Do NOT set overflow shorthand first — on Mobile Safari setting
+      // overflow:hidden then overflow-x:auto in separate statements
+      // doesn't reliably work. Set both longhands directly.
+      outer.style.overflowX = 'auto';
+      outer.style.overflowY = 'hidden';
+      outer.style.webkitOverflowScrolling = 'touch';
 
-      // 3. Remove webkit mask (forces overflow:hidden in WebKit)
+      // Remove the webkit mask-image — it forces overflow:hidden internally
+      // in WebKit regardless of the overflow-x value, blocking scrollLeft.
       outer.style.webkitMaskImage = 'none';
       outer.style.maskImage = 'none';
 
-      // 4. Touch listeners — pause auto-scroll while user swipes
+      // Force a reflow so Safari registers the overflowX change
+      // before we try to set scrollLeft
+      void outer.offsetWidth;
+
+      // Touch listeners — pause auto-scroll while user is swiping
       let paused = false;
       outer.addEventListener('touchstart', () => {
         paused = true;
       }, { passive: true });
       outer.addEventListener('touchend', () => {
-        setTimeout(() => { paused = false; }, 800);
+        setTimeout(() => { paused = false; lastTs = null; }, 900);
       }, { passive: true });
 
-      // 5. Start rAF loop — timestamp-based speed (px/sec, frame-rate independent)
-      const SPEED = 30;
+      // Timestamp-based rAF loop — consistent speed regardless of frame rate
+      const SPEED = 28; // px per second
       let lastTs = null;
 
       function step(ts) {
         if (!paused) {
           if (lastTs !== null) {
-            const dt = Math.min(ts - lastTs, 50);
+            const dt = Math.min(ts - lastTs, 50); // cap delta to handle tab switches
             const half = track.scrollWidth / 2;
-            if (half > 0) {
+            // Only scroll if track is actually wider than outer (i.e. scrollable)
+            if (half > outer.clientWidth) {
               outer.scrollLeft += SPEED * dt / 1000;
-              if (outer.scrollLeft >= half) outer.scrollLeft -= half;
+              if (outer.scrollLeft >= half) outer.scrollLeft -= half; // seamless loop
             }
           }
           lastTs = ts;
-        } else {
-          lastTs = null; // reset so there's no jump on resume
         }
         requestAnimationFrame(step);
       }
 
-      // Wait two frames for layout to settle after innerHTML was set
-      requestAnimationFrame(() => requestAnimationFrame(() => step(performance.now())));
+      // Wait for two paint frames so scrollWidth is fully calculated
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        // Final safety check: if scrollWidth is still 0, tiles haven't rendered
+        if (track.scrollWidth > outer.clientWidth) {
+          step(performance.now());
+        } else {
+          // Retry after a short delay (slow devices / network)
+          setTimeout(() => step(performance.now()), 400);
+        }
+      }));
     }
 
     /* ── Section meta ───────────────────── */
