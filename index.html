@@ -1102,24 +1102,7 @@
       mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
       padding: 18px 0 22px;
     }
-    /* Touch devices at any width: JS sets overflow-x inline,
-       but declare it here too so CSS and JS agree */
-    @media (hover: none) and (pointer: coarse) {
-      .cat-carousel-outer {
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-mask-image: none;
-        mask-image: none;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        padding: 12px 0 18px;
-      }
-      .cat-carousel-outer::-webkit-scrollbar { display: none; }
-      .cat-carousel-track {
-        animation: none !important;
-        padding: 0 12px;
-      }
-    }
+
 
     .cat-carousel-track {
       display: flex;
@@ -1127,34 +1110,18 @@
       width: max-content;
     }
 
-    /* CSS animation only on non-touch devices — touch devices use JS scroll */
-    @media (hover: hover) and (pointer: fine) {
-      .cat-carousel-track {
-        animation: catScroll 32s linear infinite;
-      }
+    /* CSS animation runs on ALL devices — GPU-accelerated, works on mobile */
+    .cat-carousel-track {
+      animation: catScroll 32s linear infinite;
     }
 
     @media(max-width:768px) {
       .cat-carousel-outer {
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scroll-behavior: auto;
-        scrollbar-width: none;
-        -webkit-mask-image: none;
-        mask-image: none;
         padding: 12px 0 18px;
-        touch-action: pan-x;
-      }
-
-      .cat-carousel-outer::-webkit-scrollbar {
-        display: none;
       }
 
       .cat-carousel-track {
         gap: 12px;
-        width: max-content;
-        animation: none;
         padding: 0 16px;
       }
 
@@ -4742,7 +4709,9 @@
           loading="eager" fetchpriority="high" decoding="async" width="110" height="110" />
         <div class="hero-kicker">✦ Designer Boutique ✦</div>
         <h1 class="hero-h1"><span class="gold-text">LUVZ</span> <span class="hero-h1-sub">Collection</span></h1>
-        <p class="hero-tagline">Handcrafted 92.5 silver jewellery — custom-made for you, delivered across India.</p>
+        <p class="hero-tagline">Real silver. Real craft. Made for you.</p>
+        <p class="hero-sub">WhatsApp us to order — custom pieces in 92.5 silver with 22K gold polish, shipped across
+          India.</p>
         <div class="hero-trust-pills">
           <span class="hero-pill">🚚 Free shipping ₹999+</span>
           <span class="hero-pill">✨ Custom designs</span>
@@ -4775,10 +4744,7 @@
           </a>
           <a href="#categories" class="btn-outline">Browse Collection</a>
         </div>
-        <div class="hero-social-proof">
-          <span class="hero-stars">⭐⭐⭐⭐⭐</span>
-          <span class="hero-proof-text">Loved by <strong>1,000+</strong> customers across India</span>
-        </div>
+
       </div>
     </div>
     <div class="scroll-ind" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">
@@ -4803,47 +4769,7 @@
   </div>
 
   <!-- TRUST STRIP — SVG Quality Pillars -->
-  <div class="trust-strip" id="trust-strip">
-    <div class="trust-inner">
-      <div class="trust-item">
-        <span class="trust-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polygon
-              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-          </svg></span>
-        <div class="trust-text"><strong>925 Hallmark Certified</strong>Government-stamped purity</div>
-      </div>
-      <div class="trust-item">
-        <span class="trust-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M18 11V6a2 2 0 0 0-4 0v0" />
-            <path d="M14 10V4a2 2 0 0 0-4 0v2" />
-            <path d="M10 10.5V6a2 2 0 0 0-4 0v8" />
-            <path
-              d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15" />
-          </svg></span>
-        <div class="trust-text"><strong>Artisanal Hand-Finish</strong>22K gold polish by craftsmen</div>
-      </div>
-      <div class="trust-item">
-        <span class="trust-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3" />
-            <rect x="9" y="11" width="14" height="10" rx="2" />
-            <circle cx="12" cy="21" r="1" />
-            <circle cx="20" cy="21" r="1" />
-          </svg></span>
-        <div class="trust-text"><strong>Secure Pan-India Shipping</strong>Free above ₹999</div>
-      </div>
-      <div class="trust-item">
-        <span class="trust-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" />
-            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-          </svg></span>
-        <div class="trust-text"><strong>Nickel-Free & Skin-Safe</strong>Hypoallergenic materials</div>
-      </div>
-    </div>
-  </div>
+
 
   <!-- SHOP BY CATEGORY -->
   <section id="categories" class="sec reveal">
@@ -4957,35 +4883,32 @@
         <div class="why-card">
           <span class="why-icon">🥈</span>
           <div class="why-title">92.5 Sterling Silver</div>
-          <div class="why-body">Hallmark certified 92.5 silver — the finest grade, built to last a lifetime.</div>
+          <div class="why-body">Hallmark certified. The finest grade.</div>
         </div>
         <div class="why-card">
           <span class="why-icon">✨</span>
           <div class="why-title">22K Gold Polish</div>
-          <div class="why-body">Temple-grade 22 carat gold finish that glows warm and resists tarnishing.</div>
+          <div class="why-body">Temple-warm glow that doesn't fade.</div>
         </div>
         <div class="why-card">
           <span class="why-icon">🤲</span>
           <div class="why-title">Handcrafted Designs</div>
-          <div class="why-body">Every piece shaped by skilled artisans — no two pieces are exactly alike.</div>
+          <div class="why-body">Real hands. No two pieces alike.</div>
         </div>
         <div class="why-card">
           <span class="why-icon">🌿</span>
           <div class="why-title">Lightweight & Skin Safe</div>
-          <div class="why-body">Nickel-free and hypoallergenic — safe for sensitive skin, light enough for all-day wear.
-          </div>
+          <div class="why-body">Nickel-free. Wear it all day, every day.</div>
         </div>
         <div class="why-card">
           <span class="why-icon">🚚</span>
           <div class="why-title">Free Shipping</div>
-          <div class="why-body">Free delivery across India on all orders above ₹999. Packaged securely and with care.
-          </div>
+          <div class="why-body">Tracked, secure, pan-India. Free above ₹999.</div>
         </div>
         <div class="why-card">
           <span class="why-icon">💬</span>
           <div class="why-title">WhatsApp Support</div>
-          <div class="why-body">Direct access to us — custom orders, sizing help, or just a question. We reply fast.
-          </div>
+          <div class="why-body">Custom orders. Fast replies. Direct line to us.</div>
         </div>
       </div>
     </div>
@@ -5030,9 +4953,8 @@
       <div class="sec-head">
         <div class="eyebrow">Browse by Type</div>
         <h2 class="sec-title gold-text" id="title-category-necklace">Necklace</h2>
-        <p class="cat-sec-subtitle" id="sub-category-necklace">Delicate elegance for every moment</p>
-        <p class="cat-sec-story" id="story-category-necklace">Each necklace is handcrafted in 92.5 silver, finished with
-          a lustrous 22K gold polish.</p>
+        <p class="cat-sec-subtitle" id="sub-category-necklace">Delicate layers. Everyday glamour.</p>
+
       </div>
       <div class="carousel-wrap">
         <div class="carousel-track" id="ct-category-necklace">
@@ -5050,9 +4972,8 @@
       <div class="sec-head">
         <div class="eyebrow">Browse by Type</div>
         <h2 class="sec-title gold-text" id="title-category-pendant">Pendant</h2>
-        <p class="cat-sec-subtitle" id="sub-category-pendant">Wear your story close to your heart</p>
-        <p class="cat-sec-story" id="story-category-pendant">Intricate pendant designs in 92.5 silver — light enough for
-          daily wear, beautiful enough for every occasion.</p>
+        <p class="cat-sec-subtitle" id="sub-category-pendant">Wear your story. Close to your heart.</p>
+
       </div>
       <div class="carousel-wrap">
         <div class="carousel-track" id="ct-category-pendant">
@@ -5070,9 +4991,8 @@
       <div class="sec-head">
         <div class="eyebrow">Browse by Type</div>
         <h2 class="sec-title gold-text" id="title-category-earrings">Earrings</h2>
-        <p class="cat-sec-subtitle" id="sub-category-earrings">Frame your face in gold</p>
-        <p class="cat-sec-story" id="story-category-earrings">From subtle drops to statement chandbalis — all crafted in
-          92.5 silver with 22K gold polish.</p>
+        <p class="cat-sec-subtitle" id="sub-category-earrings">From subtle to statement — all handcrafted.</p>
+
       </div>
       <div class="carousel-wrap">
         <div class="carousel-track" id="ct-category-earrings">
@@ -5090,9 +5010,8 @@
       <div class="sec-head">
         <div class="eyebrow">Browse by Type</div>
         <h2 class="sec-title gold-text" id="title-category-bangles">Bangles</h2>
-        <p class="cat-sec-subtitle" id="sub-category-bangles">Grace in every gesture</p>
-        <p class="cat-sec-story" id="story-category-bangles">Timeless bangle designs in 92.5 silver, inspired by South
-          Indian heritage and temple traditions.</p>
+        <p class="cat-sec-subtitle" id="sub-category-bangles">Grace in every gesture.</p>
+
       </div>
       <div class="carousel-wrap">
         <div class="carousel-track" id="ct-category-bangles">
@@ -5110,9 +5029,8 @@
       <div class="sec-head">
         <div class="eyebrow">Browse by Type</div>
         <h2 class="sec-title gold-text" id="title-category-jhumkas">Jhumkas</h2>
-        <p class="cat-sec-subtitle" id="sub-category-jhumkas">The jhumka — India's most beloved earring</p>
-        <p class="cat-sec-story" id="story-category-jhumkas">Handcrafted jhumkas in 92.5 silver with 22K gold polish.
-          Lightweight, elegant, and deeply rooted in tradition.</p>
+        <p class="cat-sec-subtitle" id="sub-category-jhumkas">India's favourite earring. Reimagined in silver.</p>
+
       </div>
       <div class="carousel-wrap">
         <div class="carousel-track" id="ct-category-jhumkas">
@@ -5130,9 +5048,8 @@
       <div class="sec-head">
         <div class="eyebrow">Browse by Type</div>
         <h2 class="sec-title gold-text" id="title-category-sets">Sets</h2>
-        <p class="cat-sec-subtitle" id="sub-category-sets">Complete the look, effortlessly</p>
-        <p class="cat-sec-story" id="story-category-sets">Curated matching sets in 92.5 silver — designed to complement
-          each other perfectly.</p>
+        <p class="cat-sec-subtitle" id="sub-category-sets">One look. Perfectly matched.</p>
+
       </div>
       <div class="carousel-wrap">
         <div class="carousel-track" id="ct-category-sets">
@@ -5148,22 +5065,17 @@
   <!-- BRAND STORY -->
   <section id="story" class="sec reveal">
     <div class="story-inner">
-      <div class="divider" style="margin-bottom:22px"><span style="font-size:.6rem;letter-spacing:.4em">✦ Our Craft
+      <div class="divider" style="margin-bottom:22px"><span style="font-size:.6rem;letter-spacing:.4em">✦ Our Story
           ✦</span></div>
-      <h2 class="sec-title gold-text" style="margin-bottom:20px">Crafted with Devotion</h2>
-      <p class="story-lede">"Every piece carries the warmth of temple jewellery — made for women who wear tradition
-        beautifully."</p>
-      <p class="story-body">LUVZ Collection was born from a deep love for traditional Indian craftsmanship. Each piece
-        is meticulously crafted in 92.5 sterling silver and hand-finished with a lustrous 22 carat gold polish —
-        blending the grandeur of temple jewellery with the elegance demanded by today's modern woman. From delicate
-        pendant sets to statement guttapusalus, every ornament tells a story of heritage, devotion, and timeless beauty.
-      </p>
+      <h2 class="sec-title gold-text" style="margin-bottom:20px">Our Story</h2>
+      <p class="story-body">LUVZ was born from a love for what's real — real silver, real craft, real tradition. Every
+        piece is handcrafted by South Indian artisans, hallmarked in 92.5 silver, and finished with 22K gold polish
+        rooted in temple jewellery heritage. No two pieces are ever alike. That's the point.</p>
       <div class="q-badges">
-        <span class="q-badge">🔖 92.5 Hallmarked</span>
-        <span class="q-badge">✨ 22K Gold Finish</span>
-        <span class="q-badge">🤲 Artisan Crafted</span>
+        <span class="q-badge">🔖 925 Hallmarked</span>
+        <span class="q-badge">✨ 22K Gold Polish</span>
+        <span class="q-badge">🤲 Artisan Made</span>
         <span class="q-badge">🌿 Nickel-Free</span>
-        <span class="q-badge">📦 Secure Packaging</span>
       </div>
     </div>
   </section>
@@ -5180,17 +5092,12 @@
         <div class="about-img-bar"></div>
       </div>
       <div>
-        <div class="about-eyebrow">✦ About the Boutique ✦</div>
+        <div class="about-eyebrow">✦ About Us ✦</div>
         <h2 class="about-title gold-text">Born from<br />a Love for<br />Tradition</h2>
         <p class="about-body">
-          LUVZ Collection is a small, passionate jewellery boutique rooted in the art of South Indian craftsmanship.
-          Every piece we make begins as 92.5 sterling silver — hallmark certified, the finest grade — and is finished by
-          skilled artisans with a warm 22 carat gold polish inspired by the grandeur of temple jewellery.
-        </p>
-        <p class="about-body">
-          We believe jewellery should carry meaning. When you wear LUVZ, you wear a piece shaped by real hands, real
-          tradition, and real devotion to the craft. No two pieces are ever exactly alike — and that is precisely the
-          point.
+          LUVZ was born from a love for what's real — real silver, real craft, real tradition. Every piece is
+          handcrafted by South Indian artisans, hallmarked in 92.5 silver, and finished with 22K gold polish rooted in
+          temple jewellery heritage. No two pieces are ever alike. That's the point.
         </p>
         <div class="about-badges">
           <span class="q-badge">🔖 925 Hallmarked</span>
@@ -5198,7 +5105,6 @@
           <span class="q-badge">🤲 Artisan Made</span>
           <span class="q-badge">🌿 Nickel-Free</span>
         </div>
-        <div class="about-sig">— Crafted with devotion, worn with pride.</div>
       </div>
     </div>
   </section>
@@ -5397,8 +5303,8 @@
         <div class="policy-card">
           <span class="policy-icon">🔨</span>
           <h3 class="policy-title">Made to Order</h3>
-          <p class="policy-body">Every piece is handcrafted specifically for you. We do not accept returns or exchanges
-            on custom orders.</p>
+          <p class="policy-body">Made just for you — so we don't accept returns. But if it arrives damaged, we'll
+            replace it within 48 hours. No questions.</p>
         </div>
         <div class="policy-card">
           <span class="policy-icon">🛡️</span>
