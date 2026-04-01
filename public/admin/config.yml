@@ -1,0 +1,7 @@
+backend:
+  name: github
+  repo: n8nintegrationai/luvz-collection-dev
+  branch: main # or master
+  # Add these lines:
+  base_url: https://luvz-collection.n8nintegrationai.workers.dev
+  auth_endpoint: api/auth
