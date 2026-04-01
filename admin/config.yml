@@ -8,7 +8,7 @@
 
 backend:
   name: git-gateway
-  repo: n8nintegrationai/luvz-collection
+  repo: n8nintegrationai/luvz-collection-dev
   branch: main
   # --- ADD THESE LINES STARTING HERE ---
   commit_messages:
