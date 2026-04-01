@@ -7,7 +7,7 @@
 #   branch: main
 
 backend:
-  name: git-gateway
+  name: github
   repo: n8nintegrationai/luvz-collection-dev
   branch: main
   # --- ADD THESE LINES STARTING HERE ---
