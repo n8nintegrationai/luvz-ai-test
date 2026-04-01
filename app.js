@@ -3,7 +3,7 @@
 // jsDelivr CDN URL for fastest global delivery
 // const DATA_URL = 'https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection@main/data/products.json';
 // Change '@main' to '@latest'
-const DATA_URL = 'https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection@latest/data/products.json';
+const DATA_URL = 'https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection-dev@latest/data/products.json';
 const WA_NUM = '918919359961';
 const VIS = 4; // cards per page on desktop
 // ╚══════════════════════════════════════╝
