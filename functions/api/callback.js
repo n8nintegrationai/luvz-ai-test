@@ -1,19 +1,53 @@
 function renderBody(status, content) {
+    // const html = `
+    // <script>
+    //   const receiveMessage = (message) => {
+    //     window.opener.postMessage(
+    //       'authorization:github:${status}:${JSON.stringify(content)}',
+    //       message.origin
+    //     );
+    //     window.removeEventListener("message", receiveMessage, false);
+    //   }
+    //   window.addEventListener("message", receiveMessage, false);
+    //   window.opener.postMessage("authorizing:github", "*");
+    // </script>
+    // `;
+    // const blob = new Blob([html]);
+    // return blob;
+
     const html = `
-    <script>
-      const receiveMessage = (message) => {
-        window.opener.postMessage(
-          'authorization:github:${status}:${JSON.stringify(content)}',
-          message.origin
-        );
-        window.removeEventListener("message", receiveMessage, false);
-      }
-      window.addEventListener("message", receiveMessage, false);
-      window.opener.postMessage("authorizing:github", "*");
-    </script>
+    <!DOCTYPE html>
+    <html>
+    <head><title>Authorizing...</title></head>
+    <body>
+      <script>
+        (function() {
+          const status = "${status}";
+          const content = ${JSON.stringify(content)};
+          const targetOrigin = "https://www.luvzcollection.com"; // Hardcode your production domain
+
+          function send() {
+            // Send the token back to the Decap CMS window
+            window.opener.postMessage(
+              "authorization:github:" + status + ":" + JSON.stringify(content),
+              targetOrigin
+            );
+          }
+
+          // Handle the handshake
+          window.addEventListener("message", function(e) {
+            if (e.origin !== targetOrigin) return;
+            send();
+          }, false);
+
+          // Initial signal to the main window
+          window.opener.postMessage("authorizing:github", targetOrigin);
+        })()
+      </script>
+    </body>
+    </html>
     `;
-    const blob = new Blob([html]);
-    return blob;
+    return html; // Return the string directly, Response will handle it
 }
 
 export async function onRequest(context) {
