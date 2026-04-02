@@ -694,12 +694,23 @@ async function load() {
       d = MOCK_DATA;
     } else {
       try {
-        const url = `https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection-dev@main/public/data/products.json?nocache=${Date.now()}`;
+        let url;
+        try {
+          const commitRes = await fetch('https://api.github.com/repos/n8nintegrationai/luvz-collection-dev/commits/main', { cache: 'no-cache' });
+          if (!commitRes.ok) throw new Error(`Commit ${commitRes.status}`);
+          const commitData = await commitRes.json();
+          const sha = commitData.sha;
+          if (!sha) throw new Error('Missing commit SHA');
+          url = `https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection-dev@${sha}/public/data/products.json`;
+        } catch (shaErr) {
+          url = `https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection-dev@main/public/data/products.json?v=${Date.now()}`;
+        }
+
         const res = await fetch(url, { cache: 'no-cache' });
         if (!res.ok) throw new Error(`Data ${res.status}`);
         d = await res.json();
       } catch (fetchErr) {
-        // Network failure â€” use mock data so page renders without errors
+        // Network failure — use mock data so page renders without errors
         console.warn('Data fetch failed, using mock data:', fetchErr.message);
         d = MOCK_DATA;
       }
@@ -1531,5 +1542,6 @@ function renderReviews(reviews) {
     }
   });
 })();
+
 
 
