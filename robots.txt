@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://luvzcollection.netlify.app/sitemap.xml
+Sitemap: https://luvz-collection.n8nintegrationai.workers.dev/sitemap.xml
