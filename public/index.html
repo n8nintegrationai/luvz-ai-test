@@ -2,8 +2,6 @@
 <html lang="en" data-theme="earth">
 
 <head>
-  <!-- Google Analytics: loaded after page is idle to avoid TBT penalty -->
-  <!-- Actual load happens via requestIdleCallback in app.js -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LUVZ Collection | 92.5 Silver Jewelry with 22K Gold Polish | Handcrafted Indian Jewellery</title>
@@ -17,22 +15,30 @@
   <meta property="og:title" content="LUVZ Collection | 92.5 Silver Jewelry with 22K Gold Polish" />
   <meta property="og:description"
     content="Handcrafted 92.5 silver jewelry finished with 22 carat gold polish. Necklaces, bangles, jhumkas & more. Shop now or enquire on WhatsApp." />
-  <meta property="og:image" content="https://luvz-collection-dev.pages.dev/images/logo_gif.webp" />
-  <meta property="og:url" content="https://luvz-collection-dev.pages.dev/" />
+  <meta property="og:image" content="https://www.luvzcollection.com/images/logo_gif.webp" />
+  <meta property="og:url" content="https://www.luvzcollection.com/" />
   <meta property="og:site_name" content="LUVZ Collection" />
   <!-- Twitter/X card -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="LUVZ Collection | Handcrafted Silver Jewelry" />
   <meta name="twitter:description"
     content="92.5 Silver with 22K Gold Polish. Shop necklaces, bangles, jhumkas and more." />
-  <link rel="canonical" href="https://luvz-collection-dev.pages.dev/" />
+  <link rel="canonical" href="https://www.luvzcollection.com/" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7X8ZXT03Y9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7X8ZXT03Y9');
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Store",
     "name": "LUVZ Collection",
-    "url": "https://luvz-collection-dev.pages.dev/",
-    "logo": "https://luvz-collection-dev.pages.dev/images/logo_gif.webp",
+    "url": "https://www.luvzcollection.com/",
+    "logo": "https://www.luvzcollection.com/images/logo_gif.webp",
     "description": "LUVZ Collection is a handcrafted 92.5 silver jewelry brand creating elegant Indian jewellery finished with 22 carat gold polish."
   }
 </script>
@@ -53,7 +59,6 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <!-- Tailwind CDN removed: only 5 utility classes were used, replaced with inline CSS -->
 
-  <!-- Netlify Identity: loaded on-demand only when admin panel is accessed (see app.js) -->
 
   <!-- tailwind.config removed with Tailwind CDN -->
   <style>
@@ -5547,18 +5552,9 @@
     });
   </script>
 
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
-        }
-      });
-    }
-  </script>
-
 </body>
 
 </html>
+
+
+

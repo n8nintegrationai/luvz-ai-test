@@ -2,4 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://luvz-collection-dev.pages.dev/sitemap.xml
+Sitemap: https://www.luvzcollection.com/sitemap.xml
+
+

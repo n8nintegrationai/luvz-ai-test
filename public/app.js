@@ -176,7 +176,7 @@ function injectProductSchema(data) {
   });
   if (!allProducts.length) return;
 
-  const SITE = 'https://luvzcollection.netlify.app';
+  const SITE = 'https://www.luvzcollection.com';
   const listItems = allProducts.map((p, i) => {
     const slug = (p.name || '').toLowerCase()
       .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -340,7 +340,7 @@ function removeFromWishlist(id) {
 /* ── Task 3B + 4A: Hash routing & dynamic meta ─── */
 const SITE_TITLE = 'LUVZ Collection | 92.5 Silver Jewelry with 22K Gold Polish';
 const SITE_DESC = 'Shop handcrafted 92.5 sterling silver jewelry with 22 carat gold polish. Elegant necklaces, bangles, jhumkas, earrings and pendant sets.';
-const SITE_URL = 'https://luvzcollection.netlify.app';
+const SITE_URL = 'https://www.luvzcollection.com';
 
 function toSlug(name) {
   return (name || '').toLowerCase()
@@ -710,7 +710,7 @@ async function load() {
         if (!res.ok) throw new Error(`Data ${res.status}`);
         d = await res.json();
       } catch (fetchErr) {
-        // Network failure � use mock data so page renders without errors
+        // Network failure � use mock data so page renders without errors
         console.warn('Data fetch failed, using mock data:', fetchErr.message);
         d = MOCK_DATA;
       }
@@ -1502,46 +1502,6 @@ function renderReviews(reviews) {
   }).filter(Boolean).join('');
   strip.innerHTML = cards + cards;
 }
-
-
-
-/* ── Google Analytics: deferred until browser is idle ──────
-   Removes gtag from the critical path, reducing TBT.
-   Falls back to setTimeout(500ms) on browsers without rIC. */
-(function loadGTM() {
-  var GA_ID = 'G-7X8ZXT03Y9';
-  function initGA() {
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-    document.head.appendChild(s);
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () { dataLayer.push(arguments); };
-    gtag('js', new Date());
-    gtag('config', GA_ID);
-  }
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(initGA, { timeout: 4000 });
-  } else {
-    setTimeout(initGA, 500);
-  }
-})();
-
-/* ── Netlify Identity: load only when admin shortcut is used ── */
-(function setupAdminLink() {
-  document.addEventListener('keydown', function (e) {
-    if (e.ctrlKey && e.altKey && e.key === 'l') {
-      var al = document.getElementById('admin-link');
-      if (al) al.classList.toggle('admin-hidden');
-      // Load Netlify Identity widget on first access
-      if (!window.netlifyIdentity) {
-        var s = document.createElement('script');
-        s.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
-        document.head.appendChild(s);
-      }
-    }
-  });
-})();
 
 
 
