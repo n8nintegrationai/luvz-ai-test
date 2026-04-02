@@ -1,12 +1,10 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "luvz-collection",
-  "compatibility_date": "2025-09-27",
+  "compatibility_date": "2026-04-01",
+  "pages_build_output_dir": "./public",
   "observability": {
     "enabled": true
-  },
-  "assets": {
-    "directory": "./public"
   },
   "compatibility_flags": [
     "nodejs_compat"
