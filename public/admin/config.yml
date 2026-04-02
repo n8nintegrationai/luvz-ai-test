@@ -3,7 +3,7 @@ backend:
   repo: n8nintegrationai/luvz-collection-dev # Your repo path
   branch: main
   base_url: https://luvz-collection.n8nintegrationai.workers.dev
-  auth_endpoint: api/auth
+  auth_endpoint: /api/auth
 
 # These two lines fix the first two errors
 media_folder: "public/images"
