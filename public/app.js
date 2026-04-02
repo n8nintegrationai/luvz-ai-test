@@ -1,9 +1,7 @@
 // ╔══════════════════════════════════════╗
 // ║   ✦  LUVZ COLLECTION — CONFIG   ✦   ║
 // jsDelivr CDN URL for fastest global delivery
-// const DATA_URL = 'https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection@main/data/products.json';
-// Change '@main' to '@latest'
-const DATA_URL = 'https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection-dev@latest/data/products.json';
+const DATA_URL = '/data/products.json';
 const WA_NUM = '918919359961';
 const VIS = 4; // cards per page on desktop
 // ╚══════════════════════════════════════╝
@@ -689,36 +687,21 @@ const MOCK_DATA = {
 
 async function load() {
   try {
-    let url = DATA_URL;
-
-    // On file:// protocol all cross-origin fetches are blocked — skip
-    // straight to jsDelivr CDN URL to avoid console security errors
     const isFileProtocol = location.protocol === 'file:';
 
-    if (!isFileProtocol) {
-      try {
-        const commitRes = await fetch('https://api.github.com/repos/n8nintegrationai/luvz-collection/commits/main', { cache: 'no-cache' });
-        if (!commitRes.ok) throw new Error(`Commit ${commitRes.status}`);
-        const commitData = await commitRes.json();
-        const sha = commitData.sha;
-        if (!sha) throw new Error('Missing commit SHA');
-        url = `https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection@${sha}/data/products.json`;
-      } catch (err) {
-        url = `https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection@main/data/products.json?v=${Date.now()}`;
-      }
-    } else {
-      url = `https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection@main/data/products.json?v=${Date.now()}`;
-    }
-
     let d;
-    try {
-      const res = await fetch(url, { cache: 'no-cache' });
-      if (!res.ok) throw new Error(`Data ${res.status}`);
-      d = await res.json();
-    } catch (fetchErr) {
-      // Network failure — use mock data so page renders without errors
-      console.warn('Data fetch failed, using mock data:', fetchErr.message);
+    if (isFileProtocol) {
       d = MOCK_DATA;
+    } else {
+      try {
+        const res = await fetch(DATA_URL, { cache: 'no-cache' });
+        if (!res.ok) throw new Error(`Data ${res.status}`);
+        d = await res.json();
+      } catch (fetchErr) {
+        // Network failure — use mock data so page renders without errors
+        console.warn('Data fetch failed, using mock data:', fetchErr.message);
+        d = MOCK_DATA;
+      }
     }
     if (d.theme && !localStorage.getItem('luvz-theme-user-choice')) setTheme(d.theme, false);
     // Store valid referral codes (case-insensitive — normalise to uppercase)
