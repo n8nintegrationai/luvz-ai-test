@@ -694,7 +694,7 @@ async function load() {
       d = MOCK_DATA;
     } else {
       try {
-        const url = `${DATA_URL}?v=${Date.now()}`;
+        const url = 'https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection-dev@main/public/data/products.json?t=' + Date.now();
         const res = await fetch(url, { cache: 'no-cache' });
         if (!res.ok) throw new Error(`Data ${res.status}`);
         d = await res.json();
@@ -1531,6 +1531,4 @@ function renderReviews(reviews) {
     }
   });
 })();
-
-
 
