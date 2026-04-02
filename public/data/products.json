@@ -1,17 +1,4 @@
 {
-  "heritage": {
-    "image": "https://res.cloudinary.com/ddtlwlbgg/image/upload/v1773263394/1_lhmo8e.jpg",
-    "title": "The Art of<br/>92.5 Silver",
-    "body": "Every LUVZ piece begins as raw 92.5 sterling silver...",
-    "cta_text": "Explore the Collection →",
-    "cta_href": "#categories"
-  },
-  "about": {
-    "image": "https://res.cloudinary.com/ddtlwlbgg/image/upload/v1773436168/5_qfql95.jpg",
-    "title": "Born from<br/>a Love for<br/>Tradition",
-    "body1": "LUVZ Collection is a small, passionate jewellery boutique...",
-    "body2": "We believe jewellery should carry meaning..."
-  },
   "bangles": [
     {
       "id": "bg1",
@@ -154,7 +141,7 @@
       ],
       "id": "ts3",
       "image": "https://res.cloudinary.com/ddtlwlbgg/image/upload/v1773263398/3_lxwxat.jpg",
-      "description": "Antique gold-finish jhumkas with pearl drops. Lightweight for all-day wear.",
+      "description": "Antique gold-finish jhumkas with pearl drops. Lightweight for all-day .",
       "category": "Necklace"
     },
     {
@@ -241,6 +228,12 @@
       "price": 0
     }
   ],
+  "about": {
+    "image": "https://res.cloudinary.com/ddtlwlbgg/image/upload/v1773436168/5_qfql95.jpg",
+    "title": "Born from<br/>a Love for<br/>Tradition",
+    "body1": "LUVZ Collection is a small, passionate jewellery boutique...",
+    "body2": "We believe jewellery should carry meaning..."
+  },
   "sets": [
     {
       "id": "st1",
@@ -561,5 +554,12 @@
       "whatsapp": "https://wa.me/918919359961?text=Hi!%20I'm%20interested%20in%20the%20Kundan%20Maang%20Tikka%20%F0%9F%A4%A9%20Can%20you%20share%20more%20details?",
       "price": 0
     }
-  ]
+  ],
+  "heritage": {
+    "image": "https://res.cloudinary.com/ddtlwlbgg/image/upload/v1773263394/1_lhmo8e.jpg",
+    "title": "The Art of<br/>92.5 Silver",
+    "body": "Every LUVZ piece begins as raw 92.5 sterling silver...",
+    "cta_text": "Explore the Collection →",
+    "cta_href": "#categories"
+  }
 }
