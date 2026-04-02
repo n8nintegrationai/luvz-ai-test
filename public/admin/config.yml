@@ -1,9 +1,12 @@
 backend:
   name: github
-  repo: n8nintegrationai/luvz-collection-dev # Your repo path
+  repo: n8nintegrationai/luvz-collection-dev
   branch: main
-  base_url: https://www.luvzcollection.com
-auth_endpoint: api/auth
+  base_url: https://www.luvzcollection.com  # No trailing slash
+  auth_endpoint: /api/auth                 # Added leading slash
+  site_domain: www.luvzcollection.com
+
+
 site_url: https://www.luvzcollection.com
 display_url: https://www.luvzcollection.com
 # These two lines fix the first two errors

@@ -16,37 +16,22 @@ function renderBody(status, content) {
     // return blob;
 
     const html = `
-    <!DOCTYPE html>
-    <html>
-    <head><title>Authorizing...</title></head>
-    <body>
-      <script>
-        (function() {
-          const status = "${status}";
-          const content = ${JSON.stringify(content)};
-          const targetOrigin = "https://www.luvzcollection.com"; // Hardcode your production domain
+                <script>
+                (function() {
+                    // This allows the popup to talk back to whoever opened it, 
+                    // regardless of whether they used 'www' or not.
+                    const targetOrigin = window.opener ? window.origin : "*"; 
+                    
+                    const status = "${status}";
+                    const content = ${JSON.stringify(content)};
 
-          function send() {
-            // Send the token back to the Decap CMS window
-            window.opener.postMessage(
-              "authorization:github:" + status + ":" + JSON.stringify(content),
-              targetOrigin
-            );
-          }
-
-          // Handle the handshake
-          window.addEventListener("message", function(e) {
-            if (e.origin !== targetOrigin) return;
-            send();
-          }, false);
-
-          // Initial signal to the main window
-          window.opener.postMessage("authorizing:github", targetOrigin);
-        })()
-      </script>
-    </body>
-    </html>
-    `;
+                    window.opener.postMessage(
+                    "authorization:github:" + status + ":" + JSON.stringify(content),
+                    targetOrigin
+                    );
+                })()
+                </script>
+                `;
     return html; // Return the string directly, Response will handle it
 }
 
