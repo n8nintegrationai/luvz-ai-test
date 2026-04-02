@@ -1,38 +1,32 @@
 function renderBody(status, content) {
-    // const html = `
-    // <script>
-    //   const receiveMessage = (message) => {
-    //     window.opener.postMessage(
-    //       'authorization:github:${status}:${JSON.stringify(content)}',
-    //       message.origin
-    //     );
-    //     window.removeEventListener("message", receiveMessage, false);
-    //   }
-    //   window.addEventListener("message", receiveMessage, false);
-    //   window.opener.postMessage("authorizing:github", "*");
-    // </script>
-    // `;
-    // const blob = new Blob([html]);
-    // return blob;
-
-    const html = `
-                <script>
-                (function() {
-                    // This allows the popup to talk back to whoever opened it, 
-                    // regardless of whether they used 'www' or not.
-                    const targetOrigin = window.opener ? window.origin : "*"; 
-                    
-                    const status = "${status}";
-                    const content = ${JSON.stringify(content)};
-
-                    window.opener.postMessage(
-                    "authorization:github:" + status + ":" + JSON.stringify(content),
-                    targetOrigin
-                    );
-                })()
-                </script>
-                `;
-    return html; // Return the string directly, Response will handle it
+    return `
+    <!DOCTYPE html>
+    <html>
+    <head><title>Authorizing...</title></head>
+    <body>
+      <script>
+        (function() {
+          const status = "${status}";
+          const content = ${JSON.stringify(content)};
+          
+          // Try to find the opener
+          const targetWindow = window.opener || window.parent;
+          
+          if (targetWindow) {
+            targetWindow.postMessage(
+              "authorization:github:" + status + ":" + JSON.stringify(content),
+              "*" 
+            );
+            // Give it a moment to send, then close
+            setTimeout(() => window.close(), 1000);
+          } else {
+            document.body.innerHTML = "Configuration Error: Main window not found. Please refresh the admin page and try again.";
+          }
+        })()
+      </script>
+    </body>
+    </html>
+    `;
 }
 
 export async function onRequest(context) {
