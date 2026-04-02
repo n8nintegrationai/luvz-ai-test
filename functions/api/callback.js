@@ -8,25 +8,32 @@ function renderBody(status, content) {
         (function() {
           const status = "${status}";
           const content = ${JSON.stringify(content)};
+          const message = "authorization:github:" + status + ":" + JSON.stringify(content);
           
-          // Try to find the opener
-          const targetWindow = window.opener || window.parent;
+          const target = window.opener || window.parent;
           
-          if (targetWindow) {
-            targetWindow.postMessage(
-              "authorization:github:" + status + ":" + JSON.stringify(content),
-              "*" 
-            );
-            // Give it a moment to send, then close
-            setTimeout(() => window.close(), 1000);
+          if (target) {
+            // 1. Signal that we are starting
+            target.postMessage("authorizing:github", "*");
+            
+            // 2. Send the actual token
+            target.postMessage(message, "*"); 
+            
+            console.log("Token sent. Closing in 2 seconds...");
+            
+            // 3. Keep the window open for a moment so Decap can "grab" the data
+            setTimeout(() => {
+              window.close();
+            }, 2500);
           } else {
-            document.body.innerHTML = "Configuration Error: Main window not found. Please refresh the admin page and try again.";
+            document.body.innerHTML = "Error: Opener not found. Please refresh the admin page.";
           }
         })()
       </script>
+      <p style="text-align:center; font-family:sans-serif;">Authorizing... please wait.</p>
     </body>
     </html>
-    `;
+  `;
 }
 
 export async function onRequest(context) {
