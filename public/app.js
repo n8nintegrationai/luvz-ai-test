@@ -1,7 +1,7 @@
 // ╔══════════════════════════════════════╗
 // ║   ✦  LUVZ COLLECTION — CONFIG   ✦   ║
 // jsDelivr CDN URL for fastest global delivery
-const DATA_URL = 'https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection-dev@latest/public/data/products.json';
+const DATA_URL = 'https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection-dev@main/public/data/products.json';
 const WA_NUM = '918919359961';
 const VIS = 4; // cards per page on desktop
 // ╚══════════════════════════════════════╝
@@ -694,7 +694,8 @@ async function load() {
       d = MOCK_DATA;
     } else {
       try {
-        const res = await fetch(DATA_URL, { cache: 'no-cache' });
+        const url = `${DATA_URL}?v=${Date.now()}`;
+        const res = await fetch(url, { cache: 'no-cache' });
         if (!res.ok) throw new Error(`Data ${res.status}`);
         d = await res.json();
       } catch (fetchErr) {
@@ -1530,4 +1531,6 @@ function renderReviews(reviews) {
     }
   });
 })();
+
+
 
