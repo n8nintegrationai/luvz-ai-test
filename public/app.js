@@ -728,7 +728,7 @@ async function load() {
       }
       else {
         const t = document.getElementById('ct-' + sec);
-        if (t) t.innerHTML = `<p style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;color:var(--txt2);opacity:.3;padding:24px;text-align:center">Add products to https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection-dev@latest/public/data/products.json to display here</p>`;
+        if (t) t.innerHTML = `<p style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;color:var(--txt2);opacity:.3;padding:24px;text-align:center">Add products to https://cdn.jsdelivr.net/gh/n8nintegrationai/luvz-collection-dev@main/public/data/products.json to display here</p>`;
       }
     });
 
