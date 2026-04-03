@@ -1,35 +1,32 @@
 export async function onRequestPost(context) {
-    const { env, request } = context;
+    const { request, env } = context;
 
     try {
-        const { message } = await request.json();
+        const { message, fullData } = await request.json();
 
-        if (!env.GEMINI_API_KEY) {
-            return new Response(JSON.stringify({ response: "Error: GEMINI_API_KEY is missing." }));
-        }
-
-        // 1. Fetch Inventory
-        const productDataUrl = "https://raw.githubusercontent.com/n8nintegrationai/luvz-ai-test/refs/heads/main/public/data/products.json";
-        const productRes = await fetch(productDataUrl);
-        const fullData = await productRes.json();
-
+        // 1. "Extreme Slimming" of your JSON to save tokens
         let slimInventory = [];
         Object.keys(fullData).forEach(cat => {
             if (Array.isArray(fullData[cat])) {
-                // Only take the first 15 items per category to save tokens
-                fullData[cat].slice(0, 15).forEach(item => {
+                // Only take the first 12 items per category
+                fullData[cat].slice(0, 12).forEach(item => {
                     slimInventory.push({
                         n: item.name,
                         p: item.price,
-                        // REMOVE the description entirely to save massive amounts of tokens
-                        wa: `https://wa.me/YOUR_NUMBER?text=I%20am%20interested%20in%20${encodeURIComponent(item.name)}`
+                        // We exclude descriptions to keep the "input_token_count" low
+                        wa: `https://wa.me/YOUR_NUMBER?text=Interested%20in%20${encodeURIComponent(item.name)}`
                     });
                 });
             }
         });
 
-        // 2. Call Gemini 2.0 Flash
-        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${env.GEMINI_API_KEY}`;
+        // 2. Limit the total product count sent to the AI (e.g., top 50 items)
+        const finalContext = slimInventory.slice(0, 50);
+
+        // 3. Call the 2026 Stable Model: gemini-2.5-flash-lite
+        // Note: If 2.5-flash-lite also shows 'limit: 0', use 'gemini-3.1-flash-lite-preview'
+        const modelId = "gemini-2.5-flash-lite";
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${env.GEMINI_API_KEY}`;
 
         const geminiRes = await fetch(geminiUrl, {
             method: "POST",
@@ -37,25 +34,33 @@ export async function onRequestPost(context) {
             body: JSON.stringify({
                 contents: [{
                     parts: [{
-                        text: `System: You are the Luvz Style Assistant. Inventory: ${JSON.stringify(slimInventory.slice(0, 60))}. Policy: 7-day returns. Recommendation must include the WhatsApp link. Question: ${message}`
+                        text: `System: You are the Luvz Style Assistant. 
+            Inventory: ${JSON.stringify(finalContext)}. 
+            Policy: 7-day returns. 
+            Instruction: Be concise. Always provide the WhatsApp link for products.
+            User Question: ${message}`
                     }]
-                }]
+                }],
+                generationConfig: {
+                    temperature: 0.7,
+                    maxOutputTokens: 500,
+                }
             })
         });
 
         const data = await geminiRes.json();
 
-        // 3. Handle specific API errors
+        // Handle the case where Gemini still returns an error
         if (data.error) {
-            return new Response(JSON.stringify({ response: `Gemini Error (${data.error.code}): ${data.error.message}` }));
+            return new Response(JSON.stringify({ error: data.error.message }), { status: data.error.code });
         }
 
-        const aiText = data.candidates[0].content.parts[0].text;
-        return new Response(JSON.stringify({ response: aiText }), {
+        const aiResponse = data.candidates[0].content.parts[0].text;
+        return new Response(JSON.stringify({ response: aiResponse }), {
             headers: { "Content-Type": "application/json" }
         });
 
     } catch (err) {
-        return new Response(JSON.stringify({ response: "System Error: " + err.message }));
+        return new Response(JSON.stringify({ error: "Server Error: " + err.message }), { status: 500 });
     }
 }
