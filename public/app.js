@@ -1503,5 +1503,43 @@ function renderReviews(reviews) {
   strip.innerHTML = cards + cards;
 }
 
+async function askLuvzAI() {
+  const queryInput = document.getElementById('ai-user-query');
+  const display = document.getElementById('ai-response-display');
+  const btn = document.getElementById('ai-send-btn');
 
+  if (!queryInput.value.trim()) return;
+
+  // UI States
+  const originalBtnText = btn.innerText;
+  btn.innerText = "Thinking...";
+  btn.disabled = true;
+  display.innerHTML = "<em>Our assistant is searching the collection...</em>";
+
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: queryInput.value })
+    });
+
+    const data = await response.json();
+
+    if (data.response) {
+      // Convert URL strings into clickable links if Gemini doesn't format them as HTML
+      const formattedResponse = data.response.replace(
+        /(https?:\/\/[^\s]+)/g,
+        '<a href="$1" target="_blank" style="color: #25D366; font-weight: bold;">Buy on WhatsApp</a>'
+      );
+      display.innerHTML = formattedResponse;
+    } else {
+      display.innerHTML = "I couldn't find that right now. Could you try rephrasing your question?";
+    }
+  } catch (error) {
+    display.innerHTML = "Connection error. Please check your internet and try again.";
+  } finally {
+    btn.innerText = originalBtnText;
+    btn.disabled = false;
+  }
+}
 

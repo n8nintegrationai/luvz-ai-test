@@ -28,7 +28,7 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7X8ZXT03Y9"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-7X8ZXT03Y9');
   </script>
@@ -4594,6 +4594,84 @@
       color: #4CAF50;
       text-transform: uppercase;
     }
+
+    .ai-wrapper {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 25px;
+      background: #ffffff;
+      border: 1px solid #eaeaea;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .ai-header h2 {
+      margin: 0;
+      font-family: serif;
+      /* Matches jewelry aesthetic */
+      color: #1a1a1a;
+    }
+
+    .ai-header p {
+      color: #666;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .ai-input-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    #ai-user-query {
+      flex: 3;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    #ai-send-btn {
+      flex: 1;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+
+    #ai-send-btn:hover {
+      background: #333;
+    }
+
+    .ai-response-box {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border-left: 5px solid #000;
+      min-height: 40px;
+      font-size: 15px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      /* Preserves AI line breaks */
+    }
+
+    /* Mobile Adjustments */
+    @media (max-width: 600px) {
+      .ai-input-group {
+        flex-direction: column;
+      }
+
+      #ai-send-btn {
+        padding: 15px;
+      }
+    }
   </style>
 
 <body>
@@ -4772,8 +4850,21 @@
   </div>
 
   <!-- TRUST STRIP — SVG Quality Pillars -->
+  /* AI Section */
+  <section id="ai-assistant-container" class="ai-wrapper">
+    <div class="ai-header">
+      <h2>Luvz Style Assistant</h2>
+      <p>Find the perfect piece or ask about our policies.</p>
+    </div>
 
+    <div class="ai-input-group">
+      <input type="text" id="ai-user-query" placeholder="e.g. Do you have gold jhumkas under 500?">
+      <button onclick="askLuvzAI()" id="ai-send-btn">Ask AI</button>
+    </div>
 
+    <div id="ai-response-display" class="ai-response-box">
+    </div>
+  </section>
   <!-- SHOP BY CATEGORY -->
   <section id="categories" class="sec reveal">
     <div style="max-width:1260px;margin:0 auto">
@@ -5555,6 +5646,3 @@
 </body>
 
 </html>
-
-
-
