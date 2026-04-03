@@ -16,19 +16,20 @@ export async function onRequestPost(context) {
         let slimInventory = [];
         Object.keys(fullData).forEach(cat => {
             if (Array.isArray(fullData[cat])) {
-                fullData[cat].forEach(item => {
+                // Only take the first 15 items per category to save tokens
+                fullData[cat].slice(0, 15).forEach(item => {
                     slimInventory.push({
                         n: item.name,
                         p: item.price,
+                        // REMOVE the description entirely to save massive amounts of tokens
                         wa: `https://wa.me/YOUR_NUMBER?text=I%20am%20interested%20in%20${encodeURIComponent(item.name)}`
                     });
                 });
             }
         });
 
-        // 2. THE FIX: Correct URL and Body for Free Tier
-        // Note: We use v1beta here because it is more reliable for the 'Flash' model in some regions
-        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${env.GEMINI_API_KEY}`;
+        // 2. Call Gemini 2.0 Flash
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${env.GEMINI_API_KEY}`;
 
         const geminiRes = await fetch(geminiUrl, {
             method: "POST",
@@ -36,7 +37,7 @@ export async function onRequestPost(context) {
             body: JSON.stringify({
                 contents: [{
                     parts: [{
-                        text: `System: You are the Luvz Style Assistant. Inventory: ${JSON.stringify(slimInventory.slice(0, 100))}. Always provide the WhatsApp link for products. User: ${message}`
+                        text: `System: You are the Luvz Style Assistant. Inventory: ${JSON.stringify(slimInventory.slice(0, 60))}. Policy: 7-day returns. Recommendation must include the WhatsApp link. Question: ${message}`
                     }]
                 }]
             })
