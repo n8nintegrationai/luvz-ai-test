@@ -4,72 +4,49 @@ export async function onRequestPost(context) {
     try {
         const { message } = await request.json();
 
-        // 1. Check for API Key
         if (!env.GEMINI_API_KEY) {
-            return new Response(JSON.stringify({ response: "Config Error: GEMINI_API_KEY is missing in Cloudflare Settings." }));
+            return new Response(JSON.stringify({ response: "Error: GEMINI_API_KEY is missing." }));
         }
 
-        // 2. Fetch using the EXACT path you provided
+        // 1. Fetch Inventory
         const productDataUrl = "https://raw.githubusercontent.com/n8nintegrationai/luvz-ai-test/refs/heads/main/public/data/products.json";
-
         const productRes = await fetch(productDataUrl);
-
-        if (!productRes.ok) {
-            return new Response(JSON.stringify({
-                response: `Fetch Error: GitHub returned ${productRes.status}. Check if the file is public.`
-            }));
-        }
-
         const fullData = await productRes.json();
-        let slimInventory = [];
 
-        // 3. Robust scanning based on your Schema (Bangles, Jhumkas, Top Sellers, etc.)
-        // This loops through all keys in the JSON to find arrays of products
-        Object.keys(fullData).forEach(category => {
-            if (Array.isArray(fullData[category])) {
-                fullData[category].forEach(item => {
-                    // We only add valid product objects
-                    if (item.name && item.price) {
-                        slimInventory.push({
-                            n: item.name,
-                            p: item.price,
-                            d: (item.description || "").substring(0, 60),
-                            // Dynamic WhatsApp link generation
-                            wa: `https://wa.me/YOUR_NUMBER?text=I%20am%20interested%20in%20${encodeURIComponent(item.name)}`
-                        });
-                    }
+        let slimInventory = [];
+        Object.keys(fullData).forEach(cat => {
+            if (Array.isArray(fullData[cat])) {
+                fullData[cat].forEach(item => {
+                    slimInventory.push({
+                        n: item.name,
+                        p: item.price,
+                        wa: `https://wa.me/YOUR_NUMBER?text=I%20am%20interested%20in%20${encodeURIComponent(item.name)}`
+                    });
                 });
             }
         });
 
-        // 4. Call Gemini 1.5 Flash (Using the specific model identifier for v1)
-        const geminiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${env.GEMINI_API_KEY}`;
+        // 2. THE FIX: Correct URL and Body for Free Tier
+        // Note: We use v1beta here because it is more reliable for the 'Flash' model in some regions
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${env.GEMINI_API_KEY}`;
 
         const geminiRes = await fetch(geminiUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                contents: [
-                    {
-                        role: "user",
-                        parts: [
-                            {
-                                text: `You are the Luvz Style Assistant. Use this inventory: ${JSON.stringify(slimInventory.slice(0, 150))}. Return policy: 7 days. For any product recommended, you MUST provide the WhatsApp link. Question: ${message}`
-                            }
-                        ]
-                    }
-                ],
-                generationConfig: {
-                    maxOutputTokens: 800,
-                    temperature: 0.7
-                }
+                contents: [{
+                    parts: [{
+                        text: `System: You are the Luvz Style Assistant. Inventory: ${JSON.stringify(slimInventory.slice(0, 100))}. Always provide the WhatsApp link for products. User: ${message}`
+                    }]
+                }]
             })
         });
 
         const data = await geminiRes.json();
 
+        // 3. Handle specific API errors
         if (data.error) {
-            return new Response(JSON.stringify({ response: "Gemini Error: " + data.error.message }));
+            return new Response(JSON.stringify({ response: `Gemini Error (${data.error.code}): ${data.error.message}` }));
         }
 
         const aiText = data.candidates[0].content.parts[0].text;
@@ -78,6 +55,6 @@ export async function onRequestPost(context) {
         });
 
     } catch (err) {
-        return new Response(JSON.stringify({ response: "System Crash: " + err.message }));
+        return new Response(JSON.stringify({ response: "System Error: " + err.message }));
     }
 }
