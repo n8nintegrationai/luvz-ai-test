@@ -42,16 +42,27 @@ export async function onRequestPost(context) {
             }
         });
 
-        // 4. Call Gemini 1.5 Flash (Updated to v1 Stable Endpoint)
+        // 4. Call Gemini 1.5 Flash (Using the specific model identifier for v1)
         const geminiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${env.GEMINI_API_KEY}`;
 
         const geminiRes = await fetch(geminiUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                contents: [{
-                    parts: [{ text: `You are the Luvz Style Assistant. Use this inventory: ${JSON.stringify(slimInventory.slice(0, 150))}. Return policy: 7 days. For any product recommended, you MUST provide the WhatsApp link. Question: ${message}` }]
-                }]
+                contents: [
+                    {
+                        role: "user",
+                        parts: [
+                            {
+                                text: `You are the Luvz Style Assistant. Use this inventory: ${JSON.stringify(slimInventory.slice(0, 150))}. Return policy: 7 days. For any product recommended, you MUST provide the WhatsApp link. Question: ${message}`
+                            }
+                        ]
+                    }
+                ],
+                generationConfig: {
+                    maxOutputTokens: 800,
+                    temperature: 0.7
+                }
             })
         });
 
