@@ -4,44 +4,45 @@ export async function onRequestPost(context) {
     try {
         const { message } = await request.json();
 
+        // 1. Check for API Key
         if (!env.GEMINI_API_KEY) {
-            return new Response(JSON.stringify({ response: "Error: GEMINI_API_KEY is missing in Cloudflare Settings." }));
+            return new Response(JSON.stringify({ response: "Config Error: GEMINI_API_KEY is missing in Cloudflare Settings." }));
         }
 
-        // UPDATED URL: Points directly to your new repo's raw content
-        const productDataUrl = "https://raw.githubusercontent.com/n8nintegrationai/luvz-ai-test/main/data/products.json";
+        // 2. Fetch using the EXACT path you provided
+        const productDataUrl = "https://raw.githubusercontent.com/n8nintegrationai/luvz-ai-test/refs/heads/main/public/data/products.json";
 
-        const productRes = await fetch(productDataUrl, {
-            headers: { 'User-Agent': 'Cloudflare-Pages-Function' }
-        });
+        const productRes = await fetch(productDataUrl);
 
         if (!productRes.ok) {
             return new Response(JSON.stringify({
-                response: `Backend Error: Could not fetch products. status: ${productRes.status}. Ensure file exists at /data/products.json in the main branch.`
+                response: `Fetch Error: GitHub returned ${productRes.status}. Check if the file is public.`
             }));
         }
 
         const fullData = await productRes.json();
         let slimInventory = [];
 
-        // Categories based on your schema
-        const categories = ['bangles', 'jhumkas', 'earrings', 'sets', 'necklace', 'pendant', 'top_sellers', 'new_collection'];
-
-        categories.forEach(cat => {
-            if (fullData[cat] && Array.isArray(fullData[cat])) {
-                fullData[cat].forEach(item => {
-                    slimInventory.push({
-                        n: item.name,
-                        p: item.price,
-                        d: (item.description || "").substring(0, 60),
-                        // Ensure you replace YOUR_NUMBER with your actual WhatsApp number
-                        wa: `https://wa.me/YOUR_NUMBER?text=I%20am%20interested%20in%20${encodeURIComponent(item.name)}`
-                    });
+        // 3. Robust scanning based on your Schema (Bangles, Jhumkas, Top Sellers, etc.)
+        // This loops through all keys in the JSON to find arrays of products
+        Object.keys(fullData).forEach(category => {
+            if (Array.isArray(fullData[category])) {
+                fullData[category].forEach(item => {
+                    // We only add valid product objects
+                    if (item.name && item.price) {
+                        slimInventory.push({
+                            n: item.name,
+                            p: item.price,
+                            d: (item.description || "").substring(0, 60),
+                            // Dynamic WhatsApp link generation
+                            wa: `https://wa.me/YOUR_NUMBER?text=I%20am%20interested%20in%20${encodeURIComponent(item.name)}`
+                        });
+                    }
                 });
             }
         });
 
-        // Final Gemini Call
+        // 4. Send to Gemini 1.5 Flash
         const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${env.GEMINI_API_KEY}`;
 
         const geminiRes = await fetch(geminiUrl, {
@@ -50,19 +51,23 @@ export async function onRequestPost(context) {
             body: JSON.stringify({
                 contents: [{
                     role: "user",
-                    parts: [{ text: `You are the Luvz Style Assistant. Inventory: ${JSON.stringify(slimInventory.slice(0, 150))}. Policy: 7-day returns. Provide product name, price, and the WhatsApp link. Question: ${message}` }]
+                    parts: [{ text: `You are the Luvz Style Assistant. Use this inventory: ${JSON.stringify(slimInventory.slice(0, 150))}. Return policy: 7 days. For any product recommended, you MUST provide the WhatsApp link. Question: ${message}` }]
                 }]
             })
         });
 
         const data = await geminiRes.json();
-        const aiText = data.candidates[0].content.parts[0].text;
 
+        if (data.error) {
+            return new Response(JSON.stringify({ response: "Gemini Error: " + data.error.message }));
+        }
+
+        const aiText = data.candidates[0].content.parts[0].text;
         return new Response(JSON.stringify({ response: aiText }), {
             headers: { "Content-Type": "application/json" }
         });
 
     } catch (err) {
-        return new Response(JSON.stringify({ response: "System Error: " + err.message }));
+        return new Response(JSON.stringify({ response: "System Crash: " + err.message }));
     }
 }
