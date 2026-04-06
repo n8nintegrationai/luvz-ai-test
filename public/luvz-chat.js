@@ -6,14 +6,14 @@
 (function () {
   'use strict';
 
-  const API_URL = 'https://154ce531.luvz-ai-test.pages.dev/api/chat';
+  const API_URL = '/api/chat';
 
-  const trigger   = document.getElementById('luvz-chat-trigger');
-  const popup     = document.getElementById('luvz-chat-popup');
-  const messages  = document.getElementById('luvz-messages');
-  const input     = document.getElementById('luvz-chat-input');
-  const sendBtn   = document.getElementById('luvz-chat-send');
-  const chips     = document.querySelectorAll('.luvz-chip');
+  const trigger = document.getElementById('luvz-chat-trigger');
+  const popup = document.getElementById('luvz-chat-popup');
+  const messages = document.getElementById('luvz-messages');
+  const input = document.getElementById('luvz-chat-input');
+  const sendBtn = document.getElementById('luvz-chat-send');
+  const chips = document.querySelectorAll('.luvz-chip');
   const suggestionsBar = document.getElementById('luvz-suggestions');
 
   let isOpen = false;
