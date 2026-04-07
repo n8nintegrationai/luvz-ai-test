@@ -1,5 +1,5 @@
 /* =============================================
-   LUVZ COLLECTION — AI Chat Widget v2
+   LUVZ COLLECTION — AI Chat Widget v3
    Black & Gold Luxury | Mobile Fullscreen
    ============================================= */
 
@@ -8,8 +8,9 @@
 /* ---------- Floating Trigger Button ---------- */
 #luvz-chat-trigger {
   position: fixed;
-  bottom: 28px;
-  right: 28px;
+  /* Issue 4 fix: raised high enough to clear mobile navbars (typically ~60-70px) */
+  bottom: 80px;
+  right: 16px;
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -17,12 +18,13 @@
   background: #0a0a0a;
   border: 1px solid #c9a84c;
   border-radius: 50px;
-  padding: 0 20px 0 14px;
-  height: 52px;
+  padding: 0 18px 0 13px;
+  height: 48px;
   cursor: pointer;
   box-shadow: 0 4px 24px rgba(201,168,76,0.22), 0 2px 8px rgba(0,0,0,0.4);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #luvz-chat-trigger:hover {
@@ -31,8 +33,8 @@
 }
 
 #luvz-chat-trigger .luvz-trigger-icon {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   fill: #c9a84c;
   flex-shrink: 0;
 }
@@ -70,8 +72,8 @@
 /* ---------- DESKTOP Popup ---------- */
 #luvz-chat-popup {
   position: fixed;
-  bottom: 92px;
-  right: 28px;
+  bottom: 140px;
+  right: 16px;
   z-index: 9998;
   width: 370px;
   height: 540px;
@@ -98,10 +100,8 @@
 /* ---------- MOBILE: True fullscreen ---------- */
 @media (max-width: 600px) {
   #luvz-chat-trigger {
-    bottom: 16px;
+    bottom: 80px;
     right: 16px;
-    padding: 0 16px 0 12px;
-    height: 48px;
   }
 
   #luvz-chat-popup {
@@ -120,7 +120,6 @@
 
   #luvz-chat-popup.is-visible {
     transform: translateY(0);
-    opacity: 1;
   }
 }
 
@@ -226,6 +225,9 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(201,168,76,0.15) transparent;
   -webkit-overflow-scrolling: touch;
+  /* Prevent content from ever overflowing horizontally */
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .luvz-chat-messages::-webkit-scrollbar { width: 3px; }
@@ -240,6 +242,8 @@
   flex-direction: column;
   max-width: 86%;
   animation: luvzMsgIn 0.22s ease;
+  /* Prevent messages from ever pushing layout wider */
+  min-width: 0;
 }
 
 @keyframes luvzMsgIn {
@@ -259,6 +263,9 @@
   line-height: 1.7;
   word-break: break-word;
   overflow-wrap: break-word;
+  /* Never exceed the message container width */
+  min-width: 0;
+  max-width: 100%;
 }
 
 .luvz-msg.bot .luvz-msg-bubble {
@@ -275,7 +282,6 @@
   border-bottom-right-radius: 4px;
 }
 
-/* Rich text formatting inside bot bubble */
 .luvz-msg-bubble p {
   margin: 0 0 8px;
 }
@@ -292,7 +298,7 @@
 }
 
 .luvz-msg-bubble li {
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 /* Regular inline links */
@@ -300,38 +306,34 @@
   color: #c9a84c;
   text-decoration: underline;
   text-underline-offset: 2px;
+  word-break: break-all;
 }
 
-/* WhatsApp CTA button links */
+/* ---------- WhatsApp CTA Button ---------- */
+/* Issue 1 fix: clean small button, no background logo */
 .luvz-wa-btn {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  margin-top: 8px;
-  padding: 8px 14px;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 7px 12px;
   background: rgba(37,211,102,0.1);
   border: 1px solid rgba(37,211,102,0.28);
   border-radius: 8px;
   color: #25d366;
-  text-decoration: none;
+  text-decoration: none !important;
   font-family: 'Jost', sans-serif;
   font-size: 12.5px;
   font-weight: 400;
   letter-spacing: 0.02em;
   transition: background 0.18s;
+  /* No background image, no logo watermark */
+  background-image: none;
 }
 
 .luvz-wa-btn:hover {
   background: rgba(37,211,102,0.18);
   color: #25d366;
-  text-decoration: none;
-}
-
-.luvz-wa-btn svg {
-  width: 14px;
-  height: 14px;
-  fill: #25d366;
-  flex-shrink: 0;
 }
 
 /* ---------- Typing Indicator ---------- */
@@ -392,29 +394,42 @@
   color: #c9a84c;
 }
 
-/* ---------- Input Row ---------- */
+/* ---------- Input Row ----------
+   Issue 2 fix: box-sizing + min-width:0 on input
+   ensures send button is NEVER pushed off screen
+   when mobile keyboard opens and viewport shrinks
+   -------------------------------------------- */
 .luvz-chat-input-area {
   display: flex;
+  flex-direction: row;
   align-items: flex-end;
   gap: 8px;
+  /* Critical: constrain to popup width */
+  width: 100%;
+  box-sizing: border-box;
   padding: 10px 12px;
-  /* Safe area for iPhone home bar */
   padding-bottom: max(12px, env(safe-area-inset-bottom));
   border-top: 1px solid rgba(201,168,76,0.12);
   background: rgba(0,0,0,0.35);
   flex-shrink: 0;
+  /* Never overflow the popup */
+  overflow: hidden;
 }
 
 #luvz-chat-input {
+  /* flex:1 + min-width:0 is the key fix —
+     without min-width:0, flex children can overflow */
   flex: 1;
   min-width: 0;
+  width: 0; /* forces flex to control width */
+  box-sizing: border-box;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(201,168,76,0.2);
   border-radius: 10px;
   padding: 10px 13px;
   color: #e8d5a3;
   font-family: 'Jost', sans-serif;
-  font-size: 14px;
+  font-size: 16px; /* 16px prevents iOS auto-zoom on focus */
   font-weight: 300;
   outline: none;
   resize: none;
@@ -423,16 +438,17 @@
   line-height: 1.5;
   transition: border-color 0.2s;
   -webkit-appearance: none;
-  box-sizing: border-box;
 }
 
 #luvz-chat-input::placeholder { color: rgba(201,168,76,0.28); }
 #luvz-chat-input:focus { border-color: rgba(201,168,76,0.48); }
 
+/* Send button — fixed size, never shrinks */
 #luvz-chat-send {
   width: 42px;
   height: 42px;
-  min-width: 42px;
+  min-width: 42px; /* never compress */
+  flex-shrink: 0;  /* never compress */
   background: #c9a84c;
   border: none;
   border-radius: 10px;
@@ -440,7 +456,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
   transition: background 0.18s, transform 0.12s;
   -webkit-tap-highlight-color: transparent;
 }
@@ -456,4 +471,5 @@
   width: 16px;
   height: 16px;
   fill: #0a0a0a;
+  flex-shrink: 0;
 }
