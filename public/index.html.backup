@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="earth">
 
 <head>
@@ -11,7 +11,7 @@
   <meta name="keywords"
     content="92.5 silver jewelry, 22K gold polish jewelry, handcrafted Indian jewellery, silver necklace, silver jhumka, silver bangles, temple jewelry, South Indian jewellery, LUVZ Collection" />
   <meta name="robots" content="index, follow" />
-  <!-- Open Graph â€“ for WhatsApp & Instagram link previews -->
+  <!-- Open Graph – for WhatsApp & Instagram link previews -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="LUVZ Collection | 92.5 Silver Jewelry with 22K Gold Polish" />
   <meta property="og:description"
@@ -63,7 +63,7 @@
 
   <!-- tailwind.config removed with Tailwind CDN -->
   <style>
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• THEMES â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ THEMES ═══════════════════ */
     [data-theme="dark"] {
       --bg: #080807;
       --bg2: #0E0D09;
@@ -148,7 +148,7 @@
       --sh-modal: 0 40px 120px rgba(0, 0, 0, .88);
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• BASE â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ BASE ═══════════════════ */
     *,
     *::before,
     *::after {
@@ -187,7 +187,7 @@
       border-radius: 2px
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• GOLD TEXT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ GOLD TEXT ═══════════════════ */
     .gold-text {
       background: linear-gradient(110deg, var(--gold-d) 0%, var(--gold) 30%, var(--gold-l) 55%, var(--gold) 78%, var(--gold-d) 100%);
       background-size: 200% auto;
@@ -209,7 +209,7 @@
       }
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• LOADING SPINNER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ LOADING SPINNER ═══════════════════ */
     .loading-spinner {
       display: inline-block;
       width: 20px;
@@ -239,7 +239,7 @@
       opacity: .58;
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• REVEAL â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ REVEAL ═══════════════════ */
     .reveal {
       opacity: 0;
       transform: translateY(22px);
@@ -271,8 +271,8 @@
       transition-delay: .40s
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• GEM BAR â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
-    /* â•â• TASK 4: Liquid Gold Ultra-Striking Header â•â• */
+    /* ═══════════════════ GEM BAR ═══════════════════ */
+    /* ══ TASK 4: Liquid Gold Ultra-Striking Header ══ */
     .gem-bar {
       position: fixed;
       top: 88px;
@@ -330,7 +330,7 @@
       display: none
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• DIVIDER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ DIVIDER ═══════════════════ */
     .divider {
       display: flex;
       align-items: center;
@@ -347,7 +347,7 @@
       background: linear-gradient(90deg, transparent, var(--gold), transparent)
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• UTILS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ UTILS ═══════════════════ */
     .eyebrow {
       font-family: 'Cinzel', serif;
       font-size: .58rem;
@@ -367,7 +367,7 @@
       text-transform: uppercase
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• ANNOUNCEMENT BAR â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ ANNOUNCEMENT BAR ═══════════════════ */
     #ann-bar {
       background: var(--gold);
       color: var(--btn-fg);
@@ -409,7 +409,7 @@
       }
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• NAVBAR â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ NAVBAR ═══════════════════ */
     #nav {
       position: fixed;
       top: 30px;
@@ -418,7 +418,7 @@
       z-index: 1002;
       padding: 0 28px;
       transition: background .3s, box-shadow .3s;
-      /* Solid fallback â€” works on ALL Chrome versions, no CSS variable channels */
+      /* Solid fallback — works on ALL Chrome versions, no CSS variable channels */
       background: rgba(18, 13, 8, 0.82);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
@@ -554,7 +554,7 @@
       cursor: pointer;
       padding: 8px;
       border-radius: 8px;
-      /* Explicit min size â€” 44px touch target */
+      /* Explicit min size — 44px touch target */
       min-width: 44px;
       min-height: 44px;
       align-items: center;
@@ -564,7 +564,7 @@
     .nav-ham svg {
       display: block;
       stroke: var(--gold);
-      /* explicit â€” not inherited, works on Chrome */
+      /* explicit — not inherited, works on Chrome */
       flex-shrink: 0;
     }
 
@@ -572,7 +572,7 @@
       background: rgba(0, 0, 0, .12);
     }
 
-    /* â”€â”€ Mobile menu: full-screen overlay when open â”€â”€ */
+    /* ── Mobile menu: full-screen overlay when open ── */
     #mob-menu {
       display: none;
     }
@@ -583,11 +583,11 @@
       position: fixed;
       inset: 0;
       z-index: 2100;
-      /* Solid CSS colour â€” no rgba, no backdrop-filter.
+      /* Solid CSS colour — no rgba, no backdrop-filter.
          backdrop-filter creates compositing issues on Chrome/Android
          that make the background appear transparent even at 0.99 alpha. */
       background: #080807;
-      /* No backdrop-filter here â€” background is already fully opaque */
+      /* No backdrop-filter here — background is already fully opaque */
       padding: 104px 32px 40px;
       overflow-y: auto;
     }
@@ -651,7 +651,7 @@
       }
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• HERO â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ HERO ═══════════════════ */
     .hero {
       min-height: 100svh;
       display: flex;
@@ -982,7 +982,7 @@
       }
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• TRUST STRIP â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ TRUST STRIP ═══════════════════ */
     .trust-strip {
       background: var(--trust-bg);
       border-top: 1px solid var(--border);
@@ -1051,7 +1051,7 @@
       }
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• SECTIONS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ SECTIONS ═══════════════════ */
     .sec {
       padding: 80px 24px
     }
@@ -1101,7 +1101,7 @@
       margin-right: auto
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• CATEGORY CAROUSEL â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ CATEGORY CAROUSEL ═══════════════════ */
     .cat-carousel-outer {
       overflow: hidden;
       padding: 18px 0 22px;
@@ -1114,7 +1114,7 @@
       width: max-content;
     }
 
-    /* CSS animation runs on ALL devices â€” GPU-accelerated, works on mobile */
+    /* CSS animation runs on ALL devices — GPU-accelerated, works on mobile */
     .cat-carousel-track {
       animation: catScroll 32s linear infinite;
     }
@@ -1296,7 +1296,7 @@
       border-color: var(--gold)
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• CAROUSEL â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ CAROUSEL ═══════════════════ */
     .carousel-wrap {
       overflow: hidden
     }
@@ -1333,7 +1333,7 @@
       }
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• PRODUCT CARD (portrait 3:4) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ PRODUCT CARD (portrait 3:4) ═══════════════════ */
     .pcard {
       background: var(--card);
       border: 1px solid var(--border);
@@ -1585,7 +1585,7 @@
       pointer-events: auto
     }
 
-    /* On touch/mobile â€” always show quick view pill */
+    /* On touch/mobile — always show quick view pill */
     @media(hover:none) {
       .pcard-quick-view {
         opacity: 1;
@@ -1621,7 +1621,7 @@
       opacity: 1
     }
 
-    /* On touch/mobile â€” always show heart */
+    /* On touch/mobile — always show heart */
     @media(hover:none) {
       .pcard-wish {
         opacity: 1
@@ -1717,7 +1717,7 @@
       text-align: center
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• BRAND STORY â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ BRAND STORY ═══════════════════ */
     .story-inner {
       max-width: 740px;
       margin: 0 auto;
@@ -1774,7 +1774,7 @@
       box-shadow: 0 2px 14px rgba(168, 134, 10, .18)
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• WHY LUVZ â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ WHY LUVZ ═══════════════════ */
     .why-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1838,7 +1838,7 @@
       line-height: 1.5
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• CONTACT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ CONTACT ═══════════════════ */
     .contact-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1914,7 +1914,7 @@
       margin-top: 14px
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• BUTTONS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ BUTTONS ═══════════════════ */
     .btn-gold {
       display: inline-flex;
       align-items: center;
@@ -1964,7 +1964,7 @@
       transform: translateY(-1.5px)
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• THEME SWITCHER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ THEME SWITCHER ═══════════════════ */
     #tsw {
       position: fixed;
       top: 50%;
@@ -2057,7 +2057,7 @@
       margin: 0 5px
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• FLOATING WA â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ FLOATING WA ═══════════════════ */
     #fwa {
       position: fixed;
       bottom: max(82px, calc(70px + env(safe-area-inset-bottom)));
@@ -2145,7 +2145,7 @@
       }
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• MOBILE BOTTOM NAV â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ MOBILE BOTTOM NAV ═══════════════════ */
     #mob-nav {
       display: none;
       position: fixed;
@@ -2201,8 +2201,8 @@
       line-height: 1
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• PRODUCT MODAL â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• PRODUCT MODAL â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ PRODUCT MODAL ═══════════════════ */
+    /* ═══════════════════ PRODUCT MODAL ═══════════════════ */
     #moverlay {
       position: fixed;
       inset: 0;
@@ -2222,7 +2222,7 @@
     }
 
 
-    /* â”€â”€ Desktop: side-by-side image + info â”€â”€ */
+    /* ── Desktop: side-by-side image + info ── */
     .mbox {
       background: var(--modal-bg);
       border: 1px solid var(--border-h);
@@ -2260,7 +2260,7 @@
       }
     }
 
-    /* â”€â”€ Mobile: full-width sheet sliding up from bottom â”€â”€ */
+    /* ── Mobile: full-width sheet sliding up from bottom ── */
     @media (max-width: 600px) {
       #moverlay {
         align-items: stretch;
@@ -2291,7 +2291,7 @@
       }
     }
 
-    /* â”€â”€ Close button â”€â”€ */
+    /* ── Close button ── */
     .mclose {
       position: absolute;
       top: 12px;
@@ -2318,22 +2318,22 @@
       transform: none
     }
 
-    /* â”€â”€ Image pane â”€â”€ */
+    /* ── Image pane ── */
     #mimg-wrap {
       position: relative;
       overflow: hidden;
-      /* Use modal background â€” letterbox areas invisible, not white */
+      /* Use modal background — letterbox areas invisible, not white */
       background: var(--modal-bg);
       touch-action: pan-y pinch-zoom;
       min-height: 280px;
-      /* desktop only â€” overridden to 0 on mobile */
+      /* desktop only — overridden to 0 on mobile */
     }
 
     @media (max-width: 600px) {
       #mimg-wrap {
         flex-shrink: 0;
         width: 100%;
-        /* 65% of viewport height for image â€” gives it dominant presence */
+        /* 65% of viewport height for image — gives it dominant presence */
         height: 65vh;
         max-height: 65vh;
         overflow: hidden;
@@ -2345,7 +2345,7 @@
     #mimg {
       width: 100%;
       height: 100%;
-      /* contain on ALL sizes: jewellery is portrait â€” never crop it.
+      /* contain on ALL sizes: jewellery is portrait — never crop it.
          The modal-bg fill makes any surrounding space invisible. */
       object-fit: contain;
       transition: transform .3s;
@@ -2373,7 +2373,7 @@
       cursor: zoom-out
     }
 
-    /* â”€â”€ Gallery navigation â”€â”€ */
+    /* ── Gallery navigation ── */
     .gallery-nav {
       position: absolute;
       top: 50%;
@@ -2459,7 +2459,7 @@
       display: none
     }
 
-    /* â”€â”€ Info pane â”€â”€ */
+    /* ── Info pane ── */
     .minfo {
       padding: 24px 22px 0;
       display: flex;
@@ -2481,7 +2481,7 @@
       }
     }
 
-    /* Scrollable text area â€” badge, name, price, description */
+    /* Scrollable text area — badge, name, price, description */
     .minfo-scroll {
       flex-shrink: 0;
       overflow: visible;
@@ -2571,7 +2571,7 @@
       }
     }
 
-    /* â”€â”€ Sticky CTA footer â”€â”€ */
+    /* ── Sticky CTA footer ── */
     .m-footer {
       /* Always visible at the bottom of the info pane */
       flex-shrink: 0;
@@ -2610,7 +2610,7 @@
       }
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• POSTER MODAL â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ POSTER MODAL ═══════════════════ */
     #poster-overlay {
       position: fixed;
       inset: 0;
@@ -2637,7 +2637,7 @@
       box-shadow: 0 0 80px rgba(0, 0, 0, .8)
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• ERROR â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ ERROR ═══════════════════ */
     .ebanner {
       position: fixed;
       top: 70px;
@@ -2663,10 +2663,10 @@
       color: #f87171
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• CUSTOMER LOVE â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ CUSTOMER LOVE ═══════════════════ */
     #customer-love {
       padding: 128px 0;
-      /* py-32 â€” visual symmetry across landing page */
+      /* py-32 — visual symmetry across landing page */
       overflow: hidden
     }
 
@@ -2757,7 +2757,7 @@
     }
 
 
-    /* â•â•â• Review section SEO typography â•â•â• */
+    /* ═══ Review section SEO typography ═══ */
     .reviews-seo-sub {
       display: block;
       font-family: 'Cinzel', serif;
@@ -2779,7 +2779,7 @@
       line-height: 1.6;
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• FOOTER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ FOOTER ═══════════════════ */
     footer {
       background: var(--bg2);
       border-top: 1px solid var(--border);
@@ -2809,7 +2809,7 @@
       }
     }
 
-    /* Column 1 â€” Brand */
+    /* Column 1 — Brand */
     .footer-brand {
       display: block;
     }
@@ -2869,7 +2869,7 @@
       background: rgba(212, 175, 55, .1)
     }
 
-    /* Column 2 â€” Quick Links */
+    /* Column 2 — Quick Links */
     .footer-col-title {
       font-family: 'Cinzel', serif;
       font-size: .62rem;
@@ -2903,7 +2903,7 @@
       color: var(--gold)
     }
 
-    /* Column 3 â€” Contact */
+    /* Column 3 — Contact */
     .footer-contact-line {
       display: flex;
       align-items: flex-start;
@@ -2959,7 +2959,7 @@
       opacity: 1
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• WISHLIST DRAWER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ WISHLIST DRAWER ═══════════════════ */
     #wish-overlay {
       position: fixed;
       inset: 0;
@@ -3293,7 +3293,7 @@
       display: flex
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• HERITAGE SECTION â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ HERITAGE SECTION ═══════════════════ */
     .heritage-sec {
       position: relative;
       padding: 100px 24px;
@@ -3431,7 +3431,7 @@
       border-color: var(--gold)
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• ABOUT BOUTIQUE â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ ABOUT BOUTIQUE ═══════════════════ */
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1.15fr;
@@ -3527,7 +3527,7 @@
       margin-top: 24px
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• SVG TRUST BAR â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ SVG TRUST BAR ═══════════════════ */
     .trust-icon svg {
       flex-shrink: 0
     }
@@ -3540,10 +3540,10 @@
     }
 
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â• TASK 1: 3D VAULT â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ══════════════ TASK 1: 3D VAULT ══════════════ */
 
     /* Outer clip wrapper: prevents 3D children bleeding into header/other sections.
-       NOT part of the 3D context â€” just a solid clipping boundary. */
+       NOT part of the 3D context — just a solid clipping boundary. */
     .vault-clip {
       width: 100%;
       overflow: hidden;
@@ -3557,13 +3557,13 @@
       position: relative;
       width: 100%;
       height: 380px;
-      /* perspective ~2Ã— translateZ keeps cards visible without distortion */
+      /* perspective ~2× translateZ keeps cards visible without distortion */
       perspective: 680px;
       perspective-origin: 50% 50%;
       overflow: visible;
       cursor: grab;
       touch-action: pan-y;
-      /* transform-style is on .vault-ring, not here â€” prevents stacking-context issues */
+      /* transform-style is on .vault-ring, not here — prevents stacking-context issues */
     }
 
     @media(max-width:700px) {
@@ -3577,7 +3577,7 @@
       cursor: grabbing;
     }
 
-    /* Floor shadow â€” 2D radial gradient, no 3D transform (avoids stacking context) */
+    /* Floor shadow — 2D radial gradient, no 3D transform (avoids stacking context) */
     .vault-floor {
       position: absolute;
       bottom: 0;
@@ -3631,7 +3631,7 @@
 
       transition: box-shadow .3s;
       border-radius: 16px;
-      /* No overflow:hidden â€” it clips the 3D children in some browsers */
+      /* No overflow:hidden — it clips the 3D children in some browsers */
       cursor: pointer;
     }
 
@@ -3733,11 +3733,11 @@
     }
 
 
-    /* â•â• TASK 5: No Return Policy â•â• */
+    /* ══ TASK 5: No Return Policy ══ */
 
 
 
-    /* â•â• TASK 6: Review Lightbox â•â• */
+    /* ══ TASK 6: Review Lightbox ══ */
     #review-lightbox {
       position: fixed;
       inset: 0;
@@ -3796,7 +3796,7 @@
     }
 
 
-    /* â•â• TASK TWO: Prism Glow â€” Minimalist 1px Hairline â•â•
+    /* ══ TASK TWO: Prism Glow — Minimalist 1px Hairline ══
        Technique: pcard::after fills a 1px outer ring using mask-image.
        An inner ::before div of card-size covers the centre so glow
        never touches the product image. pointer-events:none everywhere. */
@@ -3810,7 +3810,7 @@
       isolation: isolate;
     }
 
-    /* 1px spinning hairline border â€” mask punches out everything except outermost 1px */
+    /* 1px spinning hairline border — mask punches out everything except outermost 1px */
     .pcard::after {
       content: '';
       position: absolute;
@@ -3846,7 +3846,7 @@
       }
     }
 
-    /* Soft bloom behind â€” emissive, never in front */
+    /* Soft bloom behind — emissive, never in front */
     .pcard-bloom {
       position: absolute;
       inset: -3px;
@@ -3935,7 +3935,7 @@
     }
 
 
-    /* â•â• Vault card rendering overrides â•â•
+    /* ══ Vault card rendering overrides ══
        .pcard and .pcard-img use overflow:hidden which creates new stacking
        contexts that flatten 3D children. Inside the vault we must undo this.
        These rules are scoped to .vault-ring and do NOT affect normal carousels. */
@@ -3976,7 +3976,7 @@
     .vault-ring .pcard-img-ov,
     .vault-ring .pcard-bloom,
     .vault-ring .pcard-sweep {
-      /* These overlays create stacking contexts â€” remove from vault */
+      /* These overlays create stacking contexts — remove from vault */
       display: none !important;
     }
 
@@ -3987,7 +3987,7 @@
     }
 
 
-    /* â•â• Referral Code Field â•â• */
+    /* ══ Referral Code Field ══ */
     .referral-wrap {
       margin-top: 8px;
       position: relative;
@@ -4005,7 +4005,7 @@
         padding-bottom: 8px;
       }
 
-      /* font-size â‰¥16px prevents iOS Safari and Chrome Android auto-zoom on focus */
+      /* font-size ≥16px prevents iOS Safari and Chrome Android auto-zoom on focus */
       .referral-input {
         font-size: 16px;
       }
@@ -4166,7 +4166,7 @@
       }
 
       .referral-toggle::after {
-        content: 'â–¾';
+        content: '▾';
         margin-left: auto;
         font-size: .7rem;
         transition: transform .2s;
@@ -4203,7 +4203,7 @@
     }
 
 
-    /* â”€â”€ Tailwind CDN replacement: only classes actually used â”€â”€ */
+    /* ── Tailwind CDN replacement: only classes actually used ── */
     .mini-footer {
       padding: 40px;
       text-align: center;
@@ -4215,7 +4215,7 @@
       color: #9CA3AF;
     }
 
-    /* â”€â”€ Hero trust pills (Phase 1) â”€â”€ */
+    /* ── Hero trust pills (Phase 1) ── */
     .hero-trust-pills {
       display: flex;
       flex-wrap: wrap;
@@ -4276,7 +4276,7 @@
       }
     }
 
-    /* â”€â”€ Instagram CTA (Phase 5) â”€â”€ */
+    /* ── Instagram CTA (Phase 5) ── */
     .ig-cta-sec {
       padding: 0 24px;
       margin: 0;
@@ -4338,7 +4338,7 @@
       flex-shrink: 0;
     }
 
-    /* â”€â”€ How It Works (Phase 6) â”€â”€ */
+    /* ── How It Works (Phase 6) ── */
     .hiw-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -4393,7 +4393,7 @@
       line-height: 1.55;
     }
 
-    /* â”€â”€ Policy section (Phase 7) â”€â”€ */
+    /* ── Policy section (Phase 7) ── */
     .policy-cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -4441,7 +4441,7 @@
       line-height: 1.55;
     }
 
-    /* â”€â”€ Phase 8: Smooth scroll, no jank â”€â”€ */
+    /* ── Phase 8: Smooth scroll, no jank ── */
     @media(prefers-reduced-motion: no-preference) {
 
       .hero-trust-pills,
@@ -4459,7 +4459,7 @@
     }
 
 
-    /* â”€â”€ Social Proof Bar â”€â”€ */
+    /* ── Social Proof Bar ── */
     .proof-bar {
       background: var(--trust-bg);
       border-top: 1px solid var(--border);
@@ -4487,7 +4487,7 @@
     }
 
 
-    /* â”€â”€ Touch target: all interactive elements â‰¥44px â”€â”€ */
+    /* ── Touch target: all interactive elements ≥44px ── */
     .btn-gold,
     .btn-outline,
     .c-btn,
@@ -4503,7 +4503,7 @@
     }
 
 
-    /* â”€â”€ content-visibility: defers rendering of off-screen sections â”€â”€ */
+    /* ── content-visibility: defers rendering of off-screen sections ── */
     #customer-love,
     footer,
     #social-gallery,
@@ -4515,7 +4515,7 @@
     }
 
 
-    /* â”€â”€ Text Testimonials â”€â”€ */
+    /* ── Text Testimonials ── */
     .testimonials-sec {
       padding: 80px 24px;
       background: var(--bg);
@@ -4674,7 +4674,7 @@
       }
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• RESPONSIVE FOOTER & EMAIL â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════ RESPONSIVE FOOTER & EMAIL ═══════════════════ */
     @media(max-width:768px) {
       footer {
         display: grid;
@@ -4693,694 +4693,1087 @@
       }
     }
   </style>
+
 <body>
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• LUXURY REDESIGN v2 - NEW BODY â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-<!-- Per MD spec: COMPLETE layout overhaul for premium 92.5 silver jewelry brand -->
-<!-- Preserved: WhatsApp, Wishlist, Theme system, Gemini AI, Product modals, Float button, LUVZ logo -->
-<!-- Generated: 2026-04-09 -->
+  <!-- ═══════════════════════════════════════════════ LUXURY REDESIGN v2 ═══════════════════════════════════════════════ -->
+  <!-- Per MD spec: COMPLETE layout overhaul for premium 92.5 silver jewelry brand -->
+  <!-- Preserved: WhatsApp, Wishlist, Theme system, Gemini AI, Product modals, Float button, LUVZ logo -->
 
-<!-- ANNOUNCEMENT BAR -->
-<div id="ann-bar">
+  <!-- ANNOUNCEMENT BAR -->
+  <div id="ann-bar">
     <div class="ann-track">
-        <span>âœ¦ Free shipping above â‚¹999 <span style="opacity:.35">Â·</span> 92.5 Certified Silver <span
-                style="opacity:.35">Â·</span> 22K Gold Polish <span style="opacity:.35">Â·</span> Handcrafted in India
-            <span style="opacity:.35">Â·</span> Enquire on WhatsApp</span>
-        <span>âœ¦ Free shipping above â‚¹999 <span style="opacity:.35">Â·</span> 92.5 Certified Silver <span
-                style="opacity:.35">Â·</span> 22K Gold Polish <span style="opacity:.35">Â·</span> Handcrafted in India
-            <span style="opacity:.35">Â·</span> Enquire on WhatsApp</span>
+      <span>✦ Free shipping above ₹999 <span style="opacity:.35">·</span> 92.5 Certified Silver <span
+          style="opacity:.35">·</span> 22K Gold Polish <span style="opacity:.35">·</span> Handcrafted in India <span
+          style="opacity:.35">·</span> Enquire on WhatsApp</span>
+      <span>✦ Free shipping above ₹999 <span style="opacity:.35">·</span> 92.5 Certified Silver <span
+          style="opacity:.35">·</span> 22K Gold Polish <span style="opacity:.35">·</span> Handcrafted in India <span
+          style="opacity:.35">·</span> Enquire on WhatsApp</span>
     </div>
-</div>
+  </div>
 
-<!-- THEME SWITCHER -->
-<div id="tsw" role="group" aria-label="Switch theme">
+  <!-- THEME SWITCHER -->
+  <div id="tsw" role="group" aria-label="Switch theme">
     <button class="tb on" data-t="dark" data-tip="Black Velvet" onclick="setTheme('dark')" aria-label="Dark">
-        <div class="td td-dark"></div>
+      <div class="td td-dark"></div>
     </button>
     <div class="tw-div"></div>
     <button class="tb" data-t="light" data-tip="Pearl White" onclick="setTheme('light')" aria-label="Light">
-        <div class="td td-light"></div>
+      <div class="td td-light"></div>
     </button>
     <div class="tw-div"></div>
     <button class="tb" data-t="earth" data-tip="Earthy Gold" onclick="setTheme('earth')" aria-label="Earth">
-        <div class="td td-earth"></div>
+      <div class="td td-earth"></div>
     </button>
-</div>
+  </div>
 
-<!-- FLOATING WHATSAPP -->
-<a id="fwa"
+  <!-- FLOATING WHATSAPP -->
+  <a id="fwa"
     href="https://wa.me/918919359961?text=Hi!%20I%27m%20browsing%20LUVZ%20Collection%20and%20want%20to%20order%20%F0%9F%A4%A9"
     target="_blank" rel="noopener noreferrer" aria-label="Chat and Order on WhatsApp">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="white" flex-shrink="0" aria-hidden="true">
-        <path
-            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+      <path
+        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
     </svg>
     <div>
-        <div id="fwa-text">Chat &amp; Order</div>
-        <div id="fwa-micro">on WhatsApp</div>
+      <div id="fwa-text">Chat &amp; Order</div>
+      <div id="fwa-micro">on WhatsApp</div>
     </div>
-</a>
+  </a>
 
-<!-- MOBILE BOTTOM NAV -->
-<nav id="mob-nav" aria-label="Mobile navigation">
+  <!-- MOBILE BOTTOM NAV -->
+  <nav id="mob-nav" aria-label="Mobile navigation">
     <div class="mob-nav-inner">
-        <a href="#" class="mob-nav-item active" onclick="window.scrollTo({top:0,behavior:'smooth'});return false"><span
-                class="mob-nav-icon">ðŸ </span><span>Home</span></a>
-        <a href="#collections" class="mob-nav-item"><span class="mob-nav-icon">ðŸª™</span><span>Collections</span></a>
-        <button class="mob-nav-item" onclick="openWishlist()" style="background:none;border:none;cursor:pointer">
-            <span class="mob-nav-icon" style="position:relative;display:inline-block">ðŸ¤<span id="mob-wish-count"
-                    style="display:none;position:absolute;top:-4px;right:-6px;background:var(--gold);color:var(--btn-fg);font-family:'Cinzel',serif;font-size:.45rem;font-weight:700;width:14px;height:14px;border-radius:50%;line-height:14px;text-align:center">0</span></span>
-            <span>Wishlist</span>
-        </button>
-        <a href="https://wa.me/918919359961?text=Hi!%20I'm%20interested%20in%20LUVZ%20Collection%20%F0%9F%A4%A9"
-            target="_blank" rel="noopener noreferrer" class="mob-nav-item"><span
-                class="mob-nav-icon">ðŸ’¬</span><span>WhatsApp</span></a>
-        <a href="https://www.instagram.com/luvz_collection" target="_blank" rel="noopener noreferrer"
-            class="mob-nav-item"><span class="mob-nav-icon">ðŸ“¸</span><span>Instagram</span></a>
+      <a href="#" class="mob-nav-item active" onclick="window.scrollTo({top:0,behavior:'smooth'});return false"><span
+          class="mob-nav-icon">🏠</span><span>Home</span></a>
+      <a href="#categories" class="mob-nav-item"><span class="mob-nav-icon">🪙</span><span>Categories</span></a>
+      <button class="mob-nav-item" onclick="openWishlist()" style="background:none;border:none;cursor:pointer">
+        <span class="mob-nav-icon" style="position:relative;display:inline-block">🤍<span id="mob-wish-count"
+            style="display:none;position:absolute;top:-4px;right:-6px;background:var(--gold);color:var(--btn-fg);font-family:'Cinzel',serif;font-size:.45rem;font-weight:700;width:14px;height:14px;border-radius:50%;line-height:14px;text-align:center">0</span></span>
+        <span>Wishlist</span>
+      </button>
+      <a href="https://wa.me/918919359961?text=Hi!%20I'm%20interested%20in%20LUVZ%20Collection%20%F0%9F%A4%A9"
+        target="_blank" rel="noopener noreferrer" class="mob-nav-item"><span
+          class="mob-nav-icon">💬</span><span>WhatsApp</span></a>
+      <a href="https://www.instagram.com/luvz_collection" target="_blank" rel="noopener noreferrer"
+        class="mob-nav-item"><span class="mob-nav-icon">📸</span><span>Instagram</span></a>
     </div>
-</nav>
+  </nav>
 
-<!-- NAVBAR -->
-<nav id="nav">
+  <!-- NAVBAR -->
+  <nav id="nav">
     <div class="nav-inner">
-        <a href="#" class="nav-logo-wrap" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">
-            <img src="images/logo_gif.webp" alt="LUVZ Collection logo" class="nav-logo-img" loading="eager"
-                fetchpriority="low" decoding="async" width="36" height="36" />
-            <div>
-                <div class="nav-brand gold-text">LUVZ Collection</div>
-                <div class="nav-brand-sub">Designer Boutique</div>
-            </div>
-        </a>
-        <div class="nav-links">
-            <a href="#collections" class="nav-link">Collections</a>
-            <a href="#featured" class="nav-link">Featured</a>
-            <a href="#testimonials" class="nav-link">Reviews</a>
-            <a href="#story" class="nav-link">Our Story</a>
-            <a href="#contact" class="nav-link">Contact</a>
-        </div>
-        <a href="https://wa.me/918919359961?text=Hi!%20I%20found%20LUVZ%20Collection%20%F0%9F%A4%A9" target="_blank"
-            rel="noopener noreferrer" class="nav-wa">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-            </svg>
-            WhatsApp Us
-        </a>
-        <button class="nav-wish-btn" onclick="openWishlist()" aria-label="Wishlist">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path
-                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-            </svg>
-            <span class="nav-wish-count" id="nav-wish-count">0</span>
-        </button>
-        <button class="nav-ham" onclick="toggleMenu()" aria-label="Menu">
-            <svg width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-        </button>
-    </div>
-</nav>
-
-<!-- GEM BAR â€” standalone, outside hero so overflow:hidden doesn't clip it -->
-<div class="gem-bar" aria-hidden="true"></div>
-
-<!-- 1. HERO SECTION -->
-<section class="hero" style="margin-top:30px">
-    <div class="hero-inner">
-        <div class="hero-brand-col">
-            <h1 class="hero-h1" style="margin-bottom: 32px; text-transform: uppercase;">HANDCRAFTED
-                SILVER.<br />TIMELESS BEAUTY.</h1>
-            <p class="hero-tagline" style="max-width: 520px; margin: 0 auto 32px;">Each piece carries legacy of 92.5
-                sterling silver. Finished with 22K gold. Made for those who know the difference.</p>
-            <div class="hero-btns">
-                <a href="#collections" class="btn-gold"
-                    onclick="document.getElementById('collections').scrollIntoView({behavior:'smooth'}); return false;">
-                    Explore Collections
-                </a>
-                <a href="https://wa.me/918919359961?text=Hi%20LUVZ!%20I%27d%20like%20to%20enquire%20about%20pricing%20and%20availability%20%F0%9F%A4%A9"
-                    target="_blank" rel="noopener noreferrer" class="btn-outline">
-                    Price Enquiry
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="scroll-ind" onclick="document.getElementById('collections').scrollIntoView({behavior:'smooth'})">
-        <span>Discover Collection</span>
-        <div class="chevrons">
-            <div class="chev"></div>
-            <div class="chev"></div>
-            <div class="chev"></div>
-        </div>
-    </div>
-</section>
-
-<!-- SOCIAL PROOF BAR -->
-<div class="proof-bar" aria-label="Social proof">
-    <div class="proof-bar-inner">
-        <span>â­ 4.9 / 5 rating</span>
-        <span class="proof-bar-sep">Â·</span>
-        <span>1,000+ happy collectors across India</span>
-        <span class="proof-bar-sep">Â·</span>
-        <span>Free shipping above â‚¹999</span>
-    </div>
-</div>
-
-<!-- 2. BRAND STORY â€” Why 92.5 Silver? -->
-<section id="story" class="sec reveal">
-    <div
-        style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:120px; align-items:center">
-        <!-- LEFT COLUMN: TEXT -->
+      <a href="#" class="nav-logo-wrap" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">
+        <img src="images/logo_gif.webp" alt="LUVZ Collection logo" class="nav-logo-img" loading="eager"
+          fetchpriority="low" decoding="async" width="36" height="36" />
         <div>
-            <div class="eyebrow">Heritage & Craft</div>
-            <h2 class="sec-title gold-text" style="margin-bottom:20px">Why 92.5 Silver?</h2>
-            <p
-                style="font-family:'Cormorant Garamond',serif; font-size:1.06rem; color:var(--txt2); line-height:1.95; margin-bottom:24px">
-                92.5 purity. Commitment to heritage. Every piece handcrafted by South Indian artisans using techniques
-                passed down through generations.
-            </p>
-            <p
-                style="font-family:'Cormorant Garamond',serif; font-size:1.06rem; color:var(--txt2); line-height:1.95; margin-bottom:24px">
-                Our 92.5 silver is hallmark certified, ensuring you receive exactly what you're promised. Not plated.
-                Not filled. Pure.
-            </p>
-            <p
-                style="font-family:'Cormorant Garamond',serif; font-size:1.06rem; color:var(--txt2); line-height:1.95; margin-bottom:32px">
-                The 22K gold polish lasts. It's baked on, not painted. That warm temple-jewelry glow won't fade with
-                wear or cleaning.
-            </p>
-
-            <!-- FEATURE LIST -->
-            <div style="display:flex; flex-direction:column; gap:10px">
-                <div
-                    style="display:flex; align-items:center; gap:8px; font-family:'Cinzel',serif; font-size:0.88rem; color:var(--txt)">
-                    <span style="color:var(--gold); font-size:1.2rem">âœ§</span> 92.5% Pure Silver
-                </div>
-                <div
-                    style="display:flex; align-items:center; gap:8px; font-family:'Cinzel',serif; font-size:0.88rem; color:var(--txt)">
-                    <span style="color:var(--gold); font-size:1.2rem">âœ§</span> 22K Gold Polish
-                </div>
-                <div
-                    style="display:flex; align-items:center; gap:8px; font-family:'Cinzel',serif; font-size:0.88rem; color:var(--txt)">
-                    <span style="color:var(--gold); font-size:1.2rem">âœ§</span> Lifetime Durability
-                </div>
-                <div
-                    style="display:flex; align-items:center; gap:8px; font-family:'Cinzel',serif; font-size:0.88rem; color:var(--txt)">
-                    <span style="color:var(--gold); font-size:1.2rem">âœ§</span> Conscious Craftsmanship
-                </div>
-            </div>
+          <div class="nav-brand gold-text">LUVZ Collection</div>
+          <div class="nav-brand-sub">Designer Boutique</div>
         </div>
+      </a>
+      <div class="nav-links">
+        <a href="#categories" class="nav-link">Categories</a>
+        <a href="#top-sellers" class="nav-link">Top Sellers</a>
+        <a href="#new-collection" class="nav-link">New</a>
+        <a href="#customer-love" class="nav-link">Customer Love</a>
+        <a href="#about" class="nav-link">About Us</a>
+        <a href="#story" class="nav-link">Our Story</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </div>
+      <a href="https://wa.me/918919359961?text=Hi!%20I%20found%20LUVZ%20Collection%20%F0%9F%A4%A9" target="_blank"
+        rel="noopener noreferrer" class="nav-wa">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+        WhatsApp Us
+      </a>
+      <button class="nav-wish-btn" onclick="openWishlist()" aria-label="Wishlist">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </svg>
+        <span class="nav-wish-count" id="nav-wish-count">0</span>
+      </button>
+      <button class="nav-ham" onclick="toggleMenu()" aria-label="Menu">
+        <svg width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </nav>
 
-        <!-- RIGHT COLUMN: IMAGE (Desktop only) -->
-        <div style="display:none" class="show-desktop">
-            <div
-                style="width:400px; height:500px; background:var(--card2); border:1px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--txt2); opacity:0.5; font-size:0.9rem; text-align:center">
-                [Macro photography:<br />Silver texture with<br />soft studio lighting]
-            </div>
+  <!-- GEM BAR — standalone, outside hero so overflow:hidden doesn't clip it -->
+  <div class="gem-bar" aria-hidden="true"></div>
+
+  <!-- HERO -->
+  <section class="hero" style="margin-top:30px">
+    <div class="hero-inner">
+      <div class="hero-brand-col">
+        <h1 class="hero-h1" style="margin-bottom: 32px; text-transform: uppercase;">HANDCRAFTED SILVER.<br />TIMELESS
+          BEAUTY.</h1>
+        <p class="hero-tagline" style="max-width: 520px; margin: 0 auto 32px;">Each piece carries legacy of 92.5
+          sterling silver. Finished with 22K gold. Made for those who know the difference.</p>
+        <div class="hero-btns">
+          <a href="#categories" class="btn-gold"
+            onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'}); return false;">
+            Explore Collections
+          </a>
+          <a href="https://wa.me/918919359961?text=Hi%20LUVZ!%20I%27d%20like%20to%20enquire%20about%20pricing%20and%20availability%20%F0%9F%A4%A9"
+            target="_blank" rel="noopener noreferrer" class="btn-outline">
+            Price Enquiry
+          </a>
         </div>
+      </div>
+    </div>
+    <div class="scroll-ind" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">
+      <span>Discover Collection</span>
+      <div class="chevrons">
+        <div class="chev"></div>
+        <div class="chev"></div>
+        <div class="chev"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF BAR -->
+  <div class="proof-bar" aria-label="Social proof">
+    <div class="proof-bar-inner">
+      <span>⭐ 4.9 / 5 rating</span>
+      <span class="proof-bar-sep">·</span>
+      <span>1,000+ happy collectors across India</span>
+      <span class="proof-bar-sep">·</span>
+      <span>Free shipping above ₹999</span>
+    </div>
+  </div>
+
+  <!-- TRUST STRIP — SVG Quality Pillars -->
+
+  <!-- SHOP BY CATEGORY -->
+  <section id="categories" class="sec reveal">
+    <div style="max-width:1260px;margin:0 auto">
+      <div class="sec-head">
+        <div class="eyebrow">Browse by Type</div>
+        <h2 class="sec-title gold-text">Shop by Category</h2>
+        <p>From everyday elegance to bridal statement pieces — find what speaks to you.</p>
+      </div>
+      <div class="cat-carousel-outer">
+        <div class="cat-carousel-track" id="cat-grid">
+          <!-- skeleton tiles duplicated for seamless loop appearance -->
+          <div class="cat-tile">
+            <div class="cat-tile-img sk cat-tile-img-sk"></div>
+            <div class="cat-tile-body"><span class="cat-tile-name sk"
+                style="width:70%;height:10px;border-radius:3px"></span></div>
+          </div>
+          <div class="cat-tile">
+            <div class="cat-tile-img sk cat-tile-img-sk"></div>
+            <div class="cat-tile-body"><span class="cat-tile-name sk"
+                style="width:70%;height:10px;border-radius:3px"></span></div>
+          </div>
+          <div class="cat-tile">
+            <div class="cat-tile-img sk cat-tile-img-sk"></div>
+            <div class="cat-tile-body"><span class="cat-tile-name sk"
+                style="width:70%;height:10px;border-radius:3px"></span></div>
+          </div>
+          <div class="cat-tile">
+            <div class="cat-tile-img sk cat-tile-img-sk"></div>
+            <div class="cat-tile-body"><span class="cat-tile-name sk"
+                style="width:70%;height:10px;border-radius:3px"></span></div>
+          </div>
+          <div class="cat-tile">
+            <div class="cat-tile-img sk cat-tile-img-sk"></div>
+            <div class="cat-tile-body"><span class="cat-tile-name sk"
+                style="width:70%;height:10px;border-radius:3px"></span></div>
+          </div>
+          <div class="cat-tile">
+            <div class="cat-tile-img sk cat-tile-img-sk"></div>
+            <div class="cat-tile-body"><span class="cat-tile-name sk"
+                style="width:70%;height:10px;border-radius:3px"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOP SELLERS — 3D Vault -->
+  <section id="top-sellers" class="sec reveal">
+    <div style="max-width:1360px;margin:0 auto">
+      <div class="sec-head">
+        <div class="eyebrow">Most Loved</div>
+        <h2 class="sec-title gold-text">Top Sellers</h2>
+      </div>
+      <!-- 3D Vault: .vault-clip clips overflow, .vault-scene holds 3D context -->
+      <div class="vault-clip">
+        <div class="vault-scene" id="vault-scene" aria-label="Top sellers 3D carousel">
+          <div class="vault-ring" id="vault-ring" role="list"></div>
+          <div class="vault-floor" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="vault-nav">
+        <button class="vault-btn" id="vault-prev" aria-label="Previous" onclick="vaultStep(-1)">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+        <button class="vault-btn" id="vault-next" aria-label="Next" onclick="vaultStep(1)">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6" />
+          </svg>
+        </button>
+      </div>
+      <!-- Hidden track still needed so existing buildCarousel wiring works,
+           but vault JS reads from this after population -->
+      <div style="display:none">
+        <div id="ct-top_sellers"></div>
+        <div id="cn-top_sellers"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW COLLECTION -->
+  <section id="new-collection" class="sec sec-alt reveal">
+    <div style="max-width:1360px;margin:0 auto">
+      <div class="sec-head">
+        <div class="eyebrow" style="color:#3A8C5C">Just Arrived</div>
+        <h2 class="sec-title gold-text">New Collection</h2>
+      </div>
+      <div class="carousel-wrap">
+        <div class="carousel-track" id="ct-new_collection">
+          <div class="loading-message">
+            <div class="loading-spinner"></div>
+            <span>Loading new arrivals...</span>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-nav" id="cn-new_collection"></div>
+    </div>
+  </section>
+
+  <!-- WHY LUVZ -->
+  <section id="why-luvz" class="sec sec-alt reveal">
+    <div style="max-width:960px;margin:0 auto">
+      <div class="sec-head">
+        <div class="eyebrow">Our Promise</div>
+        <h2 class="sec-title gold-text">Why LUVZ?</h2>
+        <p>Every piece we make is a promise — of quality, care, and craftsmanship that lasts.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card">
+          <span class="why-icon">🥈</span>
+          <div class="why-title">92.5 Sterling Silver</div>
+          <div class="why-body">Hallmark certified. The finest grade.</div>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">✨</span>
+          <div class="why-title">22K Gold Polish</div>
+          <div class="why-body">Temple-warm glow that doesn't fade.</div>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">🤲</span>
+          <div class="why-title">Handcrafted Designs</div>
+          <div class="why-body">Real hands. No two pieces alike.</div>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">🌿</span>
+          <div class="why-title">Lightweight & Skin Safe</div>
+          <div class="why-body">Nickel-free. Wear it all day, every day.</div>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">🚚</span>
+          <div class="why-title">Free Shipping</div>
+          <div class="why-body">Tracked, secure, pan-India. Free above ₹999.</div>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">💬</span>
+          <div class="why-title">WhatsApp Support</div>
+          <div class="why-body">Custom orders. Fast replies. Direct line to us.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- HERITAGE SECTION — hidden for now -->
+  <section class="heritage-sec reveal" id="heritage" style="display:none">
+    <div class="heritage-bg" id="heritage-bg"></div>
+    <div class="heritage-overlay"></div>
+    <div class="heritage-inner">
+      <div class="heritage-eyebrow">✦ Our Heritage ✦</div>
+      <h2 class="heritage-title">The Art of<br />92.5 Silver</h2>
+      <div class="heritage-rule"></div>
+      <p class="heritage-body">
+        Every LUVZ piece begins as raw 92.5 sterling silver — the finest hallmarked grade — shaped by the steady hands
+        of South Indian artisans into forms drawn from centuries of temple jewellery tradition. Each is then bathed in a
+        lustrous 22 carat gold polish that glows warm, wears true, and carries the soul of a craft that predates
+        modernity.
+      </p>
+      <div class="heritage-pillars">
+        <div class="heritage-pillar">
+          <div class="heritage-pillar-num">92.5</div>
+          <div class="heritage-pillar-lbl">Hallmarked Silver</div>
+        </div>
+        <div class="heritage-pillar">
+          <div class="heritage-pillar-num">22K</div>
+          <div class="heritage-pillar-lbl">Gold Polish</div>
+        </div>
+        <div class="heritage-pillar">
+          <div class="heritage-pillar-num">100%</div>
+          <div class="heritage-pillar-lbl">Handcrafted</div>
+        </div>
+      </div>
+      <a href="#categories" class="heritage-cta">Explore the Collection →</a>
+    </div>
+  </section>
+
+  <!-- CATEGORY SECTIONS (dynamically populated from jsDelivr products.json CDN) -->
+  <section id="category-necklace" class="sec reveal">
+    <div style="max-width:1360px;margin:0 auto">
+      <div class="sec-head">
+        <div class="eyebrow">Browse by Type</div>
+        <h2 class="sec-title gold-text" id="title-category-necklace">Necklace</h2>
+        <p class="cat-sec-subtitle" id="sub-category-necklace">Delicate layers. Everyday glamour.</p>
+
+      </div>
+      <div class="carousel-wrap">
+        <div class="carousel-track" id="ct-category-necklace">
+          <p class="cat-empty-msg"
+            style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;color:var(--txt2);opacity:.28;padding:32px 24px;text-align:center;width:100%">
+            Coming Soon — Products will appear here</p>
+        </div>
+      </div>
+      <div class="carousel-nav" id="cn-category-necklace"></div>
+    </div>
+  </section>
+
+  <section id="category-pendant" class="sec sec-alt reveal">
+    <div style="max-width:1360px;margin:0 auto">
+      <div class="sec-head">
+        <div class="eyebrow">Browse by Type</div>
+        <h2 class="sec-title gold-text" id="title-category-pendant">Pendant</h2>
+        <p class="cat-sec-subtitle" id="sub-category-pendant">Wear your story. Close to your heart.</p>
+
+      </div>
+      <div class="carousel-wrap">
+        <div class="carousel-track" id="ct-category-pendant">
+          <p class="cat-empty-msg"
+            style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;color:var(--txt2);opacity:.28;padding:32px 24px;text-align:center;width:100%">
+            Coming Soon — Products will appear here</p>
+        </div>
+      </div>
+      <div class="carousel-nav" id="cn-category-pendant"></div>
+    </div>
+  </section>
+
+  <section id="category-earrings" class="sec reveal">
+    <div style="max-width:1360px;margin:0 auto">
+      <div class="sec-head">
+        <div class="eyebrow">Browse by Type</div>
+        <h2 class="sec-title gold-text" id="title-category-earrings">Earrings</h2>
+        <p class="cat-sec-subtitle" id="sub-category-earrings">From subtle to statement — all handcrafted.</p>
+
+      </div>
+      <div class="carousel-wrap">
+        <div class="carousel-track" id="ct-category-earrings">
+          <p class="cat-empty-msg"
+            style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;color:var(--txt2);opacity:.28;padding:32px 24px;text-align:center;width:100%">
+            Coming Soon — Products will appear here</p>
+        </div>
+      </div>
+      <div class="carousel-nav" id="cn-category-earrings"></div>
+    </div>
+  </section>
+
+  <section id="category-bangles" class="sec sec-alt reveal">
+    <div style="max-width:1360px;margin:0 auto">
+      <div class="sec-head">
+        <div class="eyebrow">Browse by Type</div>
+        <h2 class="sec-title gold-text" id="title-category-bangles">Bangles</h2>
+        <p class="cat-sec-subtitle" id="sub-category-bangles">Grace in every gesture.</p>
+
+      </div>
+      <div class="carousel-wrap">
+        <div class="carousel-track" id="ct-category-bangles">
+          <p class="cat-empty-msg"
+            style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;color:var(--txt2);opacity:.28;padding:32px 24px;text-align:center;width:100%">
+            Coming Soon — Products will appear here</p>
+        </div>
+      </div>
+      <div class="carousel-nav" id="cn-category-bangles"></div>
+    </div>
+  </section>
+
+  <section id="category-jhumkas" class="sec reveal">
+    <div style="max-width:1360px;margin:0 auto">
+      <div class="sec-head">
+        <div class="eyebrow">Browse by Type</div>
+        <h2 class="sec-title gold-text" id="title-category-jhumkas">Jhumkas</h2>
+        <p class="cat-sec-subtitle" id="sub-category-jhumkas">India's favourite earring. Reimagined in silver.</p>
+
+      </div>
+      <div class="carousel-wrap">
+        <div class="carousel-track" id="ct-category-jhumkas">
+          <p class="cat-empty-msg"
+            style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;color:var(--txt2);opacity:.28;padding:32px 24px;text-align:center;width:100%">
+            Coming Soon — Products will appear here</p>
+        </div>
+      </div>
+      <div class="carousel-nav" id="cn-category-jhumkas"></div>
+    </div>
+  </section>
+
+  <section id="category-sets" class="sec sec-alt reveal">
+    <div style="max-width:1360px;margin:0 auto">
+      <div class="sec-head">
+        <div class="eyebrow">Browse by Type</div>
+        <h2 class="sec-title gold-text" id="title-category-sets">Sets</h2>
+        <p class="cat-sec-subtitle" id="sub-category-sets">One look. Perfectly matched.</p>
+
+      </div>
+      <div class="carousel-wrap">
+        <div class="carousel-track" id="ct-category-sets">
+          <p class="cat-empty-msg"
+            style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;color:var(--txt2);opacity:.28;padding:32px 24px;text-align:center;width:100%">
+            Coming Soon — Products will appear here</p>
+        </div>
+      </div>
+      <div class="carousel-nav" id="cn-category-sets"></div>
+    </div>
+  </section>
+
+  <!-- BRAND STORY — WHY STERLING SILVER? -->
+  <section id="story" class="sec reveal">
+    <div
+      style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:120px; align-items:center">
+      <!-- LEFT COLUMN: TEXT -->
+      <div>
+        <h2 class="sec-title gold-text" style="border-top:2px solid var(--gold); padding-top:24px; margin-bottom:20px">
+          WHY STERLING SILVER?</h2>
+        <p
+          style="font-family:'Cormorant Garamond',serif; font-size:1.06rem; color:var(--txt2); line-height:1.95; margin-bottom:24px">
+          92.5 purity. Commitment to heritage. Every piece handcrafted by South Indian artisans using techniques passed
+          down through generations.</p>
+        <p
+          style="font-family:'Cormorant Garamond',serif; font-size:1.06rem; color:var(--txt2); line-height:1.95; margin-bottom:24px">
+          Our 92.5 silver is hallmark certified, ensuring you receive exactly what you're promised. Not plated. Not
+          filled. Pure.</p>
+        <p
+          style="font-family:'Cormorant Garamond',serif; font-size:1.06rem; color:var(--txt2); line-height:1.95; margin-bottom:32px">
+          The 22K gold polish lasts. It's baked on, not painted. That warm temple-jewelry glow won't fade with wear or
+          cleaning.</p>
+
+        <!-- FEATURE LIST -->
+        <div style="display:flex; flex-direction:column; gap:10px">
+          <div
+            style="display:flex; align-items:center; gap:8px; font-family:'Cinzel',serif; font-size:0.88rem; color:var(--txt)">
+            <span style="color:var(--gold); font-size:1.2rem">✧</span> 92.5% Pure Silver
+          </div>
+          <div
+            style="display:flex; align-items:center; gap:8px; font-family:'Cinzel',serif; font-size:0.88rem; color:var(--txt)">
+            <span style="color:var(--gold); font-size:1.2rem">✧</span> 22K Gold Polish
+          </div>
+          <div
+            style="display:flex; align-items:center; gap:8px; font-family:'Cinzel',serif; font-size:0.88rem; color:var(--txt)">
+            <span style="color:var(--gold); font-size:1.2rem">✧</span> Lifetime Durability
+          </div>
+          <div
+            style="display:flex; align-items:center; gap:8px; font-family:'Cinzel',serif; font-size:0.88rem; color:var(--txt)">
+            <span style="color:var(--gold); font-size:1.2rem">✧</span> Conscious Craftsmanship
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: IMAGE (Desktop only) -->
+      <div style="display:none" class="show-desktop">
+        <div
+          style="width:400px; height:500px; background:var(--card2); border:1px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--txt2); opacity:0.5; font-size:0.9rem; text-align:center">
+          [Macro photography:<br />Silver texture with<br />soft studio lighting]
+        </div>
+      </div>
     </div>
 
     <style>
-        @media(max-width:900px) {
-            #story>div {
-                grid-template-columns: 1fr !important;
-                gap: 60px !important;
-            }
+      @media(max-width:900px) {
+        #story>div {
+          grid-template-columns: 1fr !important;
+          gap: 60px !important;
         }
+
+        .show-desktop {
+          display: flex !important;
+        }
+      }
     </style>
-</section>
+  </section>
 
-<!-- 3. COLLECTIONS SHOWCASE â€” 4 items (2Ã—2) -->
-<section id="collections" class="sec sec-alt reveal">
-    <div style="max-width:1260px;margin:0 auto">
-        <div class="sec-head">
-            <div class="eyebrow">Shop By Type</div>
-            <h2 class="sec-title gold-text">Our Collections</h2>
-            <p>From everyday elegance to bridal statement pieces â€” find what speaks to you.</p>
+
+  <!-- ABOUT THE BOUTIQUE — Task 2C -->
+  <section id="about" class="sec reveal">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <div class="sk" id="about-img-sk" style="width:100%;height:100%;position:absolute;inset:0;border-radius:4px">
         </div>
-        <div class="cat-carousel-outer">
-            <div class="cat-carousel-track" id="cat-grid">
-                <!-- skeleton tiles duplicated for seamless loop appearance -->
-                <div class="cat-tile">
-                    <div class="cat-tile-img sk cat-tile-img-sk"></div>
-                    <div class="cat-tile-body"><span class="cat-tile-name sk"
-                            style="width:70%;height:10px;border-radius:3px"></span></div>
-                </div>
-                <div class="cat-tile">
-                    <div class="cat-tile-img sk cat-tile-img-sk"></div>
-                    <div class="cat-tile-body"><span class="cat-tile-name sk"
-                            style="width:70%;height:10px;border-radius:3px"></span></div>
-                </div>
-                <div class="cat-tile">
-                    <div class="cat-tile-img sk cat-tile-img-sk"></div>
-                    <div class="cat-tile-body"><span class="cat-tile-name sk"
-                            style="width:70%;height:10px;border-radius:3px"></span></div>
-                </div>
-                <div class="cat-tile">
-                    <div class="cat-tile-img sk cat-tile-img-sk"></div>
-                    <div class="cat-tile-body"><span class="cat-tile-name sk"
-                            style="width:70%;height:10px;border-radius:3px"></span></div>
-                </div>
-                <div class="cat-tile">
-                    <div class="cat-tile-img sk cat-tile-img-sk"></div>
-                    <div class="cat-tile-body"><span class="cat-tile-name sk"
-                            style="width:70%;height:10px;border-radius:3px"></span></div>
-                </div>
-                <div class="cat-tile">
-                    <div class="cat-tile-img sk cat-tile-img-sk"></div>
-                    <div class="cat-tile-body"><span class="cat-tile-name sk"
-                            style="width:70%;height:10px;border-radius:3px"></span></div>
-                </div>
-            </div>
+        <img id="about-img" src="" alt="LUVZ Collection artisan crafting handmade silver jewellery" loading="lazy"
+          style="opacity:0;transition:opacity .5s" decoding="async" />
+        <div class="about-img-bar"></div>
+      </div>
+      <div>
+        <div class="about-eyebrow">✦ About Us ✦</div>
+        <h2 class="about-title gold-text">Born from<br />a Love for<br />Tradition</h2>
+        <p class="about-body">
+          LUVZ was born from a love for what's real — real silver, real craft, real tradition. Every piece is
+          handcrafted by South Indian artisans, hallmarked in 92.5 silver, and finished with 22K gold polish rooted in
+          temple jewellery heritage. No two pieces are ever alike. That's the point.
+        </p>
+        <div class="about-badges">
+          <span class="q-badge">🔖 925 Hallmarked</span>
+          <span class="q-badge">✨ 22K Gold Polish</span>
+          <span class="q-badge">🤲 Artisan Made</span>
+          <span class="q-badge">🌿 Nickel-Free</span>
         </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- 4. FEATURED PRODUCTS â€” 4 items (2Ã—2) with 3D Vault -->
-<section id="featured" class="sec reveal">
-    <div style="max-width:1360px;margin:0 auto">
-        <div class="sec-head">
-            <div class="eyebrow">Most Loved</div>
-            <h2 class="sec-title gold-text">Featured Products</h2>
-        </div>
-        <!-- 3D Vault: .vault-clip clips overflow, .vault-scene holds 3D context -->
-        <div class="vault-clip">
-            <div class="vault-scene" id="vault-scene" aria-label="Featured products 3D carousel">
-                <div class="vault-ring" id="vault-ring" role="list"></div>
-                <div class="vault-floor" aria-hidden="true"></div>
-            </div>
-        </div>
-        <div class="vault-nav">
-            <button class="vault-btn" id="vault-prev" aria-label="Previous" onclick="vaultStep(-1)">
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
-                </svg>
-            </button>
-            <button class="vault-btn" id="vault-next" aria-label="Next" onclick="vaultStep(1)">
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6" />
-                </svg>
-            </button>
-        </div>
-        <!-- Hidden track still needed so existing buildCarousel wiring works, but vault JS reads from this after population -->
-        <div style="display:none">
-            <div id="ct-top_sellers"></div>
-            <div id="cn-top_sellers"></div>
-        </div>
+  <!-- CUSTOMER LOVE -->
+  <!-- Reviews section: id="reviews" for SEO anchoring -->
+  <section id="customer-love" class="sec sec-alt reveal" aria-labelledby="reviews-heading">
+    <div id="reviews" class="love-header">
+      <!-- H3 first: keyword-rich sub-headline for search crawlers -->
+      <h3 class="reviews-seo-sub">Verified Customer Reviews &amp; Testimonials</h3>
+      <!-- H2: visible brand headline -->
+      <h2 id="reviews-heading" class="sec-title gold-text">Loved by You</h2>
+      <p class="reviews-desc">Words from the women who wear LUVZ — handcrafted 925 silver shared with love.</p>
     </div>
-</section>
-
-<!-- 5. WHY 92.5 SILVER â€” 6 feature cards (3Ã—2) -->
-<section class="sec sec-alt reveal">
-    <div style="max-width:960px;margin:0 auto">
-        <div class="sec-head">
-            <div class="eyebrow">Our Promise</div>
-            <h2 class="sec-title gold-text">Why Choose LUVZ?</h2>
-            <p>Every piece we make is a promise â€” of quality, care, and craftsmanship that lasts.</p>
-        </div>
-        <div class="why-grid">
-            <div class="why-card">
-                <span class="why-icon">ðŸ¥ˆ</span>
-                <div class="why-title">92.5% Purity</div>
-                <div class="why-body">Hallmark certified sterling silver. The finest grade.</div>
-            </div>
-            <div class="why-card">
-                <span class="why-icon">âœ¨</span>
-                <div class="why-title">22K Gold Polish</div>
-                <div class="why-body">Temple-warm glow that doesn't fade with wear.</div>
-            </div>
-            <div class="why-card">
-                <span class="why-icon">â°</span>
-                <div class="why-title">Lifetime Durability</div>
-                <div class="why-body">Built to last. Heirloom-quality craftsmanship.</div>
-            </div>
-            <div class="why-card">
-                <span class="why-icon">ðŸª¶</span>
-                <div class="why-title">Lightweight</div>
-                <div class="why-body">Nickel-free. Wear it comfortably all day, every day.</div>
-            </div>
-            <div class="why-card">
-                <span class="why-icon">ðŸŒ¿</span>
-                <div class="why-title">Eco-Conscious</div>
-                <div class="why-body">Ethically sourced. Sustainable artisan practices.</div>
-            </div>
-            <div class="why-card">
-                <span class="why-icon">ðŸ¤²</span>
-                <div class="why-title">Artisan Crafted</div>
-                <div class="why-body">Handmade by skilled South Indian artisans.</div>
-            </div>
-        </div>
+    <div class="love-strip-outer">
+      <div class="love-strip" id="love-strip">
+        <!-- Skeleton placeholders while reviews load -->
+        <figure class="love-card" aria-hidden="true" style="margin:0">
+          <div class="sk love-card-sk"></div>
+        </figure>
+        <figure class="love-card" aria-hidden="true" style="margin:0">
+          <div class="sk love-card-sk"></div>
+        </figure>
+        <figure class="love-card" aria-hidden="true" style="margin:0">
+          <div class="sk love-card-sk"></div>
+        </figure>
+        <figure class="love-card" aria-hidden="true" style="margin:0">
+          <div class="sk love-card-sk"></div>
+        </figure>
+        <figure class="love-card" aria-hidden="true" style="margin:0">
+          <div class="sk love-card-sk"></div>
+        </figure>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- 6. TESTIMONIALS â€” Carousel with prev/next dots, auto-rotate 5s -->
-<section id="testimonials" class="testimonials-sec reveal" aria-label="Customer testimonials">
+
+
+
+  <!-- INSTAGRAM CTA -->
+  <section class="ig-cta-sec">
+    <a href="https://www.instagram.com/luvz_collection" target="_blank" rel="noopener noreferrer" class="ig-cta-link">
+      <span class="ig-cta-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+          <circle cx="12" cy="12" r="4" />
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+        </svg>
+      </span>
+      <div>
+        <div class="ig-cta-handle">@luvz_collection</div>
+        <div class="ig-cta-sub">📸 See real customer styles on Instagram</div>
+      </div>
+      <span class="ig-cta-arrow">→</span>
+    </a>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="sec reveal">
+    <div style="max-width:1060px;margin:0 auto">
+      <div class="sec-head">
+        <div class="eyebrow">Get in Touch</div>
+        <h2 class="sec-title gold-text">We're Here for You</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-icon">💬</div>
+          <div class="eyebrow" style="margin-bottom:8px">Direct Message</div>
+          <h3 class="contact-title gold-text">WhatsApp Us</h3>
+          <p class="contact-body">Questions, custom orders, or just want to know more? We reply within minutes.</p>
+          <a href="https://wa.me/918919359961?text=Hi!%20I'm%20interested%20in%20LUVZ%20Collection%20%F0%9F%A4%A9"
+            target="_blank" rel="noopener noreferrer" class="btn-gold">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            Chat on WhatsApp
+          </a>
+          <p class="contact-footer">📞 +91 89193 59961 · 📍 Online Across India</p>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">📸</div>
+          <div class="eyebrow" style="margin-bottom:8px">Instagram DM</div>
+          <h3 class="contact-title gold-text">@luvz_collection</h3>
+          <p class="contact-body">Follow us for daily updates, new arrivals, reels and behind-the-scenes of our craft.
+          </p>
+          <a href="https://www.instagram.com/luvz_collection" target="_blank" rel="noopener noreferrer"
+            class="btn-gold">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+            </svg>
+            Open Instagram
+          </a>
+          <p class="contact-footer">DMs open · Usually replies within 1 hour</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEXT TESTIMONIALS -->
+  <section class="testimonials-sec reveal" id="testimonials" aria-label="Customer testimonials">
     <div style="max-width:980px;margin:0 auto">
-        <div class="sec-head">
-            <div class="eyebrow">Real Customers</div>
-            <h2 class="sec-title gold-text">What They Say</h2>
-            <p
-                style="font-family:'Cormorant Garamond',serif;font-size:.95rem;font-style:italic;color:var(--txt2);opacity:.55;margin-top:10px">
-                Handcrafted pieces, heartfelt reviews.
-            </p>
+      <div class="sec-head">
+        <div class="eyebrow">Real Customers</div>
+        <h2 class="sec-title gold-text">What They Say</h2>
+        <p
+          style="font-family:'Cormorant Garamond',serif;font-size:.95rem;font-style:italic;color:var(--txt2);opacity:.55;margin-top:10px">
+          Handcrafted pieces, heartfelt reviews.
+        </p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="t-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-quote">"Looks exactly like real gold! I wore it to a wedding and everyone was asking where I got
+            it. The finish is stunning."</p>
+          <div class="t-author">
+            <span class="t-name">Priya S.</span>
+            <span class="t-location">Hyderabad</span>
+            <span class="t-verified">✓ Verified buyer</span>
+          </div>
         </div>
-        <div class="testimonials-grid">
-            <div class="t-card">
-                <div class="t-stars">â˜…â˜…â˜…â˜…â˜…</div>
-                <p class="t-quote">"Looks exactly like real gold! I wore it to a wedding and everyone was asking where I
-                    got it. The finish is stunning."</p>
-                <div class="t-author">
-                    <span class="t-name">Priya S.</span>
-                    <span class="t-location">Hyderabad</span>
-                    <span class="t-verified">âœ“ Verified buyer</span>
-                </div>
-            </div>
-            <div class="t-card">
-                <div class="t-stars">â˜…â˜…â˜…â˜…â˜…</div>
-                <p class="t-quote">"Amazing quality for the price. The jhumkas are so lightweight yet look heavy and
-                    expensive. Couldn't be happier!"</p>
-                <div class="t-author">
-                    <span class="t-name">Meena R.</span>
-                    <span class="t-location">Visakhapatnam</span>
-                    <span class="t-verified">âœ“ Verified buyer</span>
-                </div>
-            </div>
-            <div class="t-card">
-                <div class="t-stars">â˜…â˜…â˜…â˜…â˜…</div>
-                <p class="t-quote">"Ordered a custom necklace via WhatsApp â€” the team was so helpful and it arrived
-                    beautifully packed. Will order again!"</p>
-                <div class="t-author">
-                    <span class="t-name">Anjali K.</span>
-                    <span class="t-location">Warangal</span>
-                    <span class="t-verified">âœ“ Verified buyer</span>
-                </div>
-            </div>
+        <div class="t-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-quote">"Amazing quality for the price. The jhumkas are so lightweight yet look heavy and
+            expensive. Couldn't be happier!"</p>
+          <div class="t-author">
+            <span class="t-name">Meena R.</span>
+            <span class="t-location">Visakhapatnam</span>
+            <span class="t-verified">✓ Verified buyer</span>
+          </div>
         </div>
+        <div class="t-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-quote">"Ordered a custom necklace via WhatsApp — the team was so helpful and it arrived
+            beautifully packed. Will order again!"</p>
+          <div class="t-author">
+            <span class="t-name">Anjali K.</span>
+            <span class="t-location">Warangal</span>
+            <span class="t-verified">✓ Verified buyer</span>
+          </div>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- 7. EMAIL CAPTURE â€” Dark section with headline + email + subscribe -->
-<section
+  <!-- HOW IT WORKS -->
+  <section class="hiw-sec sec reveal" id="how-it-works">
+    <div style="max-width:860px;margin:0 auto">
+      <div class="sec-head">
+        <div class="eyebrow">Simple &amp; Fast</div>
+        <h2 class="sec-title gold-text">How It Works</h2>
+      </div>
+      <div class="hiw-grid">
+        <div class="hiw-step">
+          <div class="hiw-num gold-text">01</div>
+          <div class="hiw-icon">👁️</div>
+          <h3 class="hiw-title">Browse</h3>
+          <p class="hiw-body">Explore our collection of handcrafted 92.5 silver jewellery.</p>
+        </div>
+        <div class="hiw-step">
+          <div class="hiw-num gold-text">02</div>
+          <div class="hiw-icon">💬</div>
+          <h3 class="hiw-title">WhatsApp Us</h3>
+          <p class="hiw-body">Tap "Order on WhatsApp" — we respond within hours.</p>
+        </div>
+        <div class="hiw-step">
+          <div class="hiw-num gold-text">03</div>
+          <div class="hiw-icon">✨</div>
+          <h3 class="hiw-title">Customise &amp; Order</h3>
+          <p class="hiw-body">Share your requirements, confirm, and we craft it for you.</p>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:32px">
+        <a href="https://wa.me/918919359961?text=Hi!%20I%20want%20to%20place%20an%20order%20%F0%9F%A4%A9"
+          target="_blank" rel="noopener noreferrer" class="btn-gold">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+          </svg>
+          Start Your Order
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- POLICY -->
+  <section class="policy-sec sec sec-alt reveal" id="policy">
+    <div style="max-width:680px;margin:0 auto;text-align:center">
+      <div class="sec-head">
+        <div class="eyebrow">Good to Know</div>
+        <h2 class="sec-title gold-text">Our Policy</h2>
+      </div>
+      <div class="policy-cards">
+        <div class="policy-card">
+          <span class="policy-icon">🔨</span>
+          <h3 class="policy-title">Made to Order</h3>
+          <p class="policy-body">Made just for you — so we don't accept returns. But if it arrives damaged, we'll
+            replace it within 48 hours. No questions.</p>
+        </div>
+        <div class="policy-card">
+          <span class="policy-icon">🛡️</span>
+          <h3 class="policy-title">Damage Protection</h3>
+          <p class="policy-body">If your jewellery arrives damaged during shipping, we will replace it. Just share a
+            photo within 48 hours of delivery.</p>
+        </div>
+        <div class="policy-card">
+          <span class="policy-icon">🚚</span>
+          <h3 class="policy-title">Free Shipping</h3>
+          <p class="policy-body">Free delivery on all orders above ₹999 across India. Secure, tracked packaging every
+            time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMAIL CAPTURE — EXCLUSIVE ACCESS -->
+  <section
     style="background:var(--bg); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:100px 24px">
     <div style="max-width:600px; margin:0 auto; text-align:center">
-        <h2
-            style="font-family:'Cinzel',serif; font-size:2.2rem; font-weight:700; letter-spacing:1.5px; margin-bottom:12px; color:var(--txt)">
-            EXCLUSIVE ACCESS</h2>
-        <p
-            style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--txt2); line-height:1.8; margin-bottom:32px">
-            First to know about limited drops. Handcrafted pieces. Premium pricing. Luxury, not noise.</p>
+      <h2
+        style="font-family:'Cinzel',serif; font-size:2.2rem; font-weight:700; letter-spacing:1.5px; margin-bottom:12px; color:var(--txt)">
+        EXCLUSIVE ACCESS</h2>
+      <p
+        style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--txt2); line-height:1.8; margin-bottom:32px">
+        First to know about limited drops. Handcrafted pieces. Premium pricing. Luxury, not noise.</p>
 
-        <form
-            style="display:flex; gap:0; border:1px solid var(--border); border-radius:2px; overflow:hidden; margin-bottom:12px"
-            onsubmit="handleEmailSubscribe(event)">
-            <input type="email" name="email" placeholder="your@email.com" required
-                style="flex:1; padding:14px; border:none; background:var(--card); color:var(--txt); font-family:'Cormorant Garamond',serif; font-size:0.95rem" />
-            <button type="submit"
-                style="background:var(--gold); color:var(--btn-fg); border:none; padding:14px 28px; font-family:'Cinzel',serif; font-size:0.85rem; font-weight:700; letter-spacing:1px; cursor:pointer; transition:background 0.2s">SUBSCRIBE</button>
-        </form>
+      <form
+        style="display:flex; gap:0; border:1px solid var(--border); border-radius:2px; overflow:hidden; margin-bottom:12px"
+        onsubmit="handleEmailSubscribe(event)">
+        <input type="email" name="email" placeholder="your@email.com" required
+          style="flex:1; padding:14px; border:none; background:var(--card); color:var(--txt); font-family:'Cormorant Garamond',serif; font-size:0.95rem" />
+        <button type="submit"
+          style="background:var(--gold); color:var(--btn-fg); border:none; padding:14px 28px; font-family:'Cinzel',serif; font-size:0.85rem; font-weight:700; letter-spacing:1px; cursor:pointer; transition:background 0.2s">SUBSCRIBE</button>
+      </form>
 
-        <p style="font-family:'Crimson Pro',serif; font-size:0.8rem; color:var(--txt2); opacity:0.7">We respect privacy.
-            Unsubscribe anytime.</p>
+      <p style="font-family:'Crimson Pro',serif; font-size:0.8rem; color:var(--txt2); opacity:0.7">We respect privacy.
+        Unsubscribe anytime.</p>
     </div>
-</section>
+  </section>
 
-<!-- 8. FOOTER â€” 3-col: logo/tagline, links, social icons -->
-<div class="gem-bar"><span class="g5"></span><span class="g4"></span><span class="g3"></span><span
-        class="g2"></span><span class="g1"></span><span class="g6"></span></div>
-<footer style="background:var(--bg2); padding:100px 80px; color:var(--txt)">
+  <!-- FOOTER -->
+  <div class="gem-bar"><span class="g5"></span><span class="g4"></span><span class="g3"></span><span
+      class="g2"></span><span class="g1"></span><span class="g6"></span></div>
+  <footer style="background:var(--bg2); padding:100px 80px; color:var(--txt)">
     <div
-        style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr 1fr; gap:80px; margin-bottom:40px">
+      style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr 1fr; gap:80px; margin-bottom:40px">
 
-        <!-- COL 1: BRAND & TAGLINE -->
-        <div>
-            <h3
-                style="font-family:'Cinzel',serif; font-size:1rem; font-weight:700; letter-spacing:1px; color:var(--txt); margin-bottom:24px">
-                LUVZ COLLECTION</h3>
-            <p
-                style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; font-style:italic; color:var(--gold); margin-bottom:24px; line-height:1.6">
-                Handcrafted 92.5 Sterling Silver Jewelry</p>
-            <div style="height:1px; background:var(--border); opacity:0.3; margin:24px 0"></div>
+      <!-- COL 1: BRAND -->
+      <div>
+        <h3
+          style="font-family:'Cinzel',serif; font-size:1rem; font-weight:700; letter-spacing:1px; color:var(--txt); margin-bottom:24px">
+          LUVZ COLLECTION</h3>
+        <p
+          style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; font-style:italic; color:var(--gold); margin-bottom:24px; line-height:1.6">
+          Handcrafted 92.5 Sterling Silver Jewelry</p>
+        <div style="height:1px; background:var(--border); opacity:0.3; margin:24px 0"></div>
 
-            <div style="display:flex; gap:16px; justify-content:flex-start">
-                <a href="https://www.instagram.com/luvz_collection" target="_blank" rel="noopener noreferrer"
-                    style="font-size:1.3rem; transition:transform 0.2s"
-                    onmouseover="this.style.color='var(--gold)'; this.style.transform='scale(1.1)'"
-                    onmouseout="this.style.color='var(--txt)'; this.style.transform='scale(1)'">ðŸ“¸</a>
-                <a href="https://www.pinterest.com/luvzcollection" target="_blank" rel="noopener noreferrer"
-                    style="font-size:1.3rem; transition:transform 0.2s"
-                    onmouseover="this.style.color='var(--gold)'; this.style.transform='scale(1.1)'"
-                    onmouseout="this.style.color='var(--txt)'; this.style.transform='scale(1)'">ðŸ“Œ</a>
-            </div>
+        <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:24px">
+          <a href="#categories"
+            style="font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:1px; text-decoration:none; color:var(--txt2); transition:color 0.2s"
+            onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">COLLECTIONS</a>
+          <a href="#about"
+            style="font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:1px; text-decoration:none; color:var(--txt2); transition:color 0.2s"
+            onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">ABOUT US</a>
+          <a href="#contact"
+            style="font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:1px; text-decoration:none; color:var(--txt2); transition:color 0.2s"
+            onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">CONTACT</a>
+        </div>
+      </div>
+
+      <!-- COL 2: ABOUT -->
+      <div>
+        <h3
+          style="font-family:'Cinzel',serif; font-size:0.75rem; font-weight:700; letter-spacing:1px; color:var(--gold); text-transform:uppercase; margin-bottom:12px">
+          About</h3>
+        <div style="height:1px; background:var(--border); opacity:0.3; margin:12px 0 12px"></div>
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <a href="#story"
+            style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; text-decoration:none; color:var(--txt2); transition:color 0.2s"
+            onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">• Craft &
+            Heritage</a>
+          <a href="#"
+            style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; text-decoration:none; color:var(--txt2); transition:color 0.2s"
+            onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">•
+            Sustainability</a>
+          <a href="#"
+            style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; text-decoration:none; color:var(--txt2); transition:color 0.2s"
+            onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">• Packaging</a>
+          <a href="#"
+            style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; text-decoration:none; color:var(--txt2); transition:color 0.2s"
+            onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">• Returns
+            Policy</a>
+        </div>
+      </div>
+
+      <!-- COL 3: CONTACT -->
+      <div>
+        <h3
+          style="font-family:'Cinzel',serif; font-size:0.75rem; font-weight:700; letter-spacing:1px; color:var(--gold); text-transform:uppercase; margin-bottom:12px">
+          Contact</h3>
+        <div style="height:1px; background:var(--border); opacity:0.3; margin:12px 0 12px"></div>
+        <div style="display:flex; flex-direction:column; gap:8px">
+          <a href="https://wa.me/918919359961" target="_blank"
+            style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; text-decoration:none; color:var(--txt2); transition:color 0.2s"
+            onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">📞 WhatsApp</a>
+          <a href="mailto:hello@luvzcollection.com"
+            style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; text-decoration:none; color:var(--txt2); transition:color 0.2s"
+            onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">📧 Email</a>
+          <span style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; color:var(--txt2)">📍 Online Across
+            India</span>
         </div>
 
-        <!-- COL 2: QUICK LINKS -->
-        <div>
-            <h3
-                style="font-family:'Cinzel',serif; font-size:0.75rem; font-weight:700; letter-spacing:1px; color:var(--gold); text-transform:uppercase; margin-bottom:12px">
-                Quick Links</h3>
-            <div style="height:1px; background:var(--border); opacity:0.3; margin:12px 0 12px"></div>
-            <div style="display:flex; flex-direction:column; gap:8px">
-                <a href="#collections"
-                    style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; text-decoration:none; color:var(--txt2); transition:color 0.2s"
-                    onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">â€¢
-                    Collections</a>
-                <a href="#story"
-                    style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; text-decoration:none; color:var(--txt2); transition:color 0.2s"
-                    onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">â€¢ Our
-                    Story</a>
-                <a href="#testimonials"
-                    style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; text-decoration:none; color:var(--txt2); transition:color 0.2s"
-                    onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">â€¢
-                    Reviews</a>
-                <a href="#"
-                    style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; text-decoration:none; color:var(--txt2); transition:color 0.2s"
-                    onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">â€¢ Returns
-                    Policy</a>
-            </div>
+        <div style="margin-top:20px; display:flex; gap:16px; justify-content:flex-start">
+          <a href="https://www.instagram.com/luvz_collection" target="_blank"
+            style="font-size:1.3rem; transition:transform 0.2s"
+            onmouseover="this.style.color='var(--gold)'; this.style.transform='scale(1.1)'"
+            onmouseout="this.style.color='var(--txt)'; this.style.transform='scale(1)'">📸</a>
+          <a href="https://www.pinterest.com/luvzcollection" target="_blank"
+            style="font-size:1.3rem; transition:transform 0.2s"
+            onmouseover="this.style.color='var(--gold)'; this.style.transform='scale(1.1)'"
+            onmouseout="this.style.color='var(--txt)'; this.style.transform='scale(1)'">📌</a>
         </div>
-
-        <!-- COL 3: CONTACT -->
-        <div>
-            <h3
-                style="font-family:'Cinzel',serif; font-size:0.75rem; font-weight:700; letter-spacing:1px; color:var(--gold); text-transform:uppercase; margin-bottom:12px">
-                Contact</h3>
-            <div style="height:1px; background:var(--border); opacity:0.3; margin:12px 0 12px"></div>
-            <div style="display:flex; flex-direction:column; gap:8px">
-                <a href="https://wa.me/918919359961" target="_blank" rel="noopener noreferrer"
-                    style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; text-decoration:none; color:var(--txt2); transition:color 0.2s"
-                    onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">ðŸ“ž
-                    WhatsApp</a>
-                <a href="mailto:hello@luvzcollection.com"
-                    style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; text-decoration:none; color:var(--txt2); transition:color 0.2s"
-                    onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">ðŸ“§
-                    Email</a>
-                <span style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; color:var(--txt2)">ðŸ“ Online
-                    Across India</span>
-            </div>
-        </div>
+      </div>
 
     </div>
 
     <!-- FOOTER BOTTOM -->
     <div style="border-top:1px solid var(--border); opacity:0.3; padding-top:32px; text-align:center">
-        <p
-            style="font-family:'Crimson Pro',serif; font-size:0.75rem; color:var(--txt2); opacity:0.7; margin-bottom:8px">
-            Â© 2025 LUVZ. Handcrafted India. Worldwide shipping.</p>
-        <div
-            style="display:flex; gap:16px; justify-content:center; font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.5px; color:var(--txt2)">
-            <a href="#" style="text-decoration:none; color:inherit; transition:color 0.2s"
-                onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">Privacy
-                Policy</a>
-            <span>Â·</span>
-            <a href="#" style="text-decoration:none; color:inherit; transition:color 0.2s"
-                onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">Terms</a>
-            <span>Â·</span>
-            <a href="#" style="text-decoration:none; color:inherit; transition:color 0.2s"
-                onmouseover="this.style.color='var(--gold)'"
-                onmouseout="this.style.color='var(--txt2)'">Sustainability</a>
-        </div>
+      <p style="font-family:'Crimson Pro',serif; font-size:0.75rem; color:var(--txt2); opacity:0.7; margin-bottom:8px">©
+        2025 LUVZ. Handcrafted India. Worldwide shipping.</p>
+      <div
+        style="display:flex; gap:16px; justify-content:center; font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.5px; color:var(--txt2)">
+        <a href="#" style="text-decoration:none; color:inherit; transition:color 0.2s"
+          onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">Privacy Policy</a>
+        <span>·</span>
+        <a href="#" style="text-decoration:none; color:inherit; transition:color 0.2s"
+          onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">Terms</a>
+        <span>·</span>
+        <a href="#" style="text-decoration:none; color:inherit; transition:color 0.2s"
+          onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--txt2)'">Sustainability</a>
+      </div>
     </div>
-</footer>
+  </footer>
 
-<!-- REVIEW LIGHTBOX -->
-<div id="review-lightbox" role="dialog" aria-modal="true" aria-label="Customer review image"
+  <!-- REVIEW LIGHTBOX — Task 6 -->
+  <div id="review-lightbox" role="dialog" aria-modal="true" aria-label="Customer review image"
     onclick="closeLightbox(event)">
     <img id="review-lightbox-img" src="" alt="Customer review" loading="lazy" decoding="async" />
-    <button id="review-lightbox-close" onclick="closeLightbox()" aria-label="Close">âœ•</button>
-</div>
+    <button id="review-lightbox-close" onclick="closeLightbox()" aria-label="Close">✕</button>
+  </div>
 
-<!-- WISHLIST DRAWER -->
-<div id="wish-overlay" onclick="closeWishlist()"></div>
-<div id="wish-drawer" role="dialog" aria-modal="true" aria-label="Your Wishlist">
+  <!-- WISHLIST DRAWER -->
+  <div id="wish-overlay" onclick="closeWishlist()"></div>
+  <div id="wish-drawer" role="dialog" aria-modal="true" aria-label="Your Wishlist">
     <div class="wish-header">
-        <div class="wish-title gold-text">My Wishlist <span id="wish-count-badge">0</span></div>
-        <button class="wish-close" onclick="closeWishlist()" aria-label="Close wishlist">âœ•</button>
+      <div class="wish-title gold-text">My Wishlist <span id="wish-count-badge">0</span></div>
+      <button class="wish-close" onclick="closeWishlist()" aria-label="Close wishlist">✕</button>
     </div>
     <div class="wish-body" id="wish-body">
-        <div class="wish-empty">
-            <div class="wish-empty-icon">ðŸ¤</div>
-            <div class="wish-empty-title">Your wishlist is empty</div>
-            <p class="wish-empty-sub">Tap the heart on any product to save it here for later.</p>
-        </div>
+      <div class="wish-empty">
+        <div class="wish-empty-icon">🤍</div>
+        <div class="wish-empty-title">Your wishlist is empty</div>
+        <p class="wish-empty-sub">Tap the heart on any product to save it here for later.</p>
+      </div>
     </div>
     <div class="wish-footer" id="wish-footer" style="display:none">
-        <a id="wish-wa-all" href="#" target="_blank" rel="noopener noreferrer" class="wish-wa-all">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-            </svg>
-            Enquire All on WhatsApp
-        </a>
+      <a id="wish-wa-all" href="#" target="_blank" rel="noopener noreferrer" class="wish-wa-all">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+        Enquire All on WhatsApp
+      </a>
     </div>
-</div>
+  </div>
 
-<!-- PRODUCT MODAL -->
-<div id="moverlay" class="modal" role="dialog" aria-modal="true">
+  <!-- PRODUCT MODAL -->
+  <div id="moverlay" class="modal" role="dialog" aria-modal="true">
     <div class="mbox modal-inner">
-        <button class="mclose close-btn" onclick="closeModal()" aria-label="Close">âœ•</button>
-        <div id="mimg-wrap" class="mimg-wrap">
-            <img loading="lazy" id="mimg" src="" alt="Selected LUVZ Collection product image" loading="lazy"
-                onclick="this.classList.toggle('z')" decoding="async" />
-            <button type="button" class="gallery-nav gallery-prev" id="gallery-prev" aria-label="Previous image"
-                onclick="event.stopPropagation();galleryPrev()" style="display:none">
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
-                </svg>
-            </button>
-            <button type="button" class="gallery-nav gallery-next" id="gallery-next" aria-label="Next image"
-                onclick="event.stopPropagation();galleryNext()" style="display:none">
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6" />
-                </svg>
-            </button>
-            <div class="mhint mhint-zoom">Tap image to zoom</div>
-            <div class="mhint gallery-counter" id="gallery-counter" style="display:none">1 / 1</div>
+      <button class="mclose close-btn" onclick="closeModal()" aria-label="Close">✕</button>
+      <div id="mimg-wrap" class="mimg-wrap">
+        <img loading="lazy" id="mimg" src="" alt="Selected LUVZ Collection product image" loading="lazy"
+          onclick="this.classList.toggle('z')" decoding="async" />
+        <button type="button" class="gallery-nav gallery-prev" id="gallery-prev" aria-label="Previous image"
+          onclick="event.stopPropagation();galleryPrev()" style="display:none">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+        <button type="button" class="gallery-nav gallery-next" id="gallery-next" aria-label="Next image"
+          onclick="event.stopPropagation();galleryNext()" style="display:none">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6" />
+          </svg>
+        </button>
+        <div class="mhint mhint-zoom">Tap image to zoom</div>
+        <div class="mhint gallery-counter" id="gallery-counter" style="display:none">1 / 1</div>
+      </div>
+      <div class="minfo modal-content">
+        <!-- Scrollable section: badge, name, price, description -->
+        <div class="minfo-scroll">
+          <p id="m-badge"></p>
+          <h3 id="m-name" class="gold-text"></h3>
+          <p id="m-price"></p>
+          <p id="m-desc" class="description"></p>
         </div>
-        <div class="minfo modal-content">
-            <div class="minfo-scroll">
-                <p id="m-badge"></p>
-                <h3 id="m-name" class="gold-text"></h3>
-                <p id="m-price"></p>
-                <p id="m-desc" class="description"></p>
+        <!-- Sticky CTA footer — always visible, never pushed off screen -->
+        <div class="m-footer">
+          <!-- Referral code field — collapsible on mobile -->
+          <div class="referral-wrap referral">
+            <button class="referral-toggle" type="button"
+              onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"
+              aria-expanded="false">✦ Have a referral code?</button>
+            <div class="referral-expandable">
+              <label class="referral-label" for="referral-code">Enter referral or discount code</label>
+              <div class="referral-row">
+                <input id="referral-code" class="referral-input" type="text" placeholder="Enter code" maxlength="32"
+                  minlength="5" autocomplete="off" oninput="clearReferralState()" />
+                <button class="referral-apply" onclick="applyReferralCode()" type="button">Apply</button>
+              </div>
+              <span class="referral-applied" id="referral-applied">✓ Code applied</span>
+              <span class="referral-invalid" id="referral-invalid">✗ Invalid code</span>
             </div>
-            <div class="m-footer">
-                <div class="referral-wrap referral">
-                    <button class="referral-toggle" type="button"
-                        onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"
-                        aria-expanded="false">âœ¦ Have a referral code?</button>
-                    <div class="referral-expandable">
-                        <label class="referral-label" for="referral-code">Enter referral or discount code</label>
-                        <div class="referral-row">
-                            <input id="referral-code" class="referral-input" type="text" placeholder="Enter code"
-                                maxlength="32" minlength="5" autocomplete="off" oninput="clearReferralState()" />
-                            <button class="referral-apply" onclick="applyReferralCode()" type="button">Apply</button>
-                        </div>
-                        <span class="referral-applied" id="referral-applied">âœ“ Code applied</span>
-                        <span class="referral-invalid" id="referral-invalid">âœ— Invalid code</span>
-                    </div>
-                </div>
-                <a id="m-wa" href="#" target="_blank" rel="noopener noreferrer" class="btn-gold enquiry-btn"
-                    style="width:100%;margin-top:12px">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                        <path
-                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                    </svg>
-                    Enquire on WhatsApp
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
+          </div>
+          <a id="m-wa" href="#" target="_blank" rel="noopener noreferrer" class="btn-gold enquiry-btn"
+            style="width:100%;margin-top:12px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            Enquire on WhatsApp
+          </a>
 
-<!-- POSTER MODAL -->
-<div id="poster-overlay" onclick="closePosterModal()">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POSTER MODAL -->
+  <div id="poster-overlay" onclick="closePosterModal()">
     <img loading="lazy" id="poster-modal-img" src="" alt="LUVZ Collection promotional poster" loading="lazy"
-        decoding="async" />
+      decoding="async" />
     <button onclick="event.stopPropagation();closePosterModal()"
-        style="position:absolute;top:16px;right:16px;background:rgba(0,0,0,.6);border:1px solid var(--border-h);color:var(--gold);width:33px;height:33px;border-radius:50%;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center">âœ•</button>
-</div>
+      style="position:absolute;top:16px;right:16px;background:rgba(0,0,0,.6);border:1px solid var(--border-h);color:var(--gold);width:33px;height:33px;border-radius:50%;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center">✕</button>
+  </div>
 
-<!-- MOBILE MENU OVERLAY -->
-<div id="mob-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <!-- MOBILE MENU OVERLAY — direct body child so z-index is unrestricted -->
+  <div id="mob-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <!-- Header row -->
     <div
-        style="display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--border-h)">
-        <span
-            style="font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);opacity:.65">Menu</span>
-        <button onclick="toggleMenu()" aria-label="Close menu"
-            style="background:none;border:1px solid var(--border);color:var(--gold);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s"
-            onmouseenter="this.style.borderColor='var(--gold)'"
-            onmouseleave="this.style.borderColor='var(--border)'">âœ•</button>
+      style="display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--border-h)">
+      <span
+        style="font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);opacity:.65">Menu</span>
+      <button onclick="toggleMenu()" aria-label="Close menu"
+        style="background:none;border:1px solid var(--border);color:var(--gold);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s"
+        onmouseenter="this.style.borderColor='var(--gold)'"
+        onmouseleave="this.style.borderColor='var(--border)'">✕</button>
     </div>
-    <a href="#collections" onclick="toggleMenu()" class="mob-link">Collections</a>
-    <a href="#featured" onclick="toggleMenu()" class="mob-link">Featured</a>
-    <a href="#testimonials" onclick="toggleMenu()" class="mob-link">Reviews</a>
+    <a href="#categories" onclick="toggleMenu()" class="mob-link">Categories</a>
+    <a href="#top-sellers" onclick="toggleMenu()" class="mob-link">Top Sellers</a>
+    <a href="#new-collection" onclick="toggleMenu()" class="mob-link">New Collection</a>
+    <a href="#customer-love" onclick="toggleMenu()" class="mob-link">Customer Love</a>
+    <a href="#about" onclick="toggleMenu()" class="mob-link">About Us</a>
     <a href="#story" onclick="toggleMenu()" class="mob-link">Our Story</a>
     <a href="#contact" onclick="toggleMenu()" class="mob-link">Contact</a>
-</div>
+  </div>
 
-<script defer src="app.js"></script>
-<footer class="mini-footer" style="padding-bottom:max(40px,calc(70px + env(safe-area-inset-bottom)))">
-    <p>Â© 2026 LUVZ Collection</p>
+
+  <script defer src="app.js"></script>
+  <footer class="mini-footer" style="padding-bottom:max(40px,calc(70px + env(safe-area-inset-bottom)))">
+    <p>© 2026 LUVZ Collection</p>
     <a id="admin-link" href="/admin/" class="admin-hidden">Admin Login</a>
-</footer>
+  </footer>
 
-<script>
+  <script>
+
     window.addEventListener('keydown', (e) => {
-        if (e.ctrlKey && e.altKey && e.key === 'l') {
-            document.getElementById('admin-link').classList.toggle('hidden');
-        }
+      if (e.ctrlKey && e.altKey && e.key === 'l') {
+        document.getElementById('admin-link').classList.toggle('hidden');
+      }
     });
-</script>
+  </script>
 
-<!-- Floating AI Chat Trigger -->
-<button id="luvz-chat-trigger" aria-label="Chat with Luvz Style Assistant">
+  <!-- Floating pill trigger button -->
+  <button id="luvz-chat-trigger" aria-label="Chat with Luvz Style Assistant">
     <svg class="luvz-trigger-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 1l2.5 7.5H22l-6.5 4.7 2.5 7.5L12 16.2 6 20.7l2.5-7.5L2 8.5h7.5z" />
+      <path d="M12 1l2.5 7.5H22l-6.5 4.7 2.5 7.5L12 16.2 6 20.7l2.5-7.5L2 8.5h7.5z" />
     </svg>
-    <span class="luvz-trigger-label">Ask AI <span>âœ¦</span></span>
+    <span class="luvz-trigger-label">Ask AI <span>✦</span></span>
     <span class="luvz-dot" aria-hidden="true"></span>
-</button>
+  </button>
 
-<!-- Chat Popup -->
-<div id="luvz-chat-popup" role="dialog" aria-modal="true" aria-label="Luvz Style Assistant">
+  <!-- Chat popup -->
+  <div id="luvz-chat-popup" role="dialog" aria-modal="true" aria-label="Luvz Style Assistant">
+
+    <!-- Header (close button lives here — never overlaps input) -->
     <div class="luvz-chat-header">
-        <div class="luvz-chat-avatar" aria-hidden="true">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 1l2.5 7.5H22l-6.5 4.7 2.5 7.5L12 16.2 6 20.7l2.5-7.5L2 8.5h7.5z" />
-            </svg>
-        </div>
-        <div class="luvz-chat-header-text">
-            <h3>Luvz Style Assistant</h3>
-            <p>Jewellery Advisor Â· Online</p>
-        </div>
-        <div class="luvz-online-dot" aria-hidden="true"></div>
-        <button class="luvz-close-btn" aria-label="Close chat">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M18.3 5.71a1 1 0 00-1.41 0L12 10.59 7.11 5.7A1 1 0 005.7 7.11L10.59 12 5.7 16.89a1 1 0 001.41 1.41L12 13.41l4.89 4.89a1 1 0 001.41-1.41L13.41 12l4.89-4.89a1 1 0 000-1.4z" />
-            </svg>
-        </button>
+      <div class="luvz-chat-avatar" aria-hidden="true">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 1l2.5 7.5H22l-6.5 4.7 2.5 7.5L12 16.2 6 20.7l2.5-7.5L2 8.5h7.5z" />
+        </svg>
+      </div>
+      <div class="luvz-chat-header-text">
+        <h3>Luvz Style Assistant</h3>
+        <p>Jewellery Advisor · Online</p>
+      </div>
+      <div class="luvz-online-dot" aria-hidden="true"></div>
+      <!-- Close button in header — no overlap possible -->
+      <button class="luvz-close-btn" aria-label="Close chat">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M18.3 5.71a1 1 0 00-1.41 0L12 10.59 7.11 5.7A1 1 0 005.7 7.11L10.59 12 5.7 16.89a1 1 0 001.41 1.41L12 13.41l4.89 4.89a1 1 0 001.41-1.41L13.41 12l4.89-4.89a1 1 0 000-1.4z" />
+        </svg>
+      </button>
     </div>
 
+    <!-- Messages area -->
     <div class="luvz-chat-messages" id="luvz-messages" role="log" aria-live="polite"></div>
 
+    <!-- Quick suggestion chips -->
     <div class="luvz-suggestions" id="luvz-suggestions" aria-label="Quick questions">
-        <button class="luvz-chip" data-msg="Show me gold jhumkas under â‚¹500">Gold Jhumkas</button>
-        <button class="luvz-chip" data-msg="What bridal sets do you have?">Bridal Sets</button>
-        <button class="luvz-chip" data-msg="Do you offer free shipping?">Shipping Info</button>
-        <button class="luvz-chip" data-msg="Show me your trending pieces">Trending Now</button>
+      <button class="luvz-chip" data-msg="Show me gold jhumkas under ₹500">Gold Jhumkas</button>
+      <button class="luvz-chip" data-msg="What bridal sets do you have?">Bridal Sets</button>
+      <button class="luvz-chip" data-msg="Do you offer free shipping?">Shipping Info</button>
+      <button class="luvz-chip" data-msg="Show me your trending pieces">Trending Now</button>
     </div>
 
+    <!-- Input row (send button here, close button is in header) -->
     <div class="luvz-chat-input-area">
-        <textarea id="luvz-chat-input" placeholder="Ask about our jewelleryâ€¦" rows="1" aria-label="Your message"
-            autocomplete="off" autocorrect="on" spellcheck="true"></textarea>
-        <button id="luvz-chat-send" aria-label="Send message">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-            </svg>
-        </button>
+      <textarea id="luvz-chat-input" placeholder="Ask about our jewellery…" rows="1" aria-label="Your message"
+        autocomplete="off" autocorrect="on" spellcheck="true"></textarea>
+      <button id="luvz-chat-send" aria-label="Send message">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+        </svg>
+      </button>
     </div>
-</div>
 
-<script src="/luvz-chat.js"></script>
+  </div>
+
+  <script src="/luvz-chat.js"></script>
+
 </body>
+
 </html>
