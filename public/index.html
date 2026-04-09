@@ -4673,6 +4673,25 @@
         padding: 15px;
       }
     }
+
+    /* ═══════════════════ RESPONSIVE FOOTER & EMAIL ═══════════════════ */
+    @media(max-width:768px) {
+      footer {
+        display: grid;
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+        padding: 60px 24px !important;
+      }
+
+      footer>div:nth-child(1) {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+      }
+
+      footer h3 {
+        font-size: 0.9rem !important;
+      }
+    }
   </style>
 
 <body>
