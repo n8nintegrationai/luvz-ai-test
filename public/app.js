@@ -17,13 +17,16 @@ setTheme(localStorage.getItem('luvz-theme-user-choice') || 'earth', false);
 /* ── Navbar ─────────────────────────── */
 // Keep --modal-h accurate on orientation change
 window.addEventListener('resize', () => {
-  if (document.getElementById('moverlay').classList.contains('open')) {
+  const modal = document.getElementById('moverlay');
+  if (modal && modal.classList.contains('open')) {
     document.documentElement.style.setProperty('--modal-h', window.innerHeight + 'px');
   }
 }, { passive: true });
 
 window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('stuck', window.scrollY > 50);
+  const nav = document.getElementById('header') || document.getElementById('nav');
+  if (nav) nav.classList.toggle('stuck', window.scrollY > 50);
+
   const si = document.querySelector('.scroll-ind');
   if (si) si.style.opacity = window.scrollY > 100 ? '0' : '1';
 
@@ -43,6 +46,7 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 function toggleMenu(forceClose) {
   const m = document.getElementById('mob-menu');
+  if (!m) return;
   const willOpen = forceClose ? false : !m.classList.contains('open');
   m.classList.toggle('open', willOpen);
   // Lock body scroll while overlay is open
@@ -50,7 +54,8 @@ function toggleMenu(forceClose) {
 }
 // Close menu on Escape key
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && document.getElementById('mob-menu').classList.contains('open')) {
+  const m = document.getElementById('mob-menu');
+  if (e.key === 'Escape' && m && m.classList.contains('open')) {
     toggleMenu(true);
   }
 });
@@ -337,14 +342,18 @@ function updateWishCount() {
 
 function openWishlist() {
   renderWishDrawer();
-  document.getElementById('wish-overlay').classList.add('open');
-  document.getElementById('wish-drawer').classList.add('open');
+  const overlay = document.getElementById('wish-overlay');
+  const drawer = document.getElementById('wish-drawer');
+  if (overlay) overlay.classList.add('open');
+  if (drawer) drawer.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
 function closeWishlist() {
-  document.getElementById('wish-overlay').classList.remove('open');
-  document.getElementById('wish-drawer').classList.remove('open');
+  const overlay = document.getElementById('wish-overlay');
+  const drawer = document.getElementById('wish-drawer');
+  if (overlay) overlay.classList.remove('open');
+  if (drawer) drawer.classList.remove('open');
   document.body.style.overflow = '';
 }
 
@@ -422,6 +431,9 @@ function renderWishDrawer() {
   const body = document.getElementById('wish-body');
   const footer = document.getElementById('wish-footer');
   const badge = document.getElementById('wish-count-badge');
+
+  if (!body) return;
+
   if (badge) badge.textContent = ids.length;
 
   if (ids.length === 0) {
@@ -832,15 +844,16 @@ function renderGalleryFrame() {
   const next = document.getElementById('gallery-next');
   const counter = document.getElementById('gallery-counter');
   const n = _gallery.imgs.length;
-  if (n === 0) return;
+  if (n === 0 || !img) return;
 
   img.src = optimizeCloudinaryUrl(_gallery.imgs[_gallery.index], 800);
   img.srcset = generateSrcset(_gallery.imgs[_gallery.index], [600, 800, 1000]);
   img.sizes = '(max-width: 600px) 90vw, 90vw';
-  img.alt = document.getElementById('m-name')?.textContent || '';
+  const mName = document.getElementById('m-name');
+  img.alt = mName?.textContent || '';
   img.classList.remove('z');
   const multi = n > 1;
-  wrap.classList.toggle('has-gallery', multi);
+  if (wrap) wrap.classList.toggle('has-gallery', multi);
   if (prev) { prev.style.display = multi ? 'flex' : 'none'; prev.disabled = _gallery.index <= 0; }
   if (next) { next.style.display = multi ? 'flex' : 'none'; next.disabled = _gallery.index >= n - 1; }
   if (counter) { counter.style.display = multi ? 'block' : 'none'; counter.textContent = `${_gallery.index + 1} / ${n}`; }
@@ -849,47 +862,65 @@ function galleryPrev() { if (_gallery.index > 0) { _gallery.index--; renderGalle
 function galleryNext() { if (_gallery.index < _gallery.imgs.length - 1) { _gallery.index++; renderGalleryFrame(); } }
 
 function openModal(p, badge) {
+  const moverlay = document.getElementById('moverlay');
+  if (!moverlay || !p) return;
+
   const fb = `https://placehold.co/400x533/141210/D4AF37?text=${encodeURIComponent(p.name || '')}`;
   _gallery.imgs = getGalleryImages(p);
   _gallery.index = 0;
   const mimg = document.getElementById('mimg');
+  if (!mimg) return;
 
   mimg.src = optimizeCloudinaryUrl(_gallery.imgs[0] || p.image || fb, 800);
   mimg.srcset = generateSrcset(_gallery.imgs[0] || p.image, [600, 800, 1000]);
   mimg.sizes = '(max-width: 600px) 90vw, 90vw';
   mimg.alt = p.name || '';
   mimg.classList.remove('z');
-  document.getElementById('m-name').textContent = p.name || '';
-  document.getElementById('m-desc').textContent = p.description || '';
-  document.getElementById('m-badge').textContent = badge;
-  const pe = document.getElementById('m-price'), fmt = fmtP(p.price);
-  pe.textContent = fmt || ''; pe.style.display = fmt ? 'block' : 'none';
+
+  const mname = document.getElementById('m-name');
+  const mdesc = document.getElementById('m-desc');
+  const mbadge = document.getElementById('m-badge');
+  const mprice = document.getElementById('m-price');
+  const mwa = document.getElementById('m-wa');
+
+  if (mname) mname.textContent = p.name || '';
+  if (mdesc) mdesc.textContent = p.description || '';
+  if (mbadge) mbadge.textContent = badge;
+
+  if (mprice) {
+    const fmt = fmtP(p.price);
+    mprice.textContent = fmt || '';
+    mprice.style.display = fmt ? 'block' : 'none';
+  }
+
   // Store product for referral code system and set initial WA URL
   _currentModalProduct = p;
+
   // Reset referral field
-  const _ri = document.getElementById('referral-code');
-  const _ra = document.getElementById('referral-applied');
-  const _rv = document.getElementById('referral-invalid');
-  if (_ri) { _ri.value = ''; _ri.classList.remove('invalid'); }
-  if (_ra) { _ra.classList.remove('show'); }
-  if (_rv) { _rv.classList.remove('show'); }
-  // Set base WA URL (referral code appended dynamically via applyReferralCode)
-  document.getElementById('m-wa').href = p.whatsapp || waURL(p.name);
-  // Set --modal-h to actual visible height (Chrome vh bug fix)
-  // window.innerHeight = true visible area excluding browser chrome
-  document.documentElement.style.setProperty(
-    '--modal-h', window.innerHeight + 'px'
-  );
-  document.getElementById('moverlay').classList.add('open');
+  const ri = document.getElementById('referral-code');
+  const ra = document.getElementById('referral-applied');
+  const rv = document.getElementById('referral-invalid');
+  if (ri) { ri.value = ''; ri.classList.remove('invalid'); }
+  if (ra) { ra.classList.remove('show'); }
+  if (rv) { rv.classList.remove('show'); }
+
+  // Set base WA URL
+  if (mwa) mwa.href = p.whatsapp || waURL(p.name);
+
+  // Set --modal-h to actual visible height
+  document.documentElement.style.setProperty('--modal-h', window.innerHeight + 'px');
+  moverlay.classList.add('open');
+
   const minfo = document.querySelector('.minfo');
   const minfoScroll = document.querySelector('.minfo-scroll');
   if (minfo) minfo.scrollTop = 0;
   if (minfoScroll) minfoScroll.scrollTop = 0;
+
   document.body.style.overflow = 'hidden';
   document.body.classList.add('modal-open');
   renderGalleryFrame();
 
-  // Task 3B + 4A: update URL hash and meta tags for sharing
+  // Update URL hash and meta tags for sharing
   const slug = toSlug(p.name);
   pushProductHash(slug);
   const productUrl = `${SITE_URL}/#product/${slug}`;
@@ -904,7 +935,8 @@ function openModal(p, badge) {
   );
 
   _gallery._keyHandler = e => {
-    if (document.getElementById('moverlay').classList.contains('open') && _gallery.imgs.length > 1) {
+    const overlay = document.getElementById('moverlay');
+    if (overlay && overlay.classList.contains('open') && _gallery.imgs.length > 1) {
       if (e.key === 'ArrowLeft') { e.preventDefault(); galleryPrev(); }
       else if (e.key === 'ArrowRight') { e.preventDefault(); galleryNext(); }
     }
@@ -912,18 +944,27 @@ function openModal(p, badge) {
   document.addEventListener('keydown', _gallery._keyHandler);
 }
 function closeModal() {
-  document.getElementById('moverlay').classList.remove('open');
-  document.getElementById('moverlay').classList.remove('active');
+  const moverlay = document.getElementById('moverlay');
+  if (moverlay) {
+    moverlay.classList.remove('open');
+    moverlay.classList.remove('active');
+  }
   document.body.style.overflow = '';
   document.body.classList.remove('modal-open');
   if (_gallery._keyHandler) document.removeEventListener('keydown', _gallery._keyHandler);
   _gallery._keyHandler = null;
-  // Task 3B + 4A: restore original meta + clear hash
   clearHash();
 }
+
 const closeBtn = document.querySelector('.close-btn');
 if (closeBtn) closeBtn.onclick = closeModal;
-document.getElementById('moverlay').addEventListener('click', e => { if (e.target === document.getElementById('moverlay')) closeModal() });
+
+const moverlay = document.getElementById('moverlay');
+if (moverlay) {
+  moverlay.addEventListener('click', e => {
+    if (e.target === moverlay) closeModal();
+  });
+}
 
 
 (function () {
@@ -1402,7 +1443,8 @@ function closeLightbox(e) {
   // Clear src to free memory
   setTimeout(() => {
     const img = document.getElementById('review-lightbox-img');
-    if (img && !document.getElementById('review-lightbox').classList.contains('open')) img.src = '';
+    const lightbox = document.getElementById('review-lightbox');
+    if (img && lightbox && !lightbox.classList.contains('open')) img.src = '';
   }, 400);
 }
 
