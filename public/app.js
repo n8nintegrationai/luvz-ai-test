@@ -55,6 +55,33 @@ document.addEventListener('keydown', e => {
   }
 });
 
+/* ── Email Subscribe ────────────────── */
+function handleEmailSubscribe(event) {
+  event.preventDefault();
+  const email = event.target.querySelector('input[name="email"]').value;
+  if (!email) return;
+
+  // Store email in localStorage
+  const subscribers = JSON.parse(localStorage.getItem('luvz-subscribers') || '[]');
+  if (!subscribers.includes(email)) {
+    subscribers.push(email);
+    localStorage.setItem('luvz-subscribers', JSON.stringify(subscribers));
+  }
+
+  // Show confirmation message
+  const btn = event.target.querySelector('button');
+  const originalText = btn.textContent;
+  btn.textContent = '✓ SUBSCRIBED';
+  btn.style.background = 'var(--gold-d)';
+
+  // Reset after 2 seconds
+  setTimeout(() => {
+    btn.textContent = originalText;
+    btn.style.background = 'var(--gold)';
+    event.target.reset();
+  }, 2000);
+}
+
 /* ── Reveal ─────────────────────────── */
 const ro = new IntersectionObserver(es => {
   es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target) } });
