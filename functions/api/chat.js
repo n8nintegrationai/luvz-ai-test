@@ -19,17 +19,25 @@ export async function onRequestPost(context) {
 
         const fullData = await productRes.json();
         let slimInventory = [];
+        const seenProducts = new Set(); // Track unique products to prevent duplicates
 
         // 3. Robust Category Scanning
         const categories = Object.keys(fullData);
         categories.forEach(cat => {
             if (Array.isArray(fullData[cat])) {
                 fullData[cat].slice(0, 15).forEach(item => {
-                    slimInventory.push({
-                        n: item.name,
-                        p: item.price,
-                        wa: `https://wa.me/YOUR_PHONE_NUMBER?text=I%20am%20interested%20in%20${encodeURIComponent(item.name)}`
-                    });
+                    // Create a unique key for deduplication (name + category)
+                    const productKey = `${cat}:${item.name}`;
+
+                    // Only add if we haven't seen this product before
+                    if (!seenProducts.has(productKey)) {
+                        seenProducts.add(productKey);
+                        slimInventory.push({
+                            n: item.name,
+                            p: item.price,
+                            wa: `https://wa.me/918919359961?text=I%20am%20interested%20in%20${encodeURIComponent(item.name)}`
+                        });
+                    }
                 });
             }
         });
