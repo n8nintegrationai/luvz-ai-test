@@ -4,4 +4,4 @@
 !.dev.vars.example
 .env*
 !.env.example
-ai-config.json
+job_context.json
