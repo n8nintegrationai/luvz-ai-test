@@ -24,8 +24,8 @@ window.addEventListener('resize', () => {
 
 window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('stuck', window.scrollY > 50);
-  const si = document.querySelector('.scroll-ind');
-  if (si) si.style.opacity = window.scrollY > 100 ? '0' : '1';
+  const discover = document.querySelector('.hero-discover');
+  if (discover) discover.style.opacity = window.scrollY > 100 ? '0' : '1';
 
   // Gem bar: visible only on first screen (= 100svh = window.innerHeight)
   const gb = document.querySelector('.gem-bar');
@@ -41,6 +41,212 @@ window.addEventListener('scroll', () => {
     fwa.classList.toggle('fwa-visible', window.scrollY > heroH * 0.6);
   }
 }, { passive: true });
+
+function initHeroRedesignParallax() {
+  const hero = document.querySelector('.hero.hero-redesign');
+  const imgParallax = hero ? hero.querySelector('.hero-img-parallax') : null;
+  const textParallax = hero ? hero.querySelector('.hero-text-parallax') : null;
+  const heroImg = hero ? hero.querySelector('.hero-img') : null;
+  if (!hero || !imgParallax || !textParallax || !heroImg) return;
+
+  const mobileQuery = window.matchMedia('(max-width: 768px)');
+  let parallaxAttached = false;
+  let heroRAFPending = false;
+  let pointerMoveX = 0;
+  let pointerMoveY = 0;
+
+  function resetHeroParallax() {
+    heroRAFPending = false;
+    imgParallax.style.transform = 'translate3d(0px, 0px, 0)';
+    textParallax.style.transform = 'translate3d(0px, 0px, 0)';
+  }
+
+  function applyHeroParallax() {
+    /* Image moves subtly in direction of pointer */
+    imgParallax.style.transform = `translate3d(${pointerMoveX * 8}px, ${pointerMoveY * 6}px, 0)`;
+    /* Text moves opposite direction for depth perception */
+    textParallax.style.transform = `translate3d(${pointerMoveX * -3}px, ${pointerMoveY * -2}px, 0)`;
+    heroRAFPending = false;
+  }
+
+  function handleHeroMouseMove(event) {
+    pointerMoveX = event.clientX / window.innerWidth - 0.5;
+    pointerMoveY = event.clientY / window.innerHeight - 0.5;
+    if (!heroRAFPending) {
+      heroRAFPending = true;
+      requestAnimationFrame(applyHeroParallax);
+    }
+  }
+
+  function enableHeroParallax() {
+    if (parallaxAttached || mobileQuery.matches) return;
+    hero.addEventListener('mousemove', handleHeroMouseMove);
+    hero.addEventListener('mouseleave', resetHeroParallax);
+    parallaxAttached = true;
+  }
+
+  function disableHeroParallax() {
+    if (!parallaxAttached) return;
+    hero.removeEventListener('mousemove', handleHeroMouseMove);
+    hero.removeEventListener('mouseleave', resetHeroParallax);
+    parallaxAttached = false;
+    resetHeroParallax();
+  }
+
+  function handleViewportChange(event) {
+    if (event.matches) disableHeroParallax();
+    else enableHeroParallax();
+  }
+
+  function cleanupHeroParallax() {
+    disableHeroParallax();
+    mobileQuery.removeEventListener('change', handleViewportChange);
+    window.removeEventListener('pagehide', cleanupHeroParallax);
+  }
+
+  if (!mobileQuery.matches) enableHeroParallax();
+  mobileQuery.addEventListener('change', handleViewportChange);
+  window.addEventListener('pagehide', cleanupHeroParallax);
+}
+
+initHeroRedesignParallax();
+
+function initHeroParticles() {
+  const hero = document.querySelector('.hero.hero-redesign');
+  const canvas = document.getElementById('hero-particles-canvas');
+  if (!hero || !canvas) return;
+
+  const media = canvas.parentElement;
+  const mobileQuery = window.matchMedia('(max-width: 768px)');
+  const ctx = canvas.getContext('2d');
+  if (!media || !ctx) return;
+
+  const PARTICLE_COUNT = 25;
+  const particles = [];
+  let heroParticlesRAF = 0;
+  let canvasWidth = 0;
+  let canvasHeight = 0;
+  let animationActive = false;
+  let visibilityPaused = false;
+
+  function resizeHeroParticlesCanvas() {
+    canvasWidth = media.clientWidth;
+    canvasHeight = media.clientHeight;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+  }
+
+  function createParticle(index) {
+    const size = 1 + Math.random() * 1.5;
+    const alpha = 0.08 + Math.random() * 0.22;
+    particles[index] = {
+      baseX: Math.random() * canvasWidth,
+      y: Math.random() * canvasHeight,
+      size,
+      alpha,
+      color: `rgba(212, 175, 55, ${alpha})`,
+      speedY: 0.14 + Math.random() * 0.196,
+      amplitude: 4 + Math.random() * 7,
+      phase: Math.random() * Math.PI * 2,
+      phaseSpeed: 0.0056 + Math.random() * 0.0084
+    };
+  }
+
+  function resetParticleToBottom(particle) {
+    particle.baseX = Math.random() * canvasWidth;
+    particle.y = canvasHeight + particle.size + Math.random() * 18;
+    particle.phase = Math.random() * Math.PI * 2;
+  }
+
+  function animateHeroParticles() {
+    heroParticlesRAF = requestAnimationFrame(animateHeroParticles);
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+    for (let i = 0; i < particles.length; i += 1) {
+      const particle = particles[i];
+      particle.y -= particle.speedY;
+      particle.phase += particle.phaseSpeed;
+
+      if (particle.y + particle.size < 0) {
+        resetParticleToBottom(particle);
+      }
+
+      ctx.fillStyle = particle.color;
+      ctx.beginPath();
+      ctx.arc(
+        particle.baseX + Math.sin(particle.phase) * particle.amplitude,
+        particle.y,
+        particle.size,
+        0,
+        Math.PI * 2
+      );
+      ctx.fill();
+    }
+  }
+
+  function startHeroParticles() {
+    if (animationActive || mobileQuery.matches || document.hidden) return;
+    resizeHeroParticlesCanvas();
+    heroParticlesRAF = requestAnimationFrame(animateHeroParticles);
+    animationActive = true;
+  }
+
+  function stopHeroParticles() {
+    if (heroParticlesRAF) {
+      cancelAnimationFrame(heroParticlesRAF);
+      heroParticlesRAF = 0;
+    }
+    animationActive = false;
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+  }
+
+  function handleHeroParticlesViewportChange(event) {
+    if (event.matches) stopHeroParticles();
+    else if (!visibilityPaused) startHeroParticles();
+  }
+
+  function handleHeroParticlesVisibilityChange() {
+    if (document.hidden) {
+      visibilityPaused = true;
+      cancelAnimationFrame(heroParticlesRAF);
+      heroParticlesRAF = 0;
+      animationActive = false;
+      return;
+    }
+
+    visibilityPaused = false;
+    if (!mobileQuery.matches) {
+      heroParticlesRAF = requestAnimationFrame(animateHeroParticles);
+      animationActive = true;
+    }
+  }
+
+  function cleanupHeroParticles() {
+    stopHeroParticles();
+    mobileQuery.removeEventListener('change', handleHeroParticlesViewportChange);
+    document.removeEventListener('visibilitychange', handleHeroParticlesVisibilityChange);
+    window.removeEventListener('pagehide', cleanupHeroParticles);
+    resizeObserver.disconnect();
+  }
+
+  resizeHeroParticlesCanvas();
+  for (let i = 0; i < PARTICLE_COUNT; i += 1) {
+    createParticle(i);
+  }
+
+  const resizeObserver = new ResizeObserver(() => {
+    resizeHeroParticlesCanvas();
+  });
+
+  resizeObserver.observe(media);
+  if (!mobileQuery.matches) startHeroParticles();
+  mobileQuery.addEventListener('change', handleHeroParticlesViewportChange);
+  document.addEventListener('visibilitychange', handleHeroParticlesVisibilityChange);
+  window.addEventListener('pagehide', cleanupHeroParticles);
+}
+
+initHeroParticles();
+
 function toggleMenu(forceClose) {
   const m = document.getElementById('mob-menu');
   const willOpen = forceClose ? false : !m.classList.contains('open');
@@ -1503,6 +1709,7 @@ function renderReviews(reviews) {
   strip.innerHTML = cards + cards;
 }
 
+
 async function askLuvzAI() {
   const queryInput = document.getElementById('ai-user-query');
   const display = document.getElementById('ai-response-display');
@@ -1517,29 +1724,294 @@ async function askLuvzAI() {
   display.innerHTML = "<em>Our assistant is searching the collection...</em>";
 
   try {
-    const response = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: queryInput.value })
+    let streamText = '';
+    let streamSources = [];
+
+    await window.streamLuvzResponse({
+      apiUrl: window.LUVZ_CHAT_API_URL || 'http://127.0.0.1:8000/chat',
+      message: queryInput.value,
+      onDelta: (delta) => {
+        streamText += delta;
+        if (window.LuvzChatUI && typeof window.LuvzChatUI.renderExternalBotContent === 'function') {
+          window.LuvzChatUI.renderExternalBotContent(display, streamText, streamSources);
+        } else {
+          display.textContent = streamText;
+        }
+      },
+      onSources: (sources) => {
+        streamSources = Array.isArray(sources) ? sources : [];
+        if (window.LuvzChatUI && typeof window.LuvzChatUI.renderExternalBotContent === 'function') {
+          window.LuvzChatUI.renderExternalBotContent(display, streamText, streamSources);
+        }
+      },
+      onComplete: () => {
+        if (!streamText && !(streamSources && streamSources.length)) {
+          display.innerHTML = "I couldn't find that right now. Could you try rephrasing your question?";
+        }
+      },
+      onError: (message) => {
+        display.textContent = message;
+      }
     });
-
-    const data = await response.json();
-
-    if (data.response) {
-      // Convert URL strings into clickable links if Gemini doesn't format them as HTML
-      const formattedResponse = data.response.replace(
-        /(https?:\/\/[^\s]+)/g,
-        '<a href="$1" target="_blank" style="color: #25D366; font-weight: bold;">Buy on WhatsApp</a>'
-      );
-      display.innerHTML = formattedResponse;
-    } else {
-      display.innerHTML = "I couldn't find that right now. Could you try rephrasing your question?";
-    }
   } catch (error) {
-    display.innerHTML = "Connection error. Please check your internet and try again.";
+    if (!display.textContent || /searching the collection/i.test(display.textContent)) {
+      display.textContent = error && error.name === 'AbortError'
+        ? LUVZ_STREAM_TIMEOUT_MESSAGE
+        : LUVZ_CONNECTION_LOST_MESSAGE;
+    }
   } finally {
     btn.innerText = originalBtnText;
     btn.disabled = false;
   }
 }
+
+window.LUVZ_CHAT_API_URL = window.LUVZ_CHAT_API_URL || 'http://127.0.0.1:8000/chat';
+const LUVZ_STREAM_TIMEOUT_MESSAGE = 'The response timed out. Please try again in a moment.';
+const LUVZ_CONNECTION_LOST_MESSAGE = 'Connection lost. Please try again.';
+
+function parseSSEBlock(block) {
+  const lines = block.split(/\r?\n/);
+  let eventName = 'message';
+  const dataLines = [];
+
+  for (const line of lines) {
+    if (!line) continue;
+    if (line.startsWith(':')) continue;
+    if (line.startsWith('event:')) {
+      eventName = line.slice(6).trim();
+      continue;
+    }
+    if (line.startsWith('data:')) {
+      dataLines.push(line.slice(5).replace(/^\s/, ''));
+    }
+  }
+
+  return {
+    event: eventName,
+    data: dataLines.join('\n')
+  };
+}
+
+function parseSSEJson(data) {
+  if (!data) return null;
+  try {
+    return JSON.parse(data);
+  } catch (error) {
+    return { text: data };
+  }
+}
+
+function getStreamErrorMessage(payload, fallbackMessage) {
+  if (payload && typeof payload.error === 'string' && payload.error.trim()) return payload.error;
+  if (payload && typeof payload.message === 'string' && payload.message.trim()) return payload.message;
+  return fallbackMessage || LUVZ_CONNECTION_LOST_MESSAGE;
+}
+
+function getStreamSources(payload) {
+  if (Array.isArray(payload)) return payload;
+  if (payload && Array.isArray(payload.sources)) return payload.sources;
+  return [];
+}
+
+function getJsonResponseText(payload) {
+  if (!payload) return '';
+  if (typeof payload.text === 'string') return payload.text;
+  if (typeof payload.response === 'string') return payload.response;
+  if (typeof payload.message === 'string') return payload.message;
+  return '';
+}
+
+let activeLuvzStreamController = null;
+
+async function streamLuvzResponse(options) {
+  const {
+    apiUrl,
+    message,
+    sessionId,
+    chatHistory,
+    onDelta,
+    onSources,
+    onComplete,
+    onError
+  } = options || {};
+
+  const controller = new AbortController();
+  const timeoutMs = 25000;
+  let timeoutId = null;
+  let streamFailed = false;
+  let streamCompleted = false;
+  let cleanupRan = false;
+  let abortReason = null;
+
+  const abortRequest = (reason) => {
+    abortReason = reason;
+    if (!controller.signal.aborted) controller.abort();
+  };
+
+  if (activeLuvzStreamController && activeLuvzStreamController.controller !== controller) {
+    activeLuvzStreamController.abort('superseded');
+  }
+  activeLuvzStreamController = {
+    controller,
+    abort: abortRequest
+  };
+
+  const cleanup = () => {
+    if (cleanupRan) return;
+    cleanupRan = true;
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+    }
+    if (activeLuvzStreamController && activeLuvzStreamController.controller === controller) {
+      activeLuvzStreamController = null;
+    }
+  };
+
+  const resetTimeout = () => {
+    if (streamCompleted || streamFailed) return;
+    if (timeoutId) clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      abortRequest('timeout');
+    }, timeoutMs);
+  };
+
+  const fail = (messageText, err) => {
+    if (streamFailed) return;
+    streamFailed = true;
+    cleanup();
+    if (typeof onError === 'function') onError(messageText, err);
+    throw err || new Error(messageText);
+  };
+
+  const complete = (payload) => {
+    if (streamCompleted) return;
+    streamCompleted = true;
+    cleanup();
+    if (typeof onComplete === 'function') onComplete(payload);
+  };
+
+  const handleEvent = (rawEvent) => {
+    if (!rawEvent || !rawEvent.trim()) return;
+
+    const parsed = parseSSEBlock(rawEvent);
+    const payload = parseSSEJson(parsed.data);
+
+    if (parsed.event === 'delta') {
+      const deltaText = payload && typeof payload.text === 'string' ? payload.text : '';
+      if (deltaText && typeof onDelta === 'function') onDelta(deltaText, payload);
+      return;
+    }
+
+    if (parsed.event === 'sources') {
+      if (typeof onSources === 'function') onSources(getStreamSources(payload), payload);
+      return;
+    }
+
+    if (parsed.event === 'done') {
+      complete(payload);
+      return;
+    }
+
+    if (parsed.event === 'error') {
+      const errorMessage = getStreamErrorMessage(payload, LUVZ_CONNECTION_LOST_MESSAGE);
+      fail(errorMessage, new Error(errorMessage));
+    }
+  };
+
+  try {
+    resetTimeout();
+
+    const response = await fetch(apiUrl || window.LUVZ_CHAT_API_URL, {
+      method: 'POST',
+      headers: {
+        'Accept': 'text/event-stream, application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: message,
+        session_id: sessionId,
+        chat_history: chatHistory
+      }),
+      signal: controller.signal
+    });
+
+    if (!response.ok) {
+      fail(LUVZ_CONNECTION_LOST_MESSAGE, new Error('HTTP ' + response.status));
+    }
+
+    const contentType = (response.headers.get('content-type') || '').toLowerCase();
+    const isJsonResponse = contentType.indexOf('application/json') !== -1;
+
+    if (isJsonResponse) {
+      const payload = await response.json();
+      const responseText = getJsonResponseText(payload);
+      const sources = getStreamSources(payload);
+
+      if (responseText && typeof onDelta === 'function') onDelta(responseText, payload);
+      if (sources.length && typeof onSources === 'function') onSources(sources, payload);
+      complete(payload);
+      return payload;
+    }
+
+    if (!response.body) {
+      const fallbackText = await response.text();
+      const payload = parseSSEJson(fallbackText);
+      const responseText = getJsonResponseText(payload);
+      const sources = getStreamSources(payload);
+
+      if (responseText && typeof onDelta === 'function') onDelta(responseText, payload);
+      if (sources.length && typeof onSources === 'function') onSources(sources, payload);
+      complete(payload);
+      return payload;
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while (true) {
+      resetTimeout();
+      const chunk = await reader.read();
+      if (chunk.done) break;
+
+      buffer += decoder.decode(chunk.value, { stream: true });
+      const events = buffer.split(/\r?\n\r?\n/);
+      buffer = events.pop() || '';
+
+      for (const rawEvent of events) {
+        handleEvent(rawEvent);
+      }
+
+      if (streamCompleted) {
+        await reader.cancel();
+        break;
+      }
+    }
+
+    if (streamCompleted) {
+      return;
+    }
+
+    buffer += decoder.decode();
+    if (buffer.trim()) {
+      handleEvent(buffer.trim());
+    }
+
+    complete();
+  } catch (error) {
+    if (streamFailed) throw error;
+    cleanup();
+    if (error && error.name === 'AbortError' && abortReason === 'superseded') {
+      return;
+    }
+    const messageText = error && error.name === 'AbortError' && abortReason === 'timeout'
+      ? LUVZ_STREAM_TIMEOUT_MESSAGE
+      : LUVZ_CONNECTION_LOST_MESSAGE;
+    if (typeof onError === 'function') onError(messageText, error);
+    throw error;
+  }
+}
+
+window.streamLuvzResponse = streamLuvzResponse;
 
