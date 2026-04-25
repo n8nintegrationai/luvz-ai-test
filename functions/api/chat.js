@@ -10,7 +10,7 @@ export async function onRequestPost(context) {
         }
 
         // 2. Fetch your JSON directly from GitHub (The Raw URL you provided earlier)
-        const productDataUrl = "https://raw.githubusercontent.com/n8nintegrationai/luvz-ai-test/refs/heads/main/public/data/products.json";
+        const productDataUrl = "https://raw.githubusercontent.com/n8nintegrationai/luvz-collection-dev/refs/heads/main/public/data/products.json";
         const productRes = await fetch(productDataUrl);
 
         if (!productRes.ok) {
@@ -43,7 +43,10 @@ export async function onRequestPost(context) {
         });
 
         // 4. Call Gemini 2.5 Flash-Lite (The 2026 Free Tier Stable Model)
-        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${env.GEMINI_API_KEY}`;
+        // const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${env.GEMINI_API_KEY}`;
+        // const geminiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${env.GEMINI_API_KEY}`;
+        const geminiUrl = `http://localhost:8000/chat`;
+
 
         const geminiRes = await fetch(geminiUrl, {
             method: "POST",

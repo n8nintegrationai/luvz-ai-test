@@ -309,6 +309,69 @@
   word-break: break-all;
 }
 
+.luvz-source-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.luvz-source-card {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(201,168,76,0.16);
+  background: rgba(255,255,255,0.035);
+}
+
+.luvz-source-image {
+  width: 72px;
+  height: 88px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.06);
+}
+
+.luvz-source-body {
+  min-width: 0;
+}
+
+.luvz-source-title {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #efe1bf;
+}
+
+.luvz-source-price {
+  margin-top: 4px;
+  color: #c9a84c;
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.luvz-source-desc {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #cbbd9e;
+}
+
+.luvz-source-cta {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 8px;
+  color: #25d366;
+  text-decoration: none !important;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.luvz-source-cta:hover {
+  text-decoration: underline !important;
+}
+
 /* ---------- WhatsApp CTA Button ---------- */
 /* Issue 1 fix: clean small button, no background logo */
 .luvz-wa-btn {

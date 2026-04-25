@@ -652,6 +652,7 @@
     }
 
     /* ═══════════════════ HERO ═══════════════════ */
+    /* Previous centered hero styles retained here for recovery.
     .hero {
       min-height: 100svh;
       display: flex;
@@ -825,118 +826,356 @@
       font-style: normal;
       font-weight: 700
     }
+    */
 
-    /* hero-poster-col removed */
-    .scroll-ind {
+    /* ═══════════════════ HERO REDESIGN ═══════════════════ */
+    .hero.hero-redesign {
+      width: 100%;
+      height: 100svh;
+      min-height: 600px;
+      position: relative;
+      overflow: hidden;
+      padding-top: 88px;
+      box-sizing: border-box;
+    }
+
+    /* Hero Image Layer: full bleed cinematic backdrop */
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      z-index: 0;
+      display: block;
+      transform: scale(1.04);
+    }
+
+    /* Gradient Veil Layer: diagonal darkening */
+    .hero-veil {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(105deg,
+          rgba(6, 3, 1, 0.88) 0%,
+          rgba(6, 3, 1, 0.72) 28%,
+          rgba(6, 3, 1, 0.30) 52%,
+          rgba(6, 3, 1, 0.18) 68%,
+          rgba(6, 3, 1, 0.40) 100%);
+    }
+
+    /* Bottom Fade Transition Layer */
+    .hero-veil-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 180px;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(to top, rgba(6, 3, 1, 1) 0%, transparent 18%);
+    }
+
+    /* Gem Glow: repositioned to center */
+    .hero-gem-light {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      background: radial-gradient(ellipse 22% 30% at 58% 42%,
+          rgba(255, 232, 150, 0.11) 0%,
+          rgba(212, 175, 55, 0.05) 50%,
+          transparent 100%);
+      animation: heroGemPulse 6s ease-in-out infinite;
+      will-change: opacity;
+    }
+
+    @keyframes heroGemPulse {
+      0% {
+        opacity: 0;
+      }
+
+      25% {
+        opacity: 1;
+      }
+
+      60% {
+        opacity: 0.55;
+      }
+
+      85% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    /* Particles Canvas */
+    #hero-particles-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    /* Parallax Wrapper */
+    .hero-parallax-wrapper {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-img-parallax {
+      position: absolute;
+      inset: 0;
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .hero-text-parallax {
+      position: absolute;
+      inset: 0;
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
+    }
+
+    /* Text Content Layer: overlay positioned left-center */
+    .hero-content {
+      position: absolute;
+      top: 50%;
+      left: 7%;
+      transform: translateY(-50%);
+      max-width: 480px;
+      z-index: 3;
+      pointer-events: auto;
+    }
+
+    /* Heading: refined, not oversized */
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.4rem, 4.2vw, 4.8rem);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: 0.14em;
+      color: #e8d5a3;
+      text-transform: uppercase;
+      margin: 0;
+      word-spacing: 100vw;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2em;
+    }
+
+    /* Decorative Rule */
+    .hero-rule {
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(to right, rgba(212, 175, 55, 0.8), transparent);
+      margin: 1.6rem 0 1.4rem;
+      display: block;
+    }
+
+    /* Subheading */
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.85rem, 1.1vw, 1.05rem);
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(212, 175, 55, 0.7);
+      letter-spacing: 0.08em;
+      margin: 0;
+      display: block;
+    }
+
+    /* Button Row */
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      margin-top: 2.4rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.35s ease;
+      white-space: nowrap;
+    }
+
+    .hero-btn-primary {
+      padding: 12px 26px;
+      background: linear-gradient(135deg, #c9a84c, #e2c46a);
+      color: #0a0602;
+    }
+
+    .hero-btn-primary:hover {
+      opacity: 0.88;
+      transform: scale(1.02);
+      box-shadow: 0 4px 24px rgba(212, 175, 55, 0.22);
+    }
+
+    .hero-btn-secondary {
+      padding: 11px 26px;
+      background: transparent;
+      border: 1px solid rgba(212, 175, 55, 0.38);
+      color: rgba(220, 195, 130, 0.82);
+    }
+
+    .hero-btn-secondary:hover {
+      border-color: rgba(212, 175, 55, 0.75);
+      background: rgba(212, 175, 55, 0.05);
+    }
+
+    /* Discover Indicator: bottom centered */
+    .hero-discover {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 5px;
-      padding: 14px 0 18px;
+      gap: 8px;
       cursor: pointer;
-      transition: opacity .4s;
-      position: relative;
-      z-index: 1
+      transition: opacity 0.4s;
     }
 
-    .scroll-ind span {
+    .hero-discover span {
       font-family: 'Cinzel', serif;
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing: .45em;
+      font-size: 9px;
+      letter-spacing: 0.26em;
+      color: rgba(212, 175, 55, 0.5);
       text-transform: uppercase;
-      color: var(--gold);
-      opacity: .6
     }
 
-    @media(max-width:600px) {
-      .hero {
-        min-height: 100svh;
-        padding: calc(72px + env(safe-area-inset-top)) 16px 12px;
-        margin-top: 0 !important;
+    .hero-chevrons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .hero-chev {
+      width: 12px;
+      height: 7px;
+      border-right: 1.5px solid var(--gold);
+      border-bottom: 1.5px solid var(--gold);
+      transform: rotate(45deg);
+      animation: heroChevBounce 2s ease-in-out infinite;
+      opacity: 0;
+    }
+
+    .hero-chev:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .hero-chev:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes heroChevBounce {
+      0% {
+        opacity: 0;
+        transform: rotate(45deg) translate(-3px, -3px);
       }
 
-      .hero-inner {
-        justify-content: center;
-        padding: 0;
+      50% {
+        opacity: 1;
       }
 
-      .hero-brand-col {
-        gap: 10px;
-        padding-bottom: 0;
+      100% {
+        opacity: 0;
+        transform: rotate(45deg) translate(3px, 3px);
+      }
+    }
+
+    /* Mobile: Poster Layout */
+    @media(max-width: 768px) {
+      .hero.hero-redesign {
+        height: 100svh;
+        min-height: auto;
+        padding-top: calc(72px + env(safe-area-inset-top));
       }
 
-      .hero-logo-img {
-        width: 80px;
-        height: 80px;
-        margin-bottom: 0;
+      .hero-img {
+        object-position: 60% center;
       }
 
-      .hero-kicker {
-        font-size: .5rem;
-        letter-spacing: .42em;
-        margin-bottom: 0;
+      .hero-veil {
+        background: linear-gradient(to bottom,
+            rgba(6, 3, 1, 0.20) 0%,
+            rgba(6, 3, 1, 0.25) 35%,
+            rgba(6, 3, 1, 0.75) 62%,
+            rgba(6, 3, 1, 0.96) 100%);
       }
 
-      .hero-h1 {
-        font-size: 24px;
-        line-height: 1.05;
-        letter-spacing: .14em;
-        max-width: 320px;
+      .hero-veil-bottom {
+        display: none;
       }
 
-      .hero-tagline {
-        font-size: 14px;
-        line-height: 1.45;
-        margin: 0;
-        max-width: 320px;
+      .hero-content {
+        position: absolute;
+        bottom: 100px;
+        left: 0;
+        right: 0;
+        top: auto;
+        transform: none;
+        max-width: none;
+        padding: 0 32px;
+        text-align: center;
       }
 
-      .hero-trust-pills {
-        gap: 6px;
-        margin: 2px 0 8px;
+      .hero-title {
+        font-size: clamp(2.6rem, 8vw, 3.6rem);
+        word-spacing: normal;
+        gap: 0.1em;
       }
 
-      .hero-pill {
-        font-size: .48rem;
-        padding: 4px 8px;
+      .hero-rule {
+        margin: 1.4rem auto;
       }
 
-      .hero-stats {
-        padding: 8px 0;
-        margin-bottom: 10px;
-      }
-
-      .hstat-num {
-        font-size: 1rem;
+      .hero-subtitle {
+        font-size: clamp(0.9rem, 2.5vw, 1.1rem);
       }
 
       .hero-btns {
-        gap: 8px;
+        flex-direction: column;
+        width: 100%;
+        max-width: 280px;
+        margin: 2.4rem auto 0;
+        gap: 10px;
       }
 
-      .hero-social-proof {
-        gap: 6px;
-        margin-top: 10px;
-        flex-wrap: wrap;
+      .hero-btn {
+        width: 100%;
       }
 
-      .hero-stars {
-        font-size: .78rem;
+      .hero-btn-primary,
+      .hero-btn-secondary {
+        padding: 12px 20px;
       }
 
-      .hero-proof-text {
-        font-size: 14px;
-        line-height: 1.35;
-      }
-
-      .scroll-ind {
-        padding: 8px 0 4px;
-      }
-
-      .scroll-ind span {
-        font-size: 10px;
-        letter-spacing: .32em;
+      .hero-discover {
+        bottom: 28px;
       }
     }
 
@@ -4215,7 +4454,7 @@
       color: #9CA3AF;
     }
 
-    /* ── Hero trust pills (Phase 1) ── */
+    /* Previous hero pill/button refinements retained for recovery.
     .hero-trust-pills {
       display: flex;
       flex-wrap: wrap;
@@ -4245,8 +4484,6 @@
     }
 
     @media(max-width:480px) {
-
-      /* Keep both hero buttons on same row on small screens */
       .hero-btns {
         flex-wrap: nowrap;
         gap: 8px;
@@ -4270,6 +4507,37 @@
       }
 
       .hero-wa-btn svg {
+        width: 13px;
+        height: 13px;
+        flex-shrink: 0;
+      }
+    }
+    */
+
+    .hero-v2 .hero-wa-btn {
+      font-size: .68rem;
+      padding: 15px 28px;
+      gap: 8px;
+    }
+
+    @media(max-width:480px) {
+
+      .hero-v2 .hero-btns {
+        flex-direction: column;
+        flex-wrap: nowrap;
+      }
+
+      .hero-v2 .hero-btns .btn-gold,
+      .hero-v2 .hero-btns .btn-outline {
+        width: 100%;
+        min-width: 0;
+        font-size: .56rem;
+        padding: 13px 14px;
+        letter-spacing: .12em;
+        justify-content: center;
+      }
+
+      .hero-v2 .hero-wa-btn svg {
         width: 13px;
         height: 13px;
         flex-shrink: 0;
@@ -4596,6 +4864,7 @@
       text-transform: uppercase;
     }
 
+
     .ai-wrapper {
       max-width: 900px;
       margin: 40px auto;
@@ -4783,58 +5052,57 @@
   <!-- GEM BAR — standalone, outside hero so overflow:hidden doesn't clip it -->
   <div class="gem-bar" aria-hidden="true"></div>
 
-  <!-- HERO -->
-  <section class="hero" style="margin-top:30px">
-    <div class="hero-inner">
-      <div class="hero-brand-col">
-        <img src="images/logo_gif.webp" alt="LUVZ Collection handcrafted silver jewelry logo" class="hero-logo-img"
-          loading="eager" fetchpriority="high" decoding="async" width="110" height="110" />
-        <div class="hero-kicker">✦ Designer Boutique ✦</div>
-        <h1 class="hero-h1"><span class="gold-text">LUVZ</span> <span class="hero-h1-sub">Collection</span></h1>
-        <p class="hero-tagline">Real silver. Real craft. Made for you.</p>
-        <p class="hero-sub">WhatsApp us to order — custom pieces in 92.5 silver with 22K gold polish, shipped across
-          India.</p>
-        <div class="hero-trust-pills">
-          <span class="hero-pill">🚚 Free shipping ₹999+</span>
-          <span class="hero-pill">✨ Custom designs</span>
-          <span class="hero-pill">💬 WhatsApp support</span>
-        </div>
-        <div class="hero-stats">
-          <div class="hstat">
-            <div class="gold-text hstat-num">92.5</div>
-            <div class="hstat-lbl">Pure Silver</div>
-          </div>
-          <div style="width:1px;background:var(--border)"></div>
-          <div class="hstat">
-            <div class="gold-text hstat-num">22K</div>
-            <div class="hstat-lbl">Gold Polish</div>
-          </div>
-          <div style="width:1px;background:var(--border)"></div>
-          <div class="hstat">
-            <div class="gold-text hstat-num">1000+</div>
-            <div class="hstat-lbl">Happy Customers</div>
-          </div>
-        </div>
-        <div class="hero-btns">
-          <a href="https://wa.me/918919359961?text=Hi!%20I%20found%20LUVZ%20Collection%20and%20want%20to%20enquire%20%F0%9F%A4%A9"
-            target="_blank" rel="noopener noreferrer" class="btn-gold hero-wa-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path
-                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-            </svg>
-            Order on WhatsApp
-          </a>
-          <a href="#categories" class="btn-outline">Browse Collection</a>
-        </div>
+  <!-- HERO — FULL BLEED CINEMATIC REDESIGN -->
+  <section class="hero hero-redesign" style="margin-top:30px">
+    <!-- Hero Image Layer: full bleed cinematic backdrop -->
+    <img src="images/hero_Image.png" alt="" class="hero-img" loading="eager" fetchpriority="high" decoding="async" />
 
+    <!-- Gradient Veil Layer: diagonal darkening from left to center -->
+    <div class="hero-veil" aria-hidden="true"></div>
+
+    <!-- Bottom Fade Transition Layer -->
+    <div class="hero-veil-bottom" aria-hidden="true"></div>
+
+    <!-- Gem Glow: repositioned to center of image -->
+    <div class="hero-gem-light" aria-hidden="true"></div>
+
+    <!-- Particle Canvas: fills entire hero -->
+    <canvas id="hero-particles-canvas" aria-hidden="true"></canvas>
+
+    <!-- Parallax Wrapper for Image and Text -->
+    <div class="hero-parallax-wrapper" aria-hidden="true">
+      <!-- Image parallax layer -->
+      <div class="hero-img-parallax"></div>
+      <!-- Text parallax layer -->
+      <div class="hero-text-parallax"></div>
+    </div>
+
+    <!-- Text Content Layer: overlay positioned left-center -->
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <span>LUVZ</span>
+        <span>COLLECTION</span>
+      </h1>
+      <div class="hero-rule"></div>
+      <p class="hero-subtitle">Crafted to be cherished.</p>
+      <div class="hero-btns">
+        <a href="https://wa.me/918919359961?text=Hi!%20I%20found%20LUVZ%20Collection%20and%20want%20to%20enquire%20%F0%9F%A4%A9"
+          target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn-primary">
+          Order on WhatsApp
+        </a>
+        <a href="#categories" class="hero-btn hero-btn-secondary">
+          Browse Collection
+        </a>
       </div>
     </div>
-    <div class="scroll-ind" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">
-      <span>Discover Collection</span>
-      <div class="chevrons">
-        <div class="chev"></div>
-        <div class="chev"></div>
-        <div class="chev"></div>
+
+    <!-- Discover Indicator: centered at bottom -->
+    <div class="hero-discover" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">
+      <span>DISCOVER COLLECTION</span>
+      <div class="hero-chevrons">
+        <div class="hero-chev"></div>
+        <div class="hero-chev"></div>
+        <div class="hero-chev"></div>
       </div>
     </div>
   </section>
@@ -4851,6 +5119,7 @@
   </div>
 
   <!-- TRUST STRIP — SVG Quality Pillars -->
+
 
   <!-- SHOP BY CATEGORY -->
   <section id="categories" class="sec reveal">
@@ -5688,7 +5957,6 @@
   </div>
 
   <script src="/luvz-chat.js"></script>
-
 </body>
 
 </html>
