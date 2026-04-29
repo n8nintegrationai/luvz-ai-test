@@ -4942,6 +4942,552 @@
         padding: 15px;
       }
     }
+
+    /* ═══════════════════ PHASE 3: HERO ENHANCEMENTS ═══════════════════ */
+
+    /* ── TEXT ENTRANCE ANIMATIONS ── */
+    .lc-fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: lcFadeUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .hero-title span:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .hero-title span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .hero-rule {
+      animation-delay: 0.3s;
+    }
+
+    .hero-subtitle {
+      animation-delay: 0.4s;
+    }
+
+    .hero-btns {
+      animation-delay: 0.5s;
+    }
+
+    @keyframes lcFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── JEWELRY IMAGE FLOATING MOTION ── */
+    .hero-img {
+      animation: lcImageFloat 7s ease-in-out infinite;
+    }
+
+    @keyframes lcImageFloat {
+
+      0%,
+      100% {
+        transform: scale(1.04) translateY(0);
+      }
+
+      50% {
+        transform: scale(1.04) translateY(-8px);
+      }
+    }
+
+    /* ── JEWELRY IMAGE GLOW & RIM LIGHTING ── */
+    .hero-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: radial-gradient(ellipse 35% 50% at 60% 40%,
+          rgba(255, 232, 150, 0.18) 0%,
+          rgba(212, 175, 55, 0.08) 35%,
+          transparent 70%);
+      border: 2px solid transparent;
+      border-image: linear-gradient(135deg,
+          rgba(212, 175, 55, 0.3) 0%,
+          rgba(212, 175, 55, 0.05) 50%,
+          transparent 100%) 1;
+      animation: lcImageGlowPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes lcImageGlowPulse {
+      0% {
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.1),
+          inset 0 0 40px rgba(212, 175, 55, 0.05);
+      }
+
+      50% {
+        box-shadow: 0 0 35px rgba(212, 175, 55, 0.2),
+          inset 0 0 50px rgba(212, 175, 55, 0.1);
+      }
+
+      100% {
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.1),
+          inset 0 0 40px rgba(212, 175, 55, 0.05);
+      }
+    }
+
+    /* ── CTA BUTTON ENHANCEMENTS: SHIMMER SWEEP ── */
+    .hero-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.35) 50%,
+          transparent 100%);
+      transform: translateX(-100%);
+      width: 100%;
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    .hero-btn {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-btn-primary::before {
+      opacity: 0;
+    }
+
+    .hero-btn-primary:hover::before {
+      animation: lcShimmerSweep 0.6s ease-in-out forwards;
+    }
+
+    @keyframes lcShimmerSweep {
+      0% {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    }
+
+    /* ── CTA BUTTON GLOW PULSE ── */
+    .hero-btn-primary {
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+      transition: all 0.35s ease;
+    }
+
+    .hero-btn-primary:hover {
+      box-shadow: 0 4px 24px rgba(212, 175, 55, 0.35),
+        0 0 16px rgba(212, 175, 55, 0.2);
+      animation: lcGlowPulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes lcGlowPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 4px 24px rgba(212, 175, 55, 0.35),
+          0 0 16px rgba(212, 175, 55, 0.2);
+      }
+
+      50% {
+        box-shadow: 0 6px 32px rgba(212, 175, 55, 0.5),
+          0 0 24px rgba(212, 175, 55, 0.3);
+      }
+    }
+
+    /* ── ENHANCED VIGNETTE OVERLAY ── */
+    .hero-veil {
+      background: radial-gradient(ellipse at 40% 50%, transparent 0%, transparent 35%, rgba(6, 3, 1, 0.3) 55%, rgba(6, 3, 1, 0.95) 100%),
+        linear-gradient(105deg,
+          rgba(6, 3, 1, 0.88) 0%,
+          rgba(6, 3, 1, 0.72) 28%,
+          rgba(6, 3, 1, 0.30) 52%,
+          rgba(6, 3, 1, 0.18) 68%,
+          rgba(6, 3, 1, 0.40) 100%);
+    }
+
+    /* ── TYPOGRAPHY REFINEMENT ── */
+    .hero-title {
+      letter-spacing: 0.16em;
+      font-weight: 400;
+      line-height: 1.08;
+    }
+
+    .hero-subtitle {
+      letter-spacing: 0.1em;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .hero-rule {
+      margin: 1.8rem 0 1.6rem;
+      opacity: 0.7;
+    }
+
+    /* ── RESPONSIVE ENHANCEMENTS ── */
+    @media (max-width: 768px) {
+      .hero-img {
+        animation: lcImageFloatMobile 6s ease-in-out infinite;
+      }
+
+      @keyframes lcImageFloatMobile {
+
+        0%,
+        100% {
+          transform: scale(1.04) translateY(0);
+        }
+
+        50% {
+          transform: scale(1.04) translateY(-4px);
+        }
+      }
+
+      .hero-title {
+        letter-spacing: 0.14em;
+      }
+
+      .hero-subtitle {
+        letter-spacing: 0.08em;
+      }
+
+      .hero-btn-primary:hover::before {
+        animation: none;
+      }
+
+      .hero-btn-primary:hover {
+        animation: none;
+      }
+    }
+
+    /* ═══ PHASE 3 ENHANCEMENTS ═══ */
+    .lc-corner {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0;
+      animation: lc-fade-in 1.2s ease forwards;
+    }
+
+    .lc-corner::before,
+    .lc-corner::after {
+      content: '';
+      position: absolute;
+      background: var(--gold);
+    }
+
+    .lc-corner::before {
+      width: 1px;
+      height: 100%;
+    }
+
+    .lc-corner::after {
+      width: 100%;
+      height: 1px;
+    }
+
+    /* Central dot on each corner */
+    .lc-corner-tl {
+      top: 20px;
+      left: 20px;
+      animation-delay: 0.6s;
+    }
+
+    .lc-corner-tr {
+      top: 20px;
+      right: 20px;
+      transform: scaleX(-1);
+      animation-delay: 0.7s;
+    }
+
+    .lc-corner-bl {
+      bottom: 20px;
+      left: 20px;
+      transform: scaleY(-1);
+      animation-delay: 0.8s;
+    }
+
+    .lc-corner-br {
+      bottom: 20px;
+      right: 20px;
+      transform: scale(-1);
+      animation-delay: 0.9s;
+    }
+
+    /* Gold dot at each corner intersection */
+    .lc-corner-tl::before,
+    .lc-corner-tr::before,
+    .lc-corner-bl::before,
+    .lc-corner-br::before {
+      box-shadow: 0 0 6px 1px var(--gold);
+    }
+
+    .lc-ambient-glow {
+      position: absolute;
+      left: -80px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 520px;
+      height: 380px;
+      background: radial-gradient(ellipse at 40% 50%, var(--hero-glow) 0%, transparent 70%);
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 1;
+      animation: lc-pulse-glow 8s ease-in-out infinite;
+    }
+
+    @keyframes lc-pulse-glow {
+
+      0%,
+      100% {
+        opacity: 0.28;
+        transform: translateY(-50%) scale(1);
+      }
+
+      50% {
+        opacity: 0.42;
+        transform: translateY(-50%) scale(1.06);
+      }
+    }
+
+    .hero-redesign::before,
+    .hero-redesign::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--gold-d) 20%, var(--gold-xl) 50%, var(--gold-d) 80%, transparent 100%);
+      z-index: 6;
+      pointer-events: none;
+    }
+
+    .hero-redesign::before {
+      top: 0;
+    }
+
+    .hero-redesign::after {
+      bottom: 0;
+    }
+
+    .lc-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      opacity: 0;
+      margin-bottom: 0.75rem;
+      animation: lc-fade-up 0.9s ease forwards;
+      animation-delay: 0.2s;
+    }
+
+    .hero-title {
+      position: relative;
+    }
+
+    .hero-title span:first-child {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(4.2rem, 10vw, 8rem);
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      line-height: 1;
+      background: linear-gradient(105deg,
+          var(--gold-d) 0%,
+          var(--gold) 28%,
+          var(--gold-xl) 48%,
+          var(--gold) 68%,
+          var(--gold-d) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(3px 4px 0px rgba(0, 0, 0, 0.55)) drop-shadow(0px 0px 22px rgba(200, 140, 44, 0.3));
+      opacity: 0;
+      animation: lc-title-reveal 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+        lc-gold-shimmer 6s linear infinite 1.5s;
+      animation-delay: 0.35s;
+      background-size: 250% auto;
+    }
+
+    .hero-title span:last-child {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1rem, 2.2vw, 1.6rem);
+      font-weight: 400;
+      letter-spacing: 0.55em;
+      color: var(--gold);
+      opacity: 0;
+      margin-top: 0.35rem;
+      animation: lc-fade-up 0.9s ease forwards;
+      animation-delay: 0.55s;
+    }
+
+    @keyframes lc-gold-shimmer {
+      0% {
+        background-position: 200% center;
+      }
+
+      100% {
+        background-position: -200% center;
+      }
+    }
+
+    @keyframes lc-title-reveal {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .lc-rule-enhanced {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 1.1rem 0 1rem;
+      width: 220px;
+      opacity: 0;
+      animation: lc-fade-in 1s ease forwards;
+      animation-delay: 0.7s;
+    }
+
+    .lc-rule-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-d), var(--gold-l));
+    }
+
+    .lc-rule-line:last-child {
+      background: linear-gradient(90deg, var(--gold-l), var(--gold-d), transparent);
+    }
+
+    .lc-rule-diamond {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+      box-shadow: 0 0 8px 2px rgba(200, 140, 44, 0.5);
+    }
+
+    .lc-micro-copy {
+      font-family: 'Cinzel', serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      color: var(--gold-d);
+      opacity: 0;
+      margin-bottom: 1.1rem;
+      animation: lc-fade-up 0.9s ease forwards;
+      animation-delay: 0.8s;
+    }
+
+    .hero-subtitle {
+      opacity: 0;
+      animation: lc-fade-up 0.9s ease forwards;
+      animation-delay: 0.9s;
+    }
+
+    .hero-btns {
+      opacity: 0;
+      animation: lc-fade-up 0.9s ease forwards;
+      animation-delay: 1.05s;
+    }
+
+    /* Primary button shimmer sweep */
+    .hero-btn-primary {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-btn-primary::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.18) 50%, transparent 100%);
+      transform: skewX(-20deg);
+      transition: none;
+    }
+
+    .hero-btn-primary:hover::after {
+      animation: lc-shimmer-sweep 0.55s ease forwards;
+    }
+
+    .hero-btn-primary:hover {
+      box-shadow: 0 0 20px 4px rgba(200, 140, 44, 0.35), 0 0 40px 8px rgba(200, 140, 44, 0.15);
+    }
+
+    @keyframes lc-shimmer-sweep {
+      from {
+        left: -75%;
+      }
+
+      to {
+        left: 125%;
+      }
+    }
+
+    /* Secondary button hover glow */
+    .hero-btn-secondary:hover {
+      box-shadow: 0 0 14px 2px rgba(200, 140, 44, 0.2);
+    }
+
+    @keyframes lc-fade-up {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes lc-fade-in {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .lc-corner {
+        display: none;
+      }
+
+      .lc-ambient-glow {
+        width: 100%;
+        left: 0;
+        opacity: 0.2;
+      }
+
+      .hero-title span:first-child {
+        filter: drop-shadow(2px 3px 0px rgba(0, 0, 0, 0.5));
+      }
+    }
   </style>
 
 <body>
@@ -5054,6 +5600,12 @@
 
   <!-- HERO — FULL BLEED CINEMATIC REDESIGN -->
   <section class="hero hero-redesign" style="margin-top:30px">
+    <!-- Phase 3: Corner ornaments -->
+    <div class="lc-corner lc-corner-tl"></div>
+    <div class="lc-corner lc-corner-tr"></div>
+    <div class="lc-corner lc-corner-bl"></div>
+    <div class="lc-corner lc-corner-br"></div>
+
     <!-- Hero Image Layer: full bleed cinematic backdrop -->
     <img src="images/hero_Image.png" alt="" class="hero-img" loading="eager" fetchpriority="high" decoding="async" />
 
@@ -5077,15 +5629,24 @@
       <div class="hero-text-parallax"></div>
     </div>
 
+    <!-- Phase 3: Ambient glow blob -->
+    <div class="lc-ambient-glow"></div>
+
     <!-- Text Content Layer: overlay positioned left-center -->
     <div class="hero-content">
-      <h1 class="hero-title">
+      <div class="lc-eyebrow">✦ Since 2017 ✦</div>
+      <h1 class="hero-title lc-fade-up">
         <span>LUVZ</span>
         <span>COLLECTION</span>
       </h1>
-      <div class="hero-rule"></div>
-      <p class="hero-subtitle">Crafted to be cherished.</p>
-      <div class="hero-btns">
+      <div class="lc-micro-copy">Handcrafted · Fine Gems · Heritage Design</div>
+      <div class="lc-rule-enhanced">
+        <span class="lc-rule-line"></span>
+        <span class="lc-rule-diamond"></span>
+        <span class="lc-rule-line"></span>
+      </div>
+      <p class="hero-subtitle lc-fade-up">Crafted to be cherished.</p>
+      <div class="hero-btns lc-fade-up">
         <a href="https://wa.me/918919359961?text=Hi!%20I%20found%20LUVZ%20Collection%20and%20want%20to%20enquire%20%F0%9F%A4%A9"
           target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn-primary">
           Order on WhatsApp
