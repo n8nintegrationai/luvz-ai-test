@@ -42,6 +42,49 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
+(function initNavActiveIndicator() {
+  const navLinks = Array.from(document.querySelectorAll('#nav .nav-link[href^="#"]'));
+  if (!navLinks.length) return;
+
+  const linkById = new Map();
+  navLinks.forEach(link => {
+    const id = link.getAttribute('href').slice(1);
+    if (id) linkById.set(id, link);
+  });
+
+  const sections = Array.from(linkById.keys())
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  if (!sections.length) return;
+
+  function setActive(id) {
+    navLinks.forEach(link => {
+      const isActive = link.getAttribute('href') === '#' + id;
+      link.classList.toggle('is-active', isActive);
+      if (isActive) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    const visible = entries
+      .filter(entry => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+    if (visible && visible.target.id) setActive(visible.target.id);
+  }, {
+    rootMargin: '-28% 0px -58% 0px',
+    threshold: [0.08, 0.18, 0.32]
+  });
+
+  sections.forEach(section => observer.observe(section));
+
+  if (location.hash && linkById.has(location.hash.slice(1))) {
+    setActive(location.hash.slice(1));
+  }
+})();
+
 function initHeroRedesignParallax() {
   // Parallax removed — Phase 3. Image float handled by CSS lcImageFloat.
 }

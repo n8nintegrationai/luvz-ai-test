@@ -275,10 +275,11 @@
     /* ══ TASK 4: Liquid Gold Ultra-Striking Header ══ */
     .gem-bar {
       position: fixed;
-      top: 88px;
+      /*  change top: 88px to show the gem bar line */
+      top: 0px;
       left: 0;
       right: 0;
-      height: 3px;
+      height: 1px;
       z-index: 1002;
       background: linear-gradient(90deg,
           #5C3D00 0%,
@@ -3671,6 +3672,302 @@
       display: flex
     }
 
+    /* Luxury navbar refinement: visual-only overrides, preserving existing markup and behavior */
+    #nav {
+      padding: 0 clamp(16px, 3vw, 34px);
+      background: linear-gradient(180deg, rgba(18, 13, 8, .64), rgba(18, 13, 8, .46));
+      border-bottom: 1px solid rgba(196, 136, 44, .16);
+      box-shadow: 0 16px 44px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 244, 210, .035);
+      backdrop-filter: blur(12px) saturate(125%);
+      -webkit-backdrop-filter: blur(12px) saturate(125%);
+      transition: background .45s cubic-bezier(.22, 1, .36, 1), box-shadow .45s cubic-bezier(.22, 1, .36, 1), border-color .45s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    [data-theme="dark"] #nav {
+      background: linear-gradient(180deg, rgba(8, 8, 7, .66), rgba(8, 8, 7, .48));
+      border-bottom-color: rgba(212, 175, 55, .15);
+    }
+
+    [data-theme="light"] #nav {
+      background: linear-gradient(180deg, rgba(250, 247, 242, .86), rgba(250, 247, 242, .68));
+      border-bottom-color: rgba(140, 100, 8, .16);
+      box-shadow: 0 14px 36px rgba(49, 34, 9, .08), inset 0 1px 0 rgba(255, 255, 255, .48);
+    }
+
+    [data-theme="earth"] #nav {
+      background: linear-gradient(180deg, rgba(18, 13, 8, .64), rgba(18, 13, 8, .46));
+    }
+
+    #nav.stuck {
+      background: rgba(14, 10, 7, .88);
+      border-bottom-color: rgba(196, 136, 44, .24);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      box-shadow: 0 18px 54px rgba(0, 0, 0, .32), 0 1px 0 rgba(196, 136, 44, .1), inset 0 1px 0 rgba(255, 244, 210, .045);
+    }
+
+    [data-theme="dark"] #nav.stuck {
+      background: rgba(8, 8, 7, .9);
+    }
+
+    [data-theme="light"] #nav.stuck {
+      background: rgba(250, 247, 242, .93);
+      box-shadow: 0 14px 42px rgba(49, 34, 9, .13), 0 1px 0 rgba(140, 100, 8, .12), inset 0 1px 0 rgba(255, 255, 255, .55);
+    }
+
+    #nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(90deg, transparent 0%, rgba(242, 202, 120, .06) 48%, transparent 100%);
+      opacity: .42;
+      transform: translateX(-38%);
+      transition: opacity .45s cubic-bezier(.22, 1, .36, 1), transform .65s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    #nav.stuck::before {
+      opacity: .25;
+      transform: translateX(0);
+    }
+
+    .nav-inner {
+      gap: 18px;
+      height: 68px;
+      position: relative;
+      transition: height .45s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    #nav.stuck .nav-inner {
+      height: 60px;
+    }
+
+    .nav-logo-wrap {
+      gap: 12px;
+      min-width: max-content;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .nav-logo-wrap::before {
+      content: '';
+      position: absolute;
+      left: -12px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(242, 202, 120, .16), transparent 64%);
+      opacity: .72;
+      z-index: -1;
+      transition: opacity .35s cubic-bezier(.22, 1, .36, 1), transform .35s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .nav-logo-wrap:hover::before,
+    .nav-logo-wrap:focus-visible::before {
+      opacity: .95;
+      transform: scale(1.08);
+    }
+
+    .nav-logo-img {
+      height: 40px;
+      width: 40px;
+      animation: none;
+      filter: drop-shadow(0 0 8px rgba(212, 175, 55, .26));
+      transition: filter .35s cubic-bezier(.22, 1, .36, 1), transform .35s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .nav-logo-wrap:hover .nav-logo-img,
+    .nav-logo-wrap:focus-visible .nav-logo-img {
+      filter: drop-shadow(0 0 12px rgba(212, 175, 55, .42));
+      transform: translateY(-1px);
+    }
+
+    .nav-brand {
+      font-size: .92rem;
+      font-weight: 600;
+      letter-spacing: .21em;
+      line-height: 1.05;
+    }
+
+    .nav-brand-sub {
+      font-size: .68rem;
+      opacity: .62;
+      letter-spacing: .16em;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      justify-content: center;
+      gap: clamp(4px, .65vw, 12px);
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .nav-link {
+      position: relative;
+      font-size: .56rem;
+      letter-spacing: .24em;
+      color: var(--txt);
+      font-weight: 600;
+      opacity: .74;
+      padding: 18px 8px;
+      border-bottom: 0;
+      white-space: nowrap;
+      transition: color .28s cubic-bezier(.22, 1, .36, 1), opacity .28s cubic-bezier(.22, 1, .36, 1), transform .28s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 8px;
+      right: calc(8px + .24em);
+      bottom: 13px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-l), var(--gold), transparent);
+      opacity: 0;
+      transform: scaleX(.35);
+      transform-origin: center;
+      transition: opacity .32s cubic-bezier(.22, 1, .36, 1), transform .32s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible,
+    .nav-link.is-active {
+      color: var(--gold-xl);
+      opacity: 1;
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .nav-link:hover::after,
+    .nav-link:focus-visible::after,
+    .nav-link.is-active::after {
+      opacity: .86;
+      transform: scaleX(1);
+    }
+
+    .nav-wa {
+      position: relative;
+      justify-content: center;
+      gap: 7px;
+      background: rgba(255, 244, 210, .045);
+      border: 1px solid rgba(196, 136, 44, .34);
+      box-shadow: inset 0 1px 0 rgba(255, 244, 210, .06);
+      color: var(--gold-xl);
+      font-weight: 600;
+      letter-spacing: .2em;
+      padding: 10px 16px;
+      border-radius: 999px;
+      overflow: hidden;
+      flex: 0 0 auto;
+      transition: transform .32s cubic-bezier(.22, 1, .36, 1), border-color .32s cubic-bezier(.22, 1, .36, 1), background .32s cubic-bezier(.22, 1, .36, 1), box-shadow .32s cubic-bezier(.22, 1, .36, 1), color .32s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .nav-wa::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(110deg, transparent 0%, rgba(242, 202, 120, .22) 45%, transparent 70%);
+      transform: translateX(-115%);
+      transition: transform .65s cubic-bezier(.22, 1, .36, 1);
+      pointer-events: none;
+    }
+
+    .nav-wa:hover,
+    .nav-wa:focus-visible {
+      background: rgba(242, 202, 120, .09);
+      border-color: rgba(242, 202, 120, .55);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, .22), 0 0 0 1px rgba(242, 202, 120, .06), inset 0 1px 0 rgba(255, 244, 210, .11);
+      color: var(--gold-xl);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .nav-wa:hover::before,
+    .nav-wa:focus-visible::before {
+      transform: translateX(115%);
+    }
+
+    .nav-wish-btn,
+    .nav-ham {
+      background: rgba(255, 244, 210, .045);
+      border: 1px solid rgba(196, 136, 44, .28);
+      border-radius: 999px;
+      transition: background .28s cubic-bezier(.22, 1, .36, 1), border-color .28s cubic-bezier(.22, 1, .36, 1), transform .28s cubic-bezier(.22, 1, .36, 1), box-shadow .28s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .nav-wish-btn:hover,
+    .nav-wish-btn:focus-visible,
+    .nav-ham:hover,
+    .nav-ham:focus-visible {
+      background: rgba(242, 202, 120, .09);
+      border-color: rgba(242, 202, 120, .5);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    #mob-menu.open {
+      background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, .08), transparent 34%), #080807;
+      padding: 108px clamp(24px, 8vw, 42px) 40px;
+    }
+
+    .mob-link {
+      transition: color .24s cubic-bezier(.22, 1, .36, 1), padding-left .24s cubic-bezier(.22, 1, .36, 1), border-color .24s cubic-bezier(.22, 1, .36, 1), opacity .24s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    @media(max-width:900px) {
+      .nav-inner {
+        height: 64px;
+      }
+
+      #nav.stuck .nav-inner {
+        height: 58px;
+      }
+
+      .nav-brand {
+        font-size: .84rem;
+      }
+
+      .nav-brand-sub {
+        font-size: .62rem;
+      }
+    }
+
+    @media(max-width:480px) {
+      #nav {
+        padding: 0 14px;
+      }
+
+      .nav-logo-img {
+        height: 38px;
+        width: 38px;
+      }
+
+      .nav-brand {
+        letter-spacing: .17em;
+      }
+    }
+
+    @media(prefers-reduced-motion: reduce) {
+
+      #nav,
+      #nav::before,
+      .nav-inner,
+      .nav-logo-wrap::before,
+      .nav-logo-img,
+      .nav-link,
+      .nav-link::after,
+      .nav-wa,
+      .nav-wa::before,
+      .nav-wish-btn,
+      .nav-ham,
+      .mob-link {
+        transition-duration: .01ms !important;
+        animation: none !important;
+      }
+    }
+
     /* ═══════════════════ HERITAGE SECTION ═══════════════════ */
     .heritage-sec {
       position: relative;
@@ -5433,6 +5730,8 @@
       animation-delay: 0.2s;
     }
 
+
+
     .hero-title {
       position: relative;
     }
@@ -5692,7 +5991,7 @@
   </nav>
 
   <!-- NAVBAR -->
-  <nav id="nav">
+  <nav id="nav" aria-label="Primary navigation">
     <div class="nav-inner">
       <a href="#" class="nav-logo-wrap" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">
         <img src="images/logo_gif.webp" alt="LUVZ Collection logo" class="nav-logo-img" loading="eager"
@@ -5773,18 +6072,19 @@
 
     <!-- Text Content Layer: overlay positioned left-center -->
     <div class="hero-content">
-      <div class="lc-eyebrow">✦ Since 2020 ✦</div>
+      <div class="lc-eyebrow">✦ Designer Boutique ✦</div>
+
       <h1 class="hero-title lc-fade-up">
         <span>LUVZ</span>
         <span>COLLECTION</span>
       </h1>
-      <div class="lc-micro-copy">Handcrafted · Fine Gems · Heritage Design</div>
+      <div class="lc-micro-copy">Handcrafted · 92.5 silver · Heritage Design</div>
       <div class="lc-rule-enhanced">
         <span class="lc-rule-line"></span>
         <span class="lc-rule-diamond"></span>
         <span class="lc-rule-line"></span>
       </div>
-      <p class="hero-subtitle lc-fade-up">Crafted to be cherished.</p>
+      <p class="hero-subtitle lc-fade-up">Real silver. Real craft. Made for you.</p>
       <div class="hero-btns lc-fade-up">
         <a href="https://wa.me/918919359961?text=Hi!%20I%20found%20LUVZ%20Collection%20and%20want%20to%20enquire%20%F0%9F%A4%A9"
           target="_blank" rel="noopener noreferrer" class="hero-btn hero-btn-primary">
@@ -6604,7 +6904,7 @@
     <svg class="luvz-trigger-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 1l2.5 7.5H22l-6.5 4.7 2.5 7.5L12 16.2 6 20.7l2.5-7.5L2 8.5h7.5z" />
     </svg>
-    <span class="luvz-trigger-label">Ask AI <span>✦</span></span>
+    <span class="luvz-trigger-label">Ask AI</span>
     <span class="luvz-dot" aria-hidden="true"></span>
   </button>
 
