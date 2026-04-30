@@ -925,25 +925,13 @@
       will-change: transform;
     }
 
-    /* Parallax Wrapper */
-    .hero-parallax-wrapper {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-
-    .hero-img-parallax {
-      position: absolute;
-      inset: 0;
-      will-change: transform;
-      transform: translate3d(0, 0, 0);
-    }
-
+    /* Parallax Wrapper – RESET */
+    .hero-parallax-wrapper,
+    .hero-img-parallax,
     .hero-text-parallax {
-      position: absolute;
-      inset: 0;
-      will-change: transform;
-      transform: translate3d(0, 0, 0);
+      transform: none !important;
+      will-change: auto !important;
+      position: static !important;
     }
 
     /* Text Content Layer: overlay positioned left-center */

@@ -43,70 +43,7 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 function initHeroRedesignParallax() {
-  const hero = document.querySelector('.hero.hero-redesign');
-  const imgParallax = hero ? hero.querySelector('.hero-img-parallax') : null;
-  const textParallax = hero ? hero.querySelector('.hero-text-parallax') : null;
-  const heroImg = hero ? hero.querySelector('.hero-img') : null;
-  if (!hero || !imgParallax || !textParallax || !heroImg) return;
-
-  const mobileQuery = window.matchMedia('(max-width: 768px)');
-  let parallaxAttached = false;
-  let heroRAFPending = false;
-  let pointerMoveX = 0;
-  let pointerMoveY = 0;
-
-  function resetHeroParallax() {
-    heroRAFPending = false;
-    imgParallax.style.transform = 'translate3d(0px, 0px, 0)';
-    textParallax.style.transform = 'translate3d(0px, 0px, 0)';
-  }
-
-  function applyHeroParallax() {
-    /* Image moves subtly in direction of pointer */
-    imgParallax.style.transform = `translate3d(${pointerMoveX * 8}px, ${pointerMoveY * 6}px, 0)`;
-    /* Text moves opposite direction for depth perception */
-    textParallax.style.transform = `translate3d(${pointerMoveX * -3}px, ${pointerMoveY * -2}px, 0)`;
-    heroRAFPending = false;
-  }
-
-  function handleHeroMouseMove(event) {
-    pointerMoveX = event.clientX / window.innerWidth - 0.5;
-    pointerMoveY = event.clientY / window.innerHeight - 0.5;
-    if (!heroRAFPending) {
-      heroRAFPending = true;
-      requestAnimationFrame(applyHeroParallax);
-    }
-  }
-
-  function enableHeroParallax() {
-    if (parallaxAttached || mobileQuery.matches) return;
-    hero.addEventListener('mousemove', handleHeroMouseMove);
-    hero.addEventListener('mouseleave', resetHeroParallax);
-    parallaxAttached = true;
-  }
-
-  function disableHeroParallax() {
-    if (!parallaxAttached) return;
-    hero.removeEventListener('mousemove', handleHeroMouseMove);
-    hero.removeEventListener('mouseleave', resetHeroParallax);
-    parallaxAttached = false;
-    resetHeroParallax();
-  }
-
-  function handleViewportChange(event) {
-    if (event.matches) disableHeroParallax();
-    else enableHeroParallax();
-  }
-
-  function cleanupHeroParallax() {
-    disableHeroParallax();
-    mobileQuery.removeEventListener('change', handleViewportChange);
-    window.removeEventListener('pagehide', cleanupHeroParallax);
-  }
-
-  if (!mobileQuery.matches) enableHeroParallax();
-  mobileQuery.addEventListener('change', handleViewportChange);
-  window.addEventListener('pagehide', cleanupHeroParallax);
+  // Parallax removed — Phase 3. Image float handled by CSS lcImageFloat.
 }
 
 initHeroRedesignParallax();
