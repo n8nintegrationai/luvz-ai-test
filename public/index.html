@@ -1107,6 +1107,149 @@
       }
     }
 
+    /* ═══ PHASE 3 ENHANCEMENTS ═══ */
+    /* Blocker Fix 2: Mobile Legibility Overlay */
+    @media (max-width: 767px) {
+      .hero-veil {
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.45) 100%);
+        opacity: 1 !important;
+      }
+    }
+
+    /* Feature 1: Text Entrance Animations */
+    @keyframes lcFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-title span:nth-child(1) {
+      animation: lcFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: 0.1s;
+    }
+
+    .hero-title span:nth-child(2) {
+      animation: lcFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: 0.28s;
+    }
+
+    .hero-rule {
+      animation: lcFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: 0.48s;
+    }
+
+    .hero-subtitle {
+      animation: lcFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: 0.62s;
+    }
+
+    .hero-btns {
+      animation: lcFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: 0.82s;
+    }
+
+    /* Feature 2: Hero Image Float Animation */
+    @keyframes lcImageFloat {
+
+      0%,
+      100% {
+        transform: translateY(0px) scale(1.04);
+      }
+
+      50% {
+        transform: translateY(-9px) scale(1.04);
+      }
+    }
+
+    .hero-img {
+      animation: lcImageFloat 7s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    @media (max-width: 767px) {
+      @keyframes lcImageFloatMobile {
+
+        0%,
+        100% {
+          transform: translateY(0px) scale(1.04);
+        }
+
+        50% {
+          transform: translateY(-5px) scale(1.04);
+        }
+      }
+
+      .hero-img {
+        animation: lcImageFloatMobile 9s ease-in-out infinite;
+      }
+    }
+
+    /* Feature 3: Mobile Ambient Scale */
+    @keyframes lcAmbientScale {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.025);
+      }
+    }
+
+    @media (max-width: 767px) {
+      .hero-redesign {
+        animation: lcAmbientScale 14s ease-in-out infinite;
+        will-change: transform;
+      }
+    }
+
+    /* Feature 4: CTA Button Shimmer + Glow Pulse */
+    @keyframes lcShimmerSlide {
+      0% {
+        left: -75%;
+      }
+
+      100% {
+        left: 125%;
+      }
+    }
+
+    .hero-btn-primary {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+      transform: skewX(-20deg);
+    }
+
+    .hero-btn-primary:hover::before {
+      animation: lcShimmerSlide 0.55s ease-in-out;
+    }
+
+    .hero-btn-primary:hover {
+      box-shadow: 0 0 18px rgba(200, 140, 44, 0.55), 0 0 36px rgba(200, 140, 44, 0.22);
+      transition: box-shadow 0.35s ease;
+    }
+
+    :root {
+      --gold-rgb: 200, 140, 44;
+    }
+
     /* Mobile: Poster Layout */
     @media(max-width: 768px) {
       .hero.hero-redesign {
@@ -5634,7 +5777,7 @@
 
     <!-- Text Content Layer: overlay positioned left-center -->
     <div class="hero-content">
-      <div class="lc-eyebrow">✦ Since 2017 ✦</div>
+      <div class="lc-eyebrow">✦ Since 2020 ✦</div>
       <h1 class="hero-title lc-fade-up">
         <span>LUVZ</span>
         <span>COLLECTION</span>

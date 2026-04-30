@@ -1743,57 +1743,64 @@ function renderReviews(reviews) {
 
 
 async function askLuvzAI() {
-  const queryInput = document.getElementById('ai-user-query');
-  const display = document.getElementById('ai-response-display');
-  const btn = document.getElementById('ai-send-btn');
-
-  if (!queryInput.value.trim()) return;
-
-  // UI States
-  const originalBtnText = btn.innerText;
-  btn.innerText = "Thinking...";
-  btn.disabled = true;
-  display.innerHTML = "<em>Our assistant is searching the collection...</em>";
-
   try {
-    let streamText = '';
-    let streamSources = [];
+    const queryInput = document.getElementById('ai-user-query');
+    const display = document.getElementById('ai-response-display');
+    const btn = document.getElementById('ai-send-btn');
 
-    await window.streamLuvzResponse({
-      apiUrl: window.LUVZ_CHAT_API_URL || 'http://127.0.0.1:8000/chat',
-      message: queryInput.value,
-      onDelta: (delta) => {
-        streamText += delta;
-        if (window.LuvzChatUI && typeof window.LuvzChatUI.renderExternalBotContent === 'function') {
-          window.LuvzChatUI.renderExternalBotContent(display, streamText, streamSources);
-        } else {
-          display.textContent = streamText;
+    if (!queryInput.value.trim()) return;
+
+    // UI States
+    const originalBtnText = btn.innerText;
+    btn.innerText = "Thinking...";
+    btn.disabled = true;
+    display.innerHTML = "<em>Our assistant is searching the collection...</em>";
+
+    try {
+      let streamText = '';
+      let streamSources = [];
+
+      await window.streamLuvzResponse({
+        apiUrl: window.LUVZ_CHAT_API_URL || 'http://127.0.0.1:8000/chat',
+        message: queryInput.value,
+        onDelta: (delta) => {
+          streamText += delta;
+          if (window.LuvzChatUI && typeof window.LuvzChatUI.renderExternalBotContent === 'function') {
+            window.LuvzChatUI.renderExternalBotContent(display, streamText, streamSources);
+          } else {
+            display.textContent = streamText;
+          }
+        },
+        onSources: (sources) => {
+          streamSources = Array.isArray(sources) ? sources : [];
+          if (window.LuvzChatUI && typeof window.LuvzChatUI.renderExternalBotContent === 'function') {
+            window.LuvzChatUI.renderExternalBotContent(display, streamText, streamSources);
+          }
+        },
+        onComplete: () => {
+          if (!streamText && !(streamSources && streamSources.length)) {
+            display.innerHTML = "I couldn't find that right now. Could you try rephrasing your question?";
+          }
+        },
+        onError: (message) => {
+          display.textContent = message;
         }
-      },
-      onSources: (sources) => {
-        streamSources = Array.isArray(sources) ? sources : [];
-        if (window.LuvzChatUI && typeof window.LuvzChatUI.renderExternalBotContent === 'function') {
-          window.LuvzChatUI.renderExternalBotContent(display, streamText, streamSources);
-        }
-      },
-      onComplete: () => {
-        if (!streamText && !(streamSources && streamSources.length)) {
-          display.innerHTML = "I couldn't find that right now. Could you try rephrasing your question?";
-        }
-      },
-      onError: (message) => {
-        display.textContent = message;
+      });
+    } catch (error) {
+      if (!display.textContent || /searching the collection/i.test(display.textContent)) {
+        display.textContent = error && error.name === 'AbortError'
+          ? LUVZ_STREAM_TIMEOUT_MESSAGE
+          : LUVZ_CONNECTION_LOST_MESSAGE;
       }
-    });
-  } catch (error) {
-    if (!display.textContent || /searching the collection/i.test(display.textContent)) {
-      display.textContent = error && error.name === 'AbortError'
-        ? LUVZ_STREAM_TIMEOUT_MESSAGE
-        : LUVZ_CONNECTION_LOST_MESSAGE;
+    } finally {
+      const btn = document.getElementById('ai-send-btn');
+      if (btn) {
+        btn.innerText = originalBtnText || 'Ask LUVZ';
+        btn.disabled = false;
+      }
     }
-  } finally {
-    btn.innerText = originalBtnText;
-    btn.disabled = false;
+  } catch (e) {
+    console.warn('[LUVZ Chat] API unavailable:', e.message);
   }
 }
 
@@ -2184,4 +2191,19 @@ async function streamLuvzResponse(options) {
 }
 
 window.streamLuvzResponse = streamLuvzResponse;
+
+/* ═══ PHASE 3 ENHANCEMENTS ═══ */
+(function lcHeroPhase3Init() {
+  'use strict';
+
+  function lcLogReady() {
+    console.log('[LUVZ Phase 3] Hero enhancements active.');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', lcLogReady);
+  } else {
+    lcLogReady();
+  }
+})();
 
