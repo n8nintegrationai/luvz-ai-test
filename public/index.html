@@ -842,13 +842,17 @@
     /* Hero Image Layer: full bleed cinematic backdrop */
     .hero-img {
       position: absolute;
-      inset: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center center;
+      object-position: center top;
       z-index: 0;
       display: block;
+      opacity: 1;
       transform: scale(1.04);
     }
 
@@ -926,12 +930,16 @@
     }
 
     /* Parallax Wrapper – RESET */
-    .hero-parallax-wrapper,
     .hero-img-parallax,
     .hero-text-parallax {
       transform: none !important;
       will-change: auto !important;
-      position: static !important;
+    }
+
+    .hero-parallax-wrapper {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
     }
 
     /* Text Content Layer: overlay positioned left-center */
