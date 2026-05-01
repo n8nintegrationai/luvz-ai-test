@@ -7,7 +7,28 @@
 (function () {
   'use strict';
 
-  var API_URL = window.LUVZ_CHAT_API_URL || 'http://127.0.0.1:8000/chat';
+  // === Environment-aware API endpoint ===
+  const LUVZ_API_URL = (() => {
+    const host = window.location.hostname;
+    const isLocal = host === 'localhost'
+      || host === '127.0.0.1'
+      || host.startsWith('192.168.')
+      || host.endsWith('.local');
+
+    // When local, point specifically to the FastAPI port (8000)
+    // When production, use the full production URL
+    return isLocal
+      ? 'http://127.0.0.1:8000/chat'
+      : 'https://api-ai.luvzcollection.com/chat';
+  })();
+
+  // Dev-only log — silent in production
+  if (window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1') {
+    console.log('[LUVZ Chat] Running locally → using:', LUVZ_API_URL);
+  }
+
+
 
 
 
@@ -120,19 +141,19 @@
       var href = getSourceLink(source);
       var cta = href
         ? '<a href="' + escHtml(href) + '" target="_blank" rel="noopener" class="luvz-source-cta">' +
-          ((href.indexOf('wa.me') !== -1 || href.indexOf('whatsapp') !== -1) ? 'Enquire on WhatsApp' : 'View Product') +
-          '</a>'
+        ((href.indexOf('wa.me') !== -1 || href.indexOf('whatsapp') !== -1) ? 'Enquire on WhatsApp' : 'View Product') +
+        '</a>'
         : waLink(source && source.name ? source.name : '', 'Enquire on WhatsApp');
 
       return '<article class="luvz-source-card">' +
         (image ? '<img class="luvz-source-image" src="' + image + '" alt="' + name + '" loading="lazy" decoding="async">' : '') +
         '<div class="luvz-source-body">' +
-          '<div class="luvz-source-title">' + name + '</div>' +
-          (price ? '<div class="luvz-source-price">' + escHtml(price) + '</div>' : '') +
-          (description ? '<p class="luvz-source-desc">' + description + '</p>' : '') +
-          cta +
+        '<div class="luvz-source-title">' + name + '</div>' +
+        (price ? '<div class="luvz-source-price">' + escHtml(price) + '</div>' : '') +
+        (description ? '<p class="luvz-source-desc">' + description + '</p>' : '') +
+        cta +
         '</div>' +
-      '</article>';
+        '</article>';
     }).join('') + '</div>';
   }
 
@@ -328,7 +349,7 @@
     }
 
     streamer({
-      apiUrl: API_URL,
+      apiUrl: LUVZ_API_URL,
       message: text,
       sessionId: sessionId,
       chatHistory: chatHistory,
