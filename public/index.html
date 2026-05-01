@@ -5961,6 +5961,28 @@
         line-height: 1.8;
       }
     }
+
+    /* Nav Ask AI icon — spinning gold star */
+    #nav-askai-icon svg {
+      animation: navStarSpin 10s linear infinite;
+      filter: drop-shadow(0 0 3px rgba(212, 175, 55, 0.6));
+      transform-origin: center center;
+    }
+
+    #nav-askai-icon:hover svg {
+      animation-play-state: paused;
+      filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.9));
+    }
+
+    @keyframes navStarSpin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
   </style>
 
 <body>
@@ -6078,7 +6100,14 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="1.5"
              stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
+          <defs>
+            <linearGradient id="navGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FBF5B7"/>
+              <stop offset="45%" stop-color="#D4AF37"/>
+              <stop offset="100%" stop-color="#AA771C"/>
+            </linearGradient>
+          </defs>
+          <path fill="url(#navGoldGrad)" stroke="none" d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
         </svg>
       </button>
       <button class="nav-ham" onclick="toggleMenu()" aria-label="Menu">
