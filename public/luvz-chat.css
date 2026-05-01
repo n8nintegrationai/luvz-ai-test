@@ -7,44 +7,75 @@
 
 /* ---------- Floating Trigger Button ---------- */
 #luvz-chat-trigger {
+  /* === Layout (keep as-is from original) === */
   position: fixed;
-  /* Issue 4 fix: raised high enough to clear mobile navbars (typically ~60-70px) */
   bottom: 80px;
   right: 16px;
   z-index: 9999;
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #0a0a0a;
-  border: 1px solid #c9a84c;
-  border-radius: 50px;
-  padding: 0 18px 0 13px;
-  height: 48px;
   cursor: pointer;
-  box-shadow: 0 4px 24px rgba(201, 168, 76, 0.22), 0 2px 8px rgba(0, 0, 0, 0.4);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: none;
   outline: none;
+
+  /* === Glassmorphism base === */
+  background: rgba(20, 12, 4, 0.55);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+
+  /* === Gold border === */
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 50px;
+  padding: 12px 20px;
+
+  /* === Glowing gold drop-shadow (pulsing via animation) === */
+  box-shadow:
+    0 0 18px rgba(212, 175, 55, 0.35),
+    0 4px 24px rgba(170, 119, 28, 0.25),
+    inset 0 1px 0 rgba(251, 245, 183, 0.08);
+
+  /* === Float + glow animation === */
+  animation: luvzFloat 3.6s ease-in-out infinite,
+    luvzGoldPulse 3.6s ease-in-out infinite;
+
+  /* === Hover transition === */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 #luvz-chat-trigger:hover {
-  transform: scale(1.04);
-  box-shadow: 0 6px 32px rgba(201, 168, 76, 0.35);
+  animation-play-state: paused;
+  transform: scale(1.06) translateY(-2px);
+  box-shadow:
+    0 0 32px rgba(212, 175, 55, 0.6),
+    0 8px 40px rgba(170, 119, 28, 0.4),
+    inset 0 1px 0 rgba(251, 245, 183, 0.12);
 }
 
-#luvz-chat-trigger .luvz-trigger-icon {
+.luvz-trigger-icon {
   width: 20px;
   height: 20px;
-  fill: #c9a84c;
   flex-shrink: 0;
+  animation: luvzStarSpin 12s linear infinite;
+  filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.7));
 }
 
-#luvz-chat-trigger .luvz-trigger-label {
+/* Pause star spin on button hover */
+#luvz-chat-trigger:hover .luvz-trigger-icon {
+  animation-play-state: paused;
+}
+
+.luvz-trigger-label {
   font-family: 'Jost', sans-serif;
   font-size: 13px;
   font-weight: 400;
-  color: #e8d5a3;
-  letter-spacing: 0.04em;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #FBF5B7 0%, #D4AF37 50%, #AA771C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   white-space: nowrap;
 }
 
@@ -75,6 +106,49 @@
   50% {
     opacity: 0.5;
     transform: scale(1.3);
+  }
+}
+
+/* Gentle float up/down */
+@keyframes luvzFloat {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+/* Gold glow pulse on box-shadow */
+@keyframes luvzGoldPulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 18px rgba(212, 175, 55, 0.35),
+      0 4px 24px rgba(170, 119, 28, 0.25),
+      inset 0 1px 0 rgba(251, 245, 183, 0.08);
+  }
+
+  50% {
+    box-shadow:
+      0 0 32px rgba(212, 175, 55, 0.65),
+      0 8px 36px rgba(170, 119, 28, 0.45),
+      inset 0 1px 0 rgba(251, 245, 183, 0.14);
+  }
+}
+
+/* Slow star rotation */
+@keyframes luvzStarSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -606,6 +680,18 @@
 }
 
 /* === FIX 1: Hide floating Ask AI button on mobile === */
+@media (max-width: 480px) {
+  #luvz-chat-trigger {
+    padding: 14px;
+    border-radius: 50%;
+    gap: 0;
+  }
+
+  .luvz-trigger-label {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
   #luvz-chat-trigger {
     display: none !important;

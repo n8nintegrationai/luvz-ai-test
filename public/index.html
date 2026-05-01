@@ -7013,7 +7013,14 @@
   <!-- Floating pill trigger button -->
   <button id="luvz-chat-trigger" aria-label="Chat with Luvz Style Assistant">
     <svg class="luvz-trigger-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 1l2.5 7.5H22l-6.5 4.7 2.5 7.5L12 16.2 6 20.7l2.5-7.5L2 8.5h7.5z" />
+      <defs>
+        <linearGradient id="luvzGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FBF5B7" />
+          <stop offset="45%" stop-color="#D4AF37" />
+          <stop offset="100%" stop-color="#AA771C" />
+        </linearGradient>
+      </defs>
+      <path fill="url(#luvzGoldGrad)" d="M12 1l2.5 7.5H22l-6.5 4.7 2.5 7.5L12 16.2 6 20.7l2.5-7.5L2 8.5h7.5z" />
     </svg>
     <span class="luvz-trigger-label">Ask AI</span>
     <span class="luvz-dot" aria-hidden="true"></span>
