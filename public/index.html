@@ -5966,11 +5966,14 @@
     #nav-askai-icon {
       /* Layout */
       display: inline-flex;
+      position: relative;
       align-items: center;
       gap: 6px;
       padding: 8px 16px;
       border-radius: 50px;
       cursor: pointer;
+      pointer-events: auto;
+      z-index: 30;
       border: none;
       outline: none;
       flex-shrink: 0;
@@ -6016,6 +6019,7 @@
     }
 
     .nav-askai-label {
+      display: inline-flex;
       font-family: 'Jost', sans-serif;
       font-size: 12px;
       font-weight: 400;
@@ -6073,6 +6077,8 @@
       #nav-askai-icon {
         padding: 8px 10px;
         gap: 0;
+        cursor: pointer;
+        pointer-events: auto;
       }
 
       .nav-askai-label {
@@ -6180,7 +6186,7 @@
       </button>
       <button
         id="nav-askai-icon"
-        onclick="document.getElementById('luvz-chat-trigger').click();"
+        onclick="window.openLuvzChat(event);"
         aria-label="Ask AI Style Assistant"
       >
         <!-- Sparkle emoji icon -->
@@ -7074,11 +7080,12 @@
       <!-- Ask AI nav link - mobile only, triggers same chat drawer -->
       <button
         id="mob-askai-btn"
-        onclick="document.getElementById('luvz-chat-trigger').click(); toggleMenu();"
+        onclick="window.openLuvzChat(event); toggleMenu();"
         style="
           background: none;
           border: none;
           cursor: pointer;
+          pointer-events: auto;
           display: flex;
           align-items: center;
           gap: 6px;

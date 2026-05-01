@@ -410,6 +410,13 @@
     document.body.style.overflow = '';
   }
 
+  window.openLuvzChat = function (event) {
+    if (event && typeof event.stopPropagation === 'function') {
+      event.stopPropagation();
+    }
+    openChat();
+  };
+
   trigger.addEventListener('click', function () { isOpen ? closeChat() : openChat(); });
   closeBtn.addEventListener('click', closeChat);
 
