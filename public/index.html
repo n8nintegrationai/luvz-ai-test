@@ -5926,6 +5926,34 @@
         filter: drop-shadow(2px 3px 0px rgba(0, 0, 0, 0.5));
       }
     }
+
+    /* === FIX 2: Hero caption mobile-only refinement === */
+    @media (max-width: 768px) {
+      .hero-caption-styled {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-size: 11px;
+        border-top: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+        border-bottom: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+        padding: 12px 16px;
+        margin: 20px auto;
+        max-width: calc(100% - 32px);
+        box-sizing: border-box;
+      }
+
+      .hero-caption-styled .hero-cap-sep {
+        display: none;
+      }
+
+      .hero-caption-styled .hero-cap-part {
+        display: block;
+        line-height: 1.8;
+      }
+    }
   </style>
 
 <body>
@@ -6078,7 +6106,9 @@
         <span>LUVZ</span>
         <span>COLLECTION</span>
       </h1>
-      <div class="lc-micro-copy">Handcrafted · 92.5 silver · Heritage Design</div>
+      <div class="lc-micro-copy hero-caption-styled"><span class="hero-cap-part">Handcrafted</span><span
+          class="hero-cap-sep"> · </span><span class="hero-cap-part">92.5 Silver</span><span
+          class="hero-cap-sep"> · </span><span class="hero-cap-part">Heritage Design</span></div>
       <div class="lc-rule-enhanced">
         <span class="lc-rule-line"></span>
         <span class="lc-rule-diamond"></span>
@@ -6881,6 +6911,59 @@
     <a href="#about" onclick="toggleMenu()" class="mob-link">About Us</a>
     <a href="#story" onclick="toggleMenu()" class="mob-link">Our Story</a>
     <a href="#contact" onclick="toggleMenu()" class="mob-link">Contact</a>
+    <div style="display:flex;align-items:center;gap:18px;margin-top:24px;padding-top:20px;border-top:1px solid var(--border-h)">
+      <button
+        onclick="openWishlist(); toggleMenu();"
+        style="
+          background: none;
+          border: none;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          color: var(--gold);
+          font-family: 'Jost', sans-serif;
+          font-size: 13px;
+          font-weight: 400;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          padding: 0;
+        "
+        aria-label="Open wishlist"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        Wishlist
+      </button>
+      <!-- Ask AI nav link - mobile only, triggers same chat drawer -->
+      <button
+        id="mob-askai-btn"
+        onclick="document.getElementById('luvz-chat-trigger').click(); toggleMenu();"
+        style="
+          background: none;
+          border: none;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          color: var(--gold);
+          font-family: 'Jost', sans-serif;
+          font-size: 13px;
+          font-weight: 400;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          padding: 0;
+        "
+        aria-label="Ask AI Style Assistant"
+      >
+        <!-- Star icon matching luvz-chat.css trigger aesthetic -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+        Ask AI
+      </button>
+    </div>
   </div>
 
 
