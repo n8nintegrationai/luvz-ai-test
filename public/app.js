@@ -42,76 +42,57 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
+(function initNavActiveIndicator() {
+  const navLinks = Array.from(document.querySelectorAll('#nav .nav-link[href^="#"]'));
+  if (!navLinks.length) return;
+
+  const linkById = new Map();
+  navLinks.forEach(link => {
+    const id = link.getAttribute('href').slice(1);
+    if (id) linkById.set(id, link);
+  });
+
+  const sections = Array.from(linkById.keys())
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  if (!sections.length) return;
+
+  function setActive(id) {
+    navLinks.forEach(link => {
+      const isActive = link.getAttribute('href') === '#' + id;
+      link.classList.toggle('is-active', isActive);
+      if (isActive) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    const visible = entries
+      .filter(entry => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+    if (visible && visible.target.id) setActive(visible.target.id);
+  }, {
+    rootMargin: '-28% 0px -58% 0px',
+    threshold: [0.08, 0.18, 0.32]
+  });
+
+  sections.forEach(section => observer.observe(section));
+
+  if (location.hash && linkById.has(location.hash.slice(1))) {
+    setActive(location.hash.slice(1));
+  }
+})();
+
 function initHeroRedesignParallax() {
-  const hero = document.querySelector('.hero.hero-redesign');
-  const imgParallax = hero ? hero.querySelector('.hero-img-parallax') : null;
-  const textParallax = hero ? hero.querySelector('.hero-text-parallax') : null;
-  const heroImg = hero ? hero.querySelector('.hero-img') : null;
-  if (!hero || !imgParallax || !textParallax || !heroImg) return;
-
-  const mobileQuery = window.matchMedia('(max-width: 768px)');
-  let parallaxAttached = false;
-  let heroRAFPending = false;
-  let pointerMoveX = 0;
-  let pointerMoveY = 0;
-
-  function resetHeroParallax() {
-    heroRAFPending = false;
-    imgParallax.style.transform = 'translate3d(0px, 0px, 0)';
-    textParallax.style.transform = 'translate3d(0px, 0px, 0)';
-  }
-
-  function applyHeroParallax() {
-    /* Image moves subtly in direction of pointer */
-    imgParallax.style.transform = `translate3d(${pointerMoveX * 8}px, ${pointerMoveY * 6}px, 0)`;
-    /* Text moves opposite direction for depth perception */
-    textParallax.style.transform = `translate3d(${pointerMoveX * -3}px, ${pointerMoveY * -2}px, 0)`;
-    heroRAFPending = false;
-  }
-
-  function handleHeroMouseMove(event) {
-    pointerMoveX = event.clientX / window.innerWidth - 0.5;
-    pointerMoveY = event.clientY / window.innerHeight - 0.5;
-    if (!heroRAFPending) {
-      heroRAFPending = true;
-      requestAnimationFrame(applyHeroParallax);
-    }
-  }
-
-  function enableHeroParallax() {
-    if (parallaxAttached || mobileQuery.matches) return;
-    hero.addEventListener('mousemove', handleHeroMouseMove);
-    hero.addEventListener('mouseleave', resetHeroParallax);
-    parallaxAttached = true;
-  }
-
-  function disableHeroParallax() {
-    if (!parallaxAttached) return;
-    hero.removeEventListener('mousemove', handleHeroMouseMove);
-    hero.removeEventListener('mouseleave', resetHeroParallax);
-    parallaxAttached = false;
-    resetHeroParallax();
-  }
-
-  function handleViewportChange(event) {
-    if (event.matches) disableHeroParallax();
-    else enableHeroParallax();
-  }
-
-  function cleanupHeroParallax() {
-    disableHeroParallax();
-    mobileQuery.removeEventListener('change', handleViewportChange);
-    window.removeEventListener('pagehide', cleanupHeroParallax);
-  }
-
-  if (!mobileQuery.matches) enableHeroParallax();
-  mobileQuery.addEventListener('change', handleViewportChange);
-  window.addEventListener('pagehide', cleanupHeroParallax);
+  // Parallax removed — Phase 3. Image float handled by CSS lcImageFloat.
 }
 
 initHeroRedesignParallax();
 
 function initHeroParticles() {
+  return; // Replaced by lcInitParticles() in Phase 3
   const hero = document.querySelector('.hero.hero-redesign');
   const canvas = document.getElementById('hero-particles-canvas');
   if (!hero || !canvas) return;
@@ -121,7 +102,7 @@ function initHeroParticles() {
   const ctx = canvas.getContext('2d');
   if (!media || !ctx) return;
 
-  const PARTICLE_COUNT = 25;
+  const PARTICLE_COUNT = 55;
   const particles = [];
   let heroParticlesRAF = 0;
   let canvasWidth = 0;
@@ -137,18 +118,21 @@ function initHeroParticles() {
   }
 
   function createParticle(index) {
-    const size = 1 + Math.random() * 1.5;
-    const alpha = 0.08 + Math.random() * 0.22;
+    const size = 0.8 + Math.random() * 2.2;
+    const alpha = 0.06 + Math.random() * 0.28;
     particles[index] = {
       baseX: Math.random() * canvasWidth,
       y: Math.random() * canvasHeight,
       size,
       alpha,
       color: `rgba(212, 175, 55, ${alpha})`,
-      speedY: 0.14 + Math.random() * 0.196,
-      amplitude: 4 + Math.random() * 7,
+      speedY: 0.12 + Math.random() * 0.22,
+      amplitude: 3 + Math.random() * 8,
       phase: Math.random() * Math.PI * 2,
-      phaseSpeed: 0.0056 + Math.random() * 0.0084
+      phaseSpeed: 0.0048 + Math.random() * 0.0096,
+      rotation: Math.random() * Math.PI * 2,
+      rotationSpeed: (Math.random() - 0.5) * 0.008,
+      sizeVariation: 1 + (Math.random() - 0.5) * 0.3
     };
   }
 
@@ -166,21 +150,24 @@ function initHeroParticles() {
       const particle = particles[i];
       particle.y -= particle.speedY;
       particle.phase += particle.phaseSpeed;
+      particle.rotation += particle.rotationSpeed;
 
       if (particle.y + particle.size < 0) {
         resetParticleToBottom(particle);
       }
 
+      const currentSize = particle.size * particle.sizeVariation * (0.9 + Math.sin(particle.phase) * 0.1);
       ctx.fillStyle = particle.color;
-      ctx.beginPath();
-      ctx.arc(
+      ctx.save();
+      ctx.translate(
         particle.baseX + Math.sin(particle.phase) * particle.amplitude,
-        particle.y,
-        particle.size,
-        0,
-        Math.PI * 2
+        particle.y
       );
+      ctx.rotate(particle.rotation);
+      ctx.beginPath();
+      ctx.arc(0, 0, currentSize, 0, Math.PI * 2);
       ctx.fill();
+      ctx.restore();
     }
   }
 
@@ -246,6 +233,31 @@ function initHeroParticles() {
 }
 
 initHeroParticles();
+
+/* ── PHASE 3: HERO TEXT ENTRANCE ANIMATIONS ── */
+(function lcInitHeroEntranceAnimations() {
+  const fadeUpElements = document.querySelectorAll('.lc-fade-up');
+  if (fadeUpElements.length === 0) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animation = 'lcFadeUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
+        const animationDelay = window.getComputedStyle(entry.target).animationDelay;
+        if (animationDelay && animationDelay !== '0s') {
+          entry.target.style.animationDelay = animationDelay;
+        }
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  fadeUpElements.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    observer.observe(el);
+  });
+})();
 
 function toggleMenu(forceClose) {
   const m = document.getElementById('mob-menu');
@@ -1711,59 +1723,204 @@ function renderReviews(reviews) {
 
 
 async function askLuvzAI() {
-  const queryInput = document.getElementById('ai-user-query');
-  const display = document.getElementById('ai-response-display');
-  const btn = document.getElementById('ai-send-btn');
-
-  if (!queryInput.value.trim()) return;
-
-  // UI States
-  const originalBtnText = btn.innerText;
-  btn.innerText = "Thinking...";
-  btn.disabled = true;
-  display.innerHTML = "<em>Our assistant is searching the collection...</em>";
-
   try {
-    let streamText = '';
-    let streamSources = [];
+    const queryInput = document.getElementById('ai-user-query');
+    const display = document.getElementById('ai-response-display');
+    const btn = document.getElementById('ai-send-btn');
 
-    await window.streamLuvzResponse({
-      apiUrl: window.LUVZ_CHAT_API_URL || 'http://127.0.0.1:8000/chat',
-      message: queryInput.value,
-      onDelta: (delta) => {
-        streamText += delta;
-        if (window.LuvzChatUI && typeof window.LuvzChatUI.renderExternalBotContent === 'function') {
-          window.LuvzChatUI.renderExternalBotContent(display, streamText, streamSources);
-        } else {
-          display.textContent = streamText;
+    if (!queryInput.value.trim()) return;
+
+    // UI States
+    const originalBtnText = btn.innerText;
+    btn.innerText = "Thinking...";
+    btn.disabled = true;
+    display.innerHTML = "<em>Our assistant is searching the collection...</em>";
+
+    try {
+      let streamText = '';
+      let streamSources = [];
+
+      await window.streamLuvzResponse({
+        apiUrl: window.LUVZ_CHAT_API_URL || 'http://127.0.0.1:8000/chat',
+        message: queryInput.value,
+        onDelta: (delta) => {
+          streamText += delta;
+          if (window.LuvzChatUI && typeof window.LuvzChatUI.renderExternalBotContent === 'function') {
+            window.LuvzChatUI.renderExternalBotContent(display, streamText, streamSources);
+          } else {
+            display.textContent = streamText;
+          }
+        },
+        onSources: (sources) => {
+          streamSources = Array.isArray(sources) ? sources : [];
+          if (window.LuvzChatUI && typeof window.LuvzChatUI.renderExternalBotContent === 'function') {
+            window.LuvzChatUI.renderExternalBotContent(display, streamText, streamSources);
+          }
+        },
+        onComplete: () => {
+          if (!streamText && !(streamSources && streamSources.length)) {
+            display.innerHTML = "I couldn't find that right now. Could you try rephrasing your question?";
+          }
+        },
+        onError: (message) => {
+          display.textContent = message;
         }
-      },
-      onSources: (sources) => {
-        streamSources = Array.isArray(sources) ? sources : [];
-        if (window.LuvzChatUI && typeof window.LuvzChatUI.renderExternalBotContent === 'function') {
-          window.LuvzChatUI.renderExternalBotContent(display, streamText, streamSources);
-        }
-      },
-      onComplete: () => {
-        if (!streamText && !(streamSources && streamSources.length)) {
-          display.innerHTML = "I couldn't find that right now. Could you try rephrasing your question?";
-        }
-      },
-      onError: (message) => {
-        display.textContent = message;
+      });
+    } catch (error) {
+      if (!display.textContent || /searching the collection/i.test(display.textContent)) {
+        display.textContent = error && error.name === 'AbortError'
+          ? LUVZ_STREAM_TIMEOUT_MESSAGE
+          : LUVZ_CONNECTION_LOST_MESSAGE;
       }
-    });
-  } catch (error) {
-    if (!display.textContent || /searching the collection/i.test(display.textContent)) {
-      display.textContent = error && error.name === 'AbortError'
-        ? LUVZ_STREAM_TIMEOUT_MESSAGE
-        : LUVZ_CONNECTION_LOST_MESSAGE;
+    } finally {
+      const btn = document.getElementById('ai-send-btn');
+      if (btn) {
+        btn.innerText = originalBtnText || 'Ask LUVZ';
+        btn.disabled = false;
+      }
     }
-  } finally {
-    btn.innerText = originalBtnText;
-    btn.disabled = false;
+  } catch (e) {
+    console.warn('[LUVZ Chat] API unavailable:', e.message);
   }
 }
+
+/* ═══ PHASE 3 HERO ENHANCEMENTS ═══ */
+(function lcHeroPhase3() {
+
+  /* ── ENHANCED PARTICLES ── */
+  function lcInitParticles() {
+    const canvas = document.getElementById('hero-particles-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const MOBILE = () => window.innerWidth < 768;
+
+    let W, H, particles = [], raf;
+
+    function resize() {
+      W = canvas.width = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+    }
+
+    function makeParticle() {
+      const tier = Math.random();
+      // Three tiers of size for depth illusion
+      const size = tier < 0.3
+        ? 1 + Math.random() * 1.0   // small background: 1.5–2.5px
+        : tier < 0.7
+          ? 2 + Math.random() * 1.5  // mid: 2.5–4px
+          : 3 + Math.random() * 2.0; // large foreground: 3.5–5.5px
+      return {
+        x: Math.random() * W,
+        y: Math.random() * H,
+        size,
+        speed: 0.10 + Math.random() * 0.28,
+        drift: (Math.random() - 0.5) * 0.4,
+        phase: Math.random() * Math.PI * 2,
+        freq: 0.004 + Math.random() * 0.006,
+        alpha: 0.12 + Math.random() * 0.55,
+        alphaDelta: (Math.random() - 0.5) * 0.003,
+        alphaMin: 0.08,
+        alphaMax: 0.75,
+      };
+    }
+
+    function init() {
+      resize();
+      const COUNT = MOBILE() ? 0 : 58;
+      particles = Array.from({ length: COUNT }, makeParticle);
+    }
+
+    let frame = 0;
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      frame++;
+      particles.forEach(p => {
+        // Vertical drift
+        p.y -= p.speed;
+        // Sine wave horizontal
+        p.x += Math.sin(p.phase + frame * p.freq) * p.drift;
+        // Alpha breathe
+        p.alpha += p.alphaDelta;
+        if (p.alpha > p.alphaMax) { p.alpha = p.alphaMax; p.alphaDelta *= -1; }
+        if (p.alpha < p.alphaMin) { p.alpha = p.alphaMin; p.alphaDelta *= -1; }
+        // Wrap
+        if (p.y < -6) { p.y = H + 4; p.x = Math.random() * W; }
+        if (p.x < -10) { p.x = W + 4; }
+        if (p.x > W + 10) { p.x = -4; }
+
+        // Draw with soft glow for larger particles
+        if (p.size >= 3) {
+          const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 2.2);
+          grd.addColorStop(0, `rgba(245,215,138,${p.alpha})`);
+          grd.addColorStop(0.4, `rgba(212,175,55,${p.alpha * 0.6})`);
+          grd.addColorStop(1, `rgba(200,140,44,0)`);
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * 2.2, 0, Math.PI * 2);
+          ctx.fillStyle = grd;
+          ctx.fill();
+        }
+        // Core dot
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(245,215,138,${p.alpha})`;
+        ctx.fill();
+      });
+      raf = requestAnimationFrame(draw);
+    }
+
+    // Pause on hidden tab
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cancelAnimationFrame(raf);
+      else raf = requestAnimationFrame(draw);
+    });
+
+    window.addEventListener('resize', () => { resize(); }, { passive: true });
+
+    init();
+    raf = requestAnimationFrame(draw);
+  }
+
+  /* ── PARALLAX (enhanced sensitivity) ── */
+  function lcEnhanceParallax() {
+    const hero = document.querySelector('.hero-redesign');
+    if (!hero || window.innerWidth < 768) return;
+    const imgLayer = hero.querySelector('.hero-img-parallax');
+    const txtLayer = hero.querySelector('.hero-text-parallax');
+    const gemLight = hero.querySelector('.hero-gem-light');
+    if (!imgLayer || !txtLayer) return;
+
+    let tx = 0, ty = 0, cx = 0, cy = 0;
+
+    hero.addEventListener('mousemove', e => {
+      const r = hero.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
+    }, { passive: true });
+
+    (function tick() {
+      // Smooth lerp
+      cx += (tx - cx) * 0.06;
+      cy += (ty - cy) * 0.06;
+      imgLayer.style.transform = `translate(${cx * 14}px, ${cy * 8}px) scale(1.04)`;
+      txtLayer.style.transform = `translate(${cx * -5}px, ${cy * -3}px)`;
+      if (gemLight) gemLight.style.transform = `translate(${cx * 22}px, ${cy * 14}px)`;
+      requestAnimationFrame(tick);
+    })();
+  }
+
+  /* ── INIT ── */
+  function lcInit() {
+    lcInitParticles();
+    lcEnhanceParallax();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', lcInit);
+  } else {
+    lcInit();
+  }
+
+})();
 
 window.LUVZ_CHAT_API_URL = window.LUVZ_CHAT_API_URL || 'http://127.0.0.1:8000/chat';
 const LUVZ_STREAM_TIMEOUT_MESSAGE = 'The response timed out. Please try again in a moment.';
@@ -2014,4 +2171,19 @@ async function streamLuvzResponse(options) {
 }
 
 window.streamLuvzResponse = streamLuvzResponse;
+
+/* ═══ PHASE 3 ENHANCEMENTS ═══ */
+(function lcHeroPhase3Init() {
+  'use strict';
+
+  function lcLogReady() {
+    console.log('[LUVZ Phase 3] Hero enhancements active.');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', lcLogReady);
+  } else {
+    lcLogReady();
+  }
+})();
 
